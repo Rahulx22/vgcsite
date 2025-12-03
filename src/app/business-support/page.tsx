@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function BusinessSupportPage() {
   const data: BusinessSupportPage = businessSupportData;
-
+  console.log("Business Support Data:", data);
   return (
     <>
       <Header />

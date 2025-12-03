@@ -12,7 +12,7 @@ export type NavigationItem = {
 };
 
 export type HeaderData = {
-  logo: string; 
+  logo: string;
   navigation: NavigationItem[];
   button: { text: string; link: string };
 };
@@ -22,7 +22,7 @@ export type ApiShape = {
   data: { header: HeaderData };
 };
 
-type MiddleShape = { header?: HeaderData; [k: string]: unknown };
+type MiddleShape = { header?: HeaderData;[k: string]: unknown };
 
 type HeaderProps = { data?: HeaderData | MiddleShape | ApiShape | null };
 
@@ -47,9 +47,9 @@ const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
 const normalizeUrl = (raw?: string) => {
   if (!raw) return "/";
   let url = raw.trim().replace(/\\/g, "");
-  if (/^https?:\/\//i.test(url)) return url; 
-  if (!url.startsWith("/")) url = `/${url}`; 
-  if (url === "/home") return "/"; 
+  if (/^https?:\/\//i.test(url)) return url;
+  if (!url.startsWith("/")) url = `/${url}`;
+  if (url === "/home") return "/";
   return url;
 };
 
@@ -131,6 +131,69 @@ export default function Header({ data }: HeaderProps) {
   }, [menuOpen]);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
+
+
+
+
+  const [styles, setStyles] = useState({
+    borderTop: "1px solid #eef0f2",
+    marginTop: "15px",
+    paddingTop: "15px",
+    paddingBottom: "10px",
+    width: "100%",
+    boxSizing: "border-box",
+    textAlign: "center",
+  });
+
+  const [linkStyles, setLinkStyles] = useState({
+    display: "inline-block",
+    background: "#0070f3",
+    color: "#fff",
+    padding: "12px 24px",
+    borderRadius: "6px",
+    fontSize: "1rem",
+    fontWeight: 600,
+    textDecoration: "none",
+    transition: "background 0.2s",
+    width: "auto",
+    boxSizing: "border-box",
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth <= 480) {
+        setLinkStyles(current => ({
+          ...current,
+          padding: "14px 16px",
+          fontSize: "0.95rem",
+          width: "90%",
+        }));
+        setStyles(current => ({
+          ...current,
+          paddingTop: "18px",
+          paddingBottom: "12px",
+          marginTop: "10px",
+        }));
+      } else {
+        setLinkStyles(current => ({
+          ...current,
+          padding: "12px 24px",
+          fontSize: "1rem",
+          width: "auto",
+        }));
+        setStyles(current => ({
+          ...current,
+          paddingTop: "15px",
+          paddingBottom: "10px",
+          marginTop: "15px",
+        }));
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
 
   return (
     <header ref={headerRef}>
@@ -256,10 +319,18 @@ export default function Header({ data }: HeaderProps) {
                 </li>
               );
             })}
+            {/* 
             <li className="mobile-cta-button" style={{ borderTop: "1px solid #eef0f2", marginTop: "15px", paddingTop: "15px", paddingBottom: "10px" }}>
               <Link href={buttonHref} onClick={closeMenu} className="mobile-cta-link">
                 {buttonText}
               </Link>
+            </li>
+             */}
+
+            <li className="mobile-cta-button" style={styles}>
+              <a href={buttonHref} onClick={closeMenu} style={linkStyles}>
+                {buttonText}
+              </a>
             </li>
           </ul>
         </nav>

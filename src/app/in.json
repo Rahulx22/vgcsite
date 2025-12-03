@@ -1,0 +1,899 @@
+{
+    "success": true,
+    "message": "Pages retrieved successfully",
+    "data": [
+      {
+        "id": 1,
+        "title": "Homepage",
+        "slug": "homepage",
+        "type": "home",
+        "blocks": [
+          {
+            "type": "banner_slider_section",
+            "data": {
+              "banners": [
+                {
+                  "image": "builder/01K5VN4FPNZM7XVFSEJGVGZ41J.jpg",
+                  "title": "Empower your finance. Grow with clarity.",
+                  "statics": [
+                    {
+                      "text": "Revenue Growth Rate",
+                      "count_percent": "15%"
+                    },
+                    {
+                      "text": "Client Retention Rate",
+                      "count_percent": "90%"
+                    },
+                    {
+                      "text": "Years in Operation",
+                      "count_percent": "12+"
+                    }
+                  ],
+                  "cta_link": "tel:+1234",
+                  "cta_text": "Book a Consultation",
+                  "subtitle": "As a CA-led consulting firm, VGC helps MSMEs navigate tax, finance, and compliance with confidence.\nWe bring expert, data-backed advice and disciplined processes for a stronger financial foundation.\nOur structured workflows and timely responses ensure a seamless, professional experience."
+                },
+                {
+                  "image": "builder/01K8N1DC6Z1VGQZSG1KPMKWKJX.png",
+                  "title": "On-time. Audit-ready. Outcome-driven.",
+                  "statics": [
+                    {
+                      "text": "Revenue Growth Rate",
+                      "count_percent": "15%"
+                    },
+                    {
+                      "text": "Client Retention Rate",
+                      "count_percent": "90%"
+                    },
+                    {
+                      "text": "Years in Operation",
+                      "count_percent": "12+"
+                    }
+                  ],
+                  "cta_link": "tel:+12345678912222",
+                  "cta_text": "Book a Consultation",
+                  "subtitle": "As your finance partner, we turn complex filings and numbers into clear, usable insights.\nWe deliver compliant returns, reliable MIS, and calm handling of notices and assessments.\nOur proactive updates and SLAs keep everything moving—without last-minute stress."
+                },
+                {
+                  "image": "builder/01K5VN4FPSS8VNBMTZKSDY6EYB.jpg",
+                  "title": "Finance made simpler for founders.",
+                  "statics": [
+                    {
+                      "text": "Revenue Growth Rate",
+                      "count_percent": "15%"
+                    },
+                    {
+                      "text": "Client Retention Rate",
+                      "count_percent": "90%"
+                    },
+                    {
+                      "text": "Years in Operation",
+                      "count_percent": "12+"
+                    }
+                  ],
+                  "cta_link": "tel:+123456789100002222",
+                  "cta_text": "Book a Consultation",
+                  "subtitle": "As a focused MSME advisory, we align tax, GST, and accounts to your growth goals.\nWe set up clean documentation, smart reconciliations, and decision-ready reporting.\nOur client-first approach and quick turnarounds make working with us effortless."
+                },
+                {
+                  "image": "builder/01K8T3BV9PZTKGRFDN6DVF83DT.png",
+                  "title": "GST done right, every month.",
+                  "statics": [
+                    {
+                      "text": null,
+                      "count_percent": null
+                    }
+                  ],
+                  "cta_link": null,
+                  "cta_text": "Fix My GST",
+                  "subtitle": "As GST specialists, we help you file accurately and protect ITC while you scale.\nWe deliver data-backed 2B-to-books reconciliation and compliant R1/3B/Annual returns.\nOur monthly calendar and swift responses keep GST stress-free and on schedule."
+                },
+                {
+                  "image": "builder/01K8T3BV9Q9WM7824TY7KARCSH.png",
+                  "title": "No visibility = no control.",
+                  "statics": [
+                    {
+                      "text": null,
+                      "count_percent": null
+                    }
+                  ],
+                  "cta_link": null,
+                  "cta_text": "See a Sample MIS",
+                  "subtitle": "As your VCFO partner, we turn numbers into decisions you can act on.\nWe close P&L, Balance Sheet, and Cash Flow within clear timelines—every month.\nOur variance commentary and board-ready MIS bring discipline and speed."
+                },
+                {
+                  "image": null,
+                  "title": "Start right. Stay compliant.",
+                  "statics": [
+                    {
+                      "text": null,
+                      "count_percent": null
+                    }
+                  ],
+                  "cta_link": null,
+                  "cta_text": "Incorporate with VGC",
+                  "subtitle": "As incorporation experts, we set up Pvt Ltd, LLP, OPC, and NGOs with clean checklists.\nWe guide you from name approval to bank-ready kit, GST, and ROC filings.\nOur structured process and prompt coordination make setup smooth and professional."
+                }
+              ]
+
+
+
+
+
+
+
+
+
+              
+            }
+          },
+
+
+
+
+
+          {
+            "type": "services_section",
+            "data": {
+              "title": "Our Services",
+              "show_all": true,
+              "subtitle": null,
+              "service_ids": [],
+              "services": [
+                {
+                  "id": 1,
+                  "title": "Registration Services",
+                  "slug": "registration-services",
+                  "sub_heading": "\u003Cp\u003EEnd-to-end incorporation, statutory registrations and licenses.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe structure your entity, file documents correctly the first time, and obtain all the registrations your business needs to operate without friction.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EFrom new incorporations to sectoral licenses and conversions, our CA-led team manages name checks, documentation, e-sign/DSC, filings, approvals and post-incorporation tasks. You get a compliant start with zero follow-up hassle and a strong legal foundation.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EPrivate Limited Company (Pvt Ltd) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELimited Liability Partnership (LLP) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EOne Person Company (OPC) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPartnership Firm Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ESole Proprietorship Registration (via MSME/Udyam + GST)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ESection 8 Company (NGO) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProducer Company Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStartup India Registration (DPIIT)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Registration (Goods &amp; Services Tax)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPAN &amp; TAN Application\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProfessional Tax Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EImport Export Code (IEC) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EESI Registration (Employee State Insurance)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPF Registration (Provident Fund)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Return Filing Setup\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Return (ITR) Filing Setup\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EDigital Signature Certificate (DSC)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EMSME / Udyam Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFSSAI License (for food businesses)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EShop &amp; Establishment Act License\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELabour License / Contract Labour Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGEM Portal Registration (for government tenders)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EISO Certification Support (via tie-ups)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrade License (Municipal level)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ERERA Registration (for builders/agents)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ENiti Aayog NGO Darpan Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrust, Society or NGO Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003E80G &amp; 12A Registration (for tax exemption for NGOs)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrademark Registration (often in collaboration with legal professionals)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EForeign Company/Branch Office Setup (FEMA, RBI Approvals)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStartup Funding Documentation &amp; Compliance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECMA Data &amp; Project Report Preparation for Loans\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EDIR-3 KYC &amp; DIN Compliance\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:12:48.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": "oklm,",
+                  "meta_keywords": null
+                },
+                {
+                  "id": 3,
+                  "title": "Taxation and Liability Compliance Services",
+                  "slug": "Taxation and Liability Compliance Services",
+                  "sub_heading": "\u003Cp\u003EComplete direct &amp; indirect tax compliance with notices and litigation support.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe plan, compute, file and defend—across Income-tax, TDS, GST, PF/ESI and corporate filings.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EOur tax engine combines process discipline with expert review to deliver timely computations, reconciliations and statutory submissions with documented trails. From e-way bills and ITC to scrutiny and refunds, we manage end-to-end so you stay compliant and confident.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Return (ITR) Filing – for individuals, businesses, and companies\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETax Audit under Section 44AB\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAdvance Tax Computation &amp; Payment\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS (Tax Deducted at Source) Compliance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Deduction &amp; Deposit\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Return Filing (Form 24Q, 26Q, etc.)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Certificates (Form 16, Form 16A)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EForm 15CA/15CB Certification – for foreign remittances\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Notices &amp; Scrutiny Handling\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EInput Tax Credit (ITC) Reconciliation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Audit &amp; Certification\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EE-way Bill Generation &amp; Support\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Refund Filing\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Notice Reply &amp; Litigation Handling\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAnnual ROC Filing (AOC-4, MGT-7, etc.)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELLP Annual Return (Form 8 &amp; 11)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProvident Fund (PF) Registration, Return Filing &amp; Payment\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003ELegal &amp; Regulatory Compliance Reviews\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:13:52.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 4,
+                  "title": "Accounting and Bookkeeping",
+                  "slug": "Accounting and Bookkeeping",
+                  "sub_heading": "\u003Cp\u003EReliable transaction capture to investor-grade financial statements.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe maintain day-to-day books, reconcile banks and ledgers, close months on time, and prepare financials your auditors and lenders will love.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EOur bookkeeping framework standardises your chart of accounts, documentation and cut-offs. We reconcile cash/bank/suspense, track ledgers precisely and prepare financial statements aligned with statutory and management needs—so MIS, audits and decisions become faster and simpler.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003ETransactional Bookkeeping\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EBank &amp; Cash Reconciliation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELedger Maintenance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFinancial Statements Preparation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EYear-End Closing &amp; Auditor Assistance\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EPayroll Accounting\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:14:58.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 5,
+                  "title": "Complete accounts and Finance",
+                  "slug": "Complete accounts and Finance",
+                  "sub_heading": "\u003Cp\u003EProcess-driven finance operations across accounting, compliance and AR/AP.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe stitch accounting, compliance, payables and receivables into one controlled workflow with tools, SLAs and dashboards.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EWe design your finance operating model—workflows, maker-checker, document trails, automation and periodic controls—covering accounting, compliance, AP/AR and banking. The result is speed with reliability: faster closes, fewer follow-ups, and better vendor/customer experience.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EProcess Accounting Automation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECompliances + Accounting &amp; Booking\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAccount Payable &amp; Receivable + Compliance\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:15:44.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 6,
+                  "title": "F&A Mastry",
+                  "slug": "fa-mastry",
+                  "sub_heading": "\u003Cp\u003EInsightful analysis, robust compliance, and stronger internal capability.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe turn data into dashboards and management views, tighten compliances, and build team/process capability to scale.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EBeyond bookkeeping and filings, we focus on what helps founders steer: timely MIS, variance analysis, trend views, and cash/working-capital visibility—backed by compliance hygiene and capability building. We help your team adopt best-practice rhythms so performance compounds month after month.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EAnalysis and Reporting\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECompliances\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProcess and Team Capability\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "featured_image": "builder/01K7PJNPD81801DZZ0MRFDN4XS.jpeg",
+                  "status": "Active",
+                  "created_at": "2025-10-14T08:24:08.000000Z",
+                  "updated_at": "2025-10-30T09:16:26.000000Z",
+                  "mobile_featured_image": "builder/01K7GX3MX3JEZTBSCJGTMDYAR8.png",
+                  "meta_title": "vb",
+                  "meta_description": "jgfh",
+                  "meta_keywords": "gcgh"
+                }
+              ]
+            }
+          },
+          {
+            "type": "blog_section",
+            "data": {
+              "title": "Our Blog",
+              "blog_ids": [],
+              "subtitle": null,
+              "show_latest": true,
+              "blogs": [
+                {
+                  "id": 5,
+                  "title": "Why are CFO Services Important?",
+                  "slug": "why-are-cfo-services-important",
+                  "short_description": "\u003Cp\u003ECFO refers to the Chief Financial Officer, a senior executive who is holistically responsible for the management of the financial undertakings of the company.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003EOften, companies commit small blunders in their pursuit of wanting to handle everything, starting from planning to taking over the finance part. This blunder can vanish if the mastermind of the company considers CFO Services and if, in case, you want your hands on the best services that are away from your reach. Then worry not! A virtual CFO is there for your rescue. Now, when it comes to virtual CFO, you might think it is less effective than offline CFO Services; however, contrary to that belief. Whether virtual or remote, CFO Services will always remain CFO Services.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EWho is a CFO?\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ECFO refers to the Chief Financial Officer, a senior executive who is holistically responsible for the management of the financial undertakings of the company. He/She is a topmost executive and is the financial controller, who takes it into his hands to solve everything relating to cash flow, financial planning, and taxation issues. Often considered to have the highest financial position and the third-highest position in the company, the CFO is vital in deciding the company&#039;s strategic initiatives.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EAre the CEO and CFO similar?\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ENo, the CEO and CFO are not similar, as CFOs are expected to work diligently with a company&#039;s other senior executives, including the CEO. Executives belonging to the CFO are referred to as the C-Suite of the company and represent themselves as the highest decision maker, thus marking all the boxes of other executives in the company. Although, the CFO is typically in a subordinate position to that of the CEO in the hierarchical structure of the corporate world. CFOs generally are the most efficient in terms of decision-making within the department, considering financial interactions in a particular firm.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EResponsibilities of a CFO\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003EControllership duties\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EControllership duties hold the CFO responsible for presenting and reporting accurate and timely financial information based on the historical shreds of evidence presented by the company. All stakeholders in the company, including shareholders, analysts, creditors, employees, future investors, and other members of the management, depend on the accuracy and timeliness of this information. The information reported by the CFO must be confidently deemed to be accurate, as many decisions are based on it.\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003ETreasury Duties\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EThe CFO is also responsible for the company&#039;s current financial condition; therefore, they must come to terms with how to invest the company&#039;s money, further taking into consideration the risk and liquidity associated with the company. Plus, the CFO oversees the company&#039;s capital structure, allowing them to determine the best mix of debt, equity, and internal financing. Resorting to address the issues surrounding the company&#039;s capital structure is one of the most important duties of a CFO and is considered vital.\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003EEconomic forecasting\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EA CFO is responsible for a company&#039;s past ventures and its present financial situation, as they are regarded to be a key player in a company&#039;s future growth and its increased potential to achieve that. The officer must be able to identify and report what areas of a company are considered the most efficient and how the company can capitalise on this information.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EAdvantages of a CFO Services\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003EIncrease in Efficiency\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EGetting a CFO ticks all the boxes you require to focus on the success of your organisation as they help you make better decisions, optimise processes, and save money. Enrolling a CFO will allow them to look at every aspect of the business, not leaving behind any nook and corner. Through this, CFOs enable you to see where things could be streamlined to help reduce costs or maximise profits, thus making your company grow efficiently and make your business more efficient.\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003EBusiness Growth\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EThe role of a CFO is primarily to help you achieve your goals in the market, especially if you are one of those companies who trust their CFO with their eyes closed. Then congratulations! You are already on the right path of advancement, and this is your call to continue doing so. CFOs have all the ideas about your goals and how you wish to achieve them. This enables them to assess your growth starting from where you started and helps you pave the paths of success by guiding you towards strategies that allow you to scale, thus preventing the scope of unsustainable growth.\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003ETax Compliance\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ECompanies are expected to deal with large-scale tax regulations. As much as complying with them is necessary, the need to adhere to the rules and regulations is also important, lest a disruption occur due to the regular audits that take place under Government Audits. However, if a CFO is enrolled in your company, then fear not! The CFO ensures the task of properly making your firm understand the tax obligations and helps you maintain the same.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EFAQ’s (Frequently Asked Questions)\u003C/strong\u003E\u003C/p\u003E\u003Col start=\"1\"\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003EDecision-making is easy as I have a responsible team to give forward the best measures effectively. Why add up additional expenses by opening up space for a CFO?\u003C/strong\u003E\u003C/p\u003E\u003C/li\u003E\u003C/ol\u003E\u003Cp\u003EWe do not doubt your decision-making skills as we hold you highly concerned for single handedly bringing your company to such a large scale all these years. However, greater workloads require specially qualified people to look into it particularly because they will act as your helpful hand and provide the best measures to upgrade your company.\u003C/p\u003E\u003Cp\u003E\u003C/p\u003E\u003Col start=\"2\"\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003EWhat if a CFO makes a mistake in the financial report?\u003C/strong\u003E\u003C/p\u003E\u003C/li\u003E\u003C/ol\u003E\u003Cp\u003EIt is nearly impossible for a CFO to make calculation mistakes as they are well-known for their reputation as the company&#039;s C-suite, despite being subordinate to the CEOs. Still, if your CFO fails to make an accurate report of your company&#039;s financial accounting, consider checking your data or help your CFO as well. Humans are prone to mistakes, and our nature of dealing with them is the main answer.\u003C/p\u003E",
+                  "featured_image": "builder/01K8D54PX5JY2ZM630Q6E5R6PV.png",
+                  "cover_image": "builder/01K8D54PXC2DA9MAS8F000ABHC.png",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-10-25T07:43:16.000000Z",
+                  "updated_at": "2025-10-28T10:55:57.000000Z",
+                  "meta_title": "Why are CFO Services Important?",
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 4,
+                  "title": "The Importance of Diversification in Inve",
+                  "slug": "the-importance-of-diversification-in-inve",
+                  "short_description": "\u003Cp\u003EVenenatis aliquet odio orci viverra quisque ultricies nec. Mollis dolor diam vitae est varius magna.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003ERunning a business is challenging enough without getting tangled in tax errors. Yet, for many MSMEs, tax-related mistakes can lead to penalties, missed savings, and unnecessary stress. Here are the five most common mistakes we see — and how you can steer clear of them.vgsvgdvsgvdgj\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E1. Missing Filing Deadlines\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003ELate filings don&#039;t just result in fines; they can also damage your compliance record. Set reminders well in advance and work with a tax advisor to ensure timely submissions.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E2. Poor Record-Keeping\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncomplete or disorganized records make tax preparation harder and increase the risk of errors. Adopt a consistent system for storing invoices, receipts, and financial statements.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E3. Overlooking Eligible Deductions\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EMany MSMEs fail to claim deductions for expenses like office rent, utilities, and professional services. A knowledgeable accountant can identify these opportunities and reduce your taxable income.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E4. Misclassifying Income or Expenses\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncorrect categorization can trigger audits. Always f\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQ4RTRNQ4VX4RHAFD5B72M.webp",
+                  "cover_image": "builder/01K5VQ4RTS3Q0PB3H5X9TSP5Y3.webp",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-09-23T16:40:09.000000Z",
+                  "updated_at": "2025-09-27T08:10:24.000000Z",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 3,
+                  "title": "The Importance of Diversification in Invest",
+                  "slug": "the-importance-of-diversification-in-invest",
+                  "short_description": "\u003Cp\u003EVenenatis aliquet odio orci viverra quisque ultricies nec. Mollis dolor diam vitae est varius magna.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003ERunning a business is challenging enough without getting tangled in tax errors. Yet, for many MSMEs, tax-related mistakes can lead to penalties, missed savings, and unnecessary stress. Here are the five most common mistakes we see — and how you can steer clear of them.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E1. Missing Filing Deadlines\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003ELate filings don&#039;t just result in fines; they can also damage your compliance record. Set reminders well in advance and work with a tax advisor to ensure timely submissions.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E2. Poor Record-Keeping\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncomplete or disorganized records make tax preparation harder and increase the risk of errors. Adopt a consistent system for storing invoices, receipts, and financial statements.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E3. Overlooking Eligible Deductions\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EMany MSMEs fail to claim deductions for expenses like office rent, utilities, and professional services. A knowledgeable accountant can identify these opportunities and reduce your taxable income.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E4. Misclassifying Income or Expenses\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncorrect categorization can trigger audits. Always f\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQ396RDQAGW24Y6CNYN9GP.webp",
+                  "cover_image": "builder/01K5VQ396SWJKF895KKB996A43.webp",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-09-23T16:39:20.000000Z",
+                  "updated_at": "2025-09-23T16:39:20.000000Z",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                }
+              ]
+            }
+          },
+          {
+            "type": "clients_logo_section",
+            "data": {
+              "logos": [
+                {
+                  "logo": "builder/01K5VNWF68R13CAW19PT7620TA.svg",
+                  "title": "Banking & Insurance"
+                },
+                {
+                  "logo": "builder/01K5VNWF69TWG2Q560QNQHAZHW.svg",
+                  "title": "Education & Social Welfare"
+                },
+                {
+                  "logo": "builder/01K5VNWF6ASN8ACX0XDAV3AVR0.svg",
+                  "title": "Nonprofits & NGOs"
+                },
+                {
+                  "logo": "builder/01K5VNWF6ASN8ACX0XDAV3AVR1.svg",
+                  "title": "Information Technology"
+                },
+                {
+                  "logo": "builder/01K5VNWF6B630JAFQ3FZ93EJWG.svg",
+                  "title": "Real Estate & Infrastructure"
+                },
+                {
+                  "logo": "builder/01K5VNWF6B630JAFQ3FZ93EJWH.svg",
+                  "title": "Logistics & Supply Chain"
+                },
+                {
+                  "logo": "builder/01K5VNWF6CDP2CNJBC2ZNCWCBT.svg",
+                  "title": "Consulting & Professional Services"
+                },
+                {
+                  "logo": "builder/01K5VNWF6CDP2CNJBC2ZNCWCBV.svg",
+                  "title": "Automotive & Ancillaries"
+                },
+                {
+                  "logo": "builder/01K5VNWF6CDP2CNJBC2ZNCWCBW.svg",
+                  "title": "Hospitality & Healthcare"
+                },
+                {
+                  "logo": "builder/01K5VNWF6D3K09KH12CPTVB2Y9.svg",
+                  "title": "Merchandising, Trading & Exports"
+                }
+              ],
+              "title": "Sectors We Serve",
+              "subtitle": "We support founders and finance teams across 10+ industries—with compliant filings, actionable MIS, and audit-ready numbers."
+            }
+          },
+          {
+            "type": "testimonials_section",
+            "data": {
+              "items": [
+                {
+                  "quote": "“VGC is a practical, creative, futuristic, and among the best solution-providing platform. Their service is excellent, with outstanding value and unexpected insights.”",
+                  "author": "Prerna Oberoi | Founder, Lex Mores",
+                  "avatar": "builder/01K5VNWF6EZBRJEH8293GCNTXB.webp",
+                  "rating": "4"
+                },
+                {
+                  "quote": "“I enjoyed working with VGC since it gave me a fantastic learning experience and helped me comprehend the challenges I was experiencing. It proved to be an Awesome learning, stable and solid value add”",
+                  "author": "Sumit Singh | CEO | AppSuccessor",
+                  "avatar": "builder/01K5VNWF6EZBRJEH8293GCNTXC.webp",
+                  "rating": "4"
+                },
+                {
+                  "quote": "“I had the distinct pleasure to collaborate with VGC- a oriented company. It offers a Ground level, one-of-a-kind rooted team that assists their clients with their one-of-a-kind problems one step at a time.”",
+                  "author": "Gaurav Singh | Crebri Director",
+                  "avatar": "builder/01K5VNWF6FCZN9DM3EN26G4ZCR.webp",
+                  "rating": "4"
+                },
+                {
+                  "quote": "Engaging with VGC Advisor changed the course of my financial life. They took the time to learn about my short- and long-term objectives, presenting a road map to financial achievement. Their openness and experience make them a reliable partner in my financial planning.",
+                  "author": "Manish Kumar | Partner, Space Electrical",
+                  "avatar": null,
+                  "rating": "4"
+                }
+              ],
+              "left_text": "Built on Trust. Measured by Outcomes.",
+              "right_text": "Testimonials",
+              "right_subtext": "•\tReal stories from clients who’ve moved from chaos to clarity with VGC."
+            }
+          },
+          {
+            "type": "cta_section",
+            "data": {
+              "subtext": "From GST and direct tax to audits and VCFO, we set up disciplined processes and on-time filings that management can trust.",
+              "cta_link": "tel:+1234567891sssshhh",
+              "cta_text": "Talk to an Expert",
+              "top_heading": "Make finance your growth lever",
+              "main_heading": "Turn compliance into clarity—and clarity into action"
+            }
+          }
+        ],
+        "meta_title": "Homepage",
+        "meta_description": "Homepage DEscription",
+        "meta_keywords": "VGC Homepage",
+        "status": "Active",
+        "created_at": "2025-09-23T09:08:10.000000Z",
+        "updated_at": "2025-10-30T09:30:48.000000Z"
+      },
+      {
+        "id": 3,
+        "title": "About",
+        "slug": "about",
+        "type": "about",
+        "blocks": [
+          {
+            "type": "banner_slider_section",
+            "data": {
+              "banners": [
+                {
+                  "image": "builder/01K5VPEZ8T1QWD6J3WG51N5TES.webp",
+                  "title": "About Us",
+                  "statics": [],
+                  "cta_link": null,
+                  "cta_text": "cta",
+                  "subtitle": "Home / About Us"
+                }
+              ]
+            }
+          },
+          {
+            "type": "about_section",
+            "data": {
+              "heading": "About Us",
+              "description": null,
+              "right_image": "builder/01K5VPEZ8V98Y0Q1QDGV6BN1RF.webp",
+              "left_heading": "About VGC",
+              "left_description": "VGC Advisors is a CA-led financial consulting and accounting firm built on Trust. Satisfaction. Growth. Incorporated in 2017 in Noida, we grew out of the chartered accountancy practice Vipin Gupta & Co.—bringing that legacy of discipline into a broader, MSME-focused advisory. Today, from our Noida HQ with a Hapur branch, our cross-functional team (CAs, CS, lawyers, analysts) helps founders turn finance from a headache into a growth lever.\nWe partner with micro, small and medium enterprises to solve end-to-end finance: Registration Services, Taxation & Liability Compliance, Accounting & Bookkeeping, Complete Accounts & Finance, and F&A Mastry. Our approach is simple—understand your business, set up clean processes, communicate proactively, and deliver audit-ready filings and decision-ready MIS. The result: fewer surprises, faster decisions, and a stronger foundation to scale."
+            }
+          },
+          {
+            "type": "why_choose_us_section",
+            "data": {
+              "items": [
+                {
+                  "icon": "01K5VPEZ8WJWX6CJZCG7T0VC1M.webp",
+                  "title": "Powerhouse Expertise",
+                  "description": "A cross-functional team of CAs, CS, lawyers, and analysts combining technical mastery with real-world business insight—so advice works in practice, not just on paper."
+                },
+                {
+                  "icon": "01K5VPEZ8XZ1FMAQH21KMXN6D7.webp",
+                  "title": "Solutions Built for You",
+                  "description": "We learn your model, risks, and goals, then design tailored strategies across tax, GST, accounts, and finance that solve today’s issues and create tomorrow’s opportunities."
+                },
+                {
+                  "icon": "01K616FSNX9CFVAVFPSSDNG034.png",
+                  "title": "Everything Under One Roof",
+                  "description": "From registrations and filings to audits, MIS/VCFO, corporate finance, and RBI/FEMA, we deliver end-to-end execution—one partner, one process, zero last-minute stress."
+                },
+                {
+                  "icon": "01K5VPEZ8XZ1FMAQH21KMXN6D9.webp",
+                  "title": "Local Knowledge, Global Vision",
+                  "description": "Headquartered in Noida with a Hapur branch and clients across India/overseas, we navigate domestic rules and cross-border compliance seamlessly."
+                },
+                {
+                  "icon": null,
+                  "title": "On-Time, SLA-Driven Delivery",
+                  "description": "Clear calendars, checklists, and owner assignments for every engagement—so filings, reconciliations, and MIS close on schedule."
+                },
+                {
+                  "icon": null,
+                  "title": "Audit-Ready Documentation",
+                  "description": "Workpapers, reconciliations, and evidence folders organized the way auditors and bankers expect—reducing queries and closure time."
+                },
+                {
+                  "icon": null,
+                  "title": "Transparent, Founder-Friendly Pricing",
+                  "description": "No surprises. Scope, timelines, and inclusions are spelled out up front; plans to fit early-stage and growth-stage MSMEs."
+                },
+                {
+                  "icon": null,
+                  "title": "Secure & Confidential",
+                  "description": "Data security and access controls across files and tools; NDA on request; strict handling of sensitive financial information."
+                },
+                {
+                  "icon": null,
+                  "title": "Tech-Enabled Workflows",
+                  "description": "Comfortable with Tally, Zoho, QuickBooks, Excel, and bank connectors; 2B-to-books GST reconciliation and MIS automation baked into our process."
+                },
+                {
+                  "icon": null,
+                  "title": "Bank- & Board-Ready Reporting",
+                  "description": "Project reports, CMA data, QIRs, and MIS packs with ratios and variance commentary—built to win approvals and inform decisions."
+                }
+              ],
+              "heading": "Why Choose VGC Advisors",
+              "subtext": "CA-led, MSME-focused, and built on Trust. Satisfaction. Growth. Since 2017, we’ve turned complex tax & finance into clean compliance and decision-ready numbers—with disciplined processes, clear SLAs, and proactive communication."
+            }
+          },
+          {
+            "type": "what_we_believe_section",
+            "data": {
+              "left_image": null,
+              "right_title": "Insight + Discipline = Lasting Growth",
+              "right_cta_link": null,
+              "right_description": "At VGC Advisors, the best outcomes happen when your vision meets our CA-led rigor. We listen first, map risks and opportunities, and design practical processes—so every step is precise, compliant, and aligned to your goals.\nWe turn complexity into clarity with data-backed advice, clean documentation, and on-time execution. From reconciliations and GST filings to MIS and audits, our structured SLAs and proactive updates build a foundation you can scale on—confidently and sustainably."
+            }
+          },
+          {
+            "type": "team_section",
+            "data": {
+              "members": [
+                {
+                  "name": "Ankit Garg",
+                  "photo": "builder/01K5VPVSGSKXXRSTXAHC3RM2RY.webp",
+                  "description": "At VGC Advisors, the best results come from the perfect blend of your vision and our expertise. Your goals shape the journey; our strategic approach ensures every step is precise, compliant, and growth-focused. We combine deep financial insight with hands-on execution, transforming complex challenges into clear opportunities. Through disciplined saving, budgeting, compliance, and accounting, we help you build a strong foundation for lasting success — so your dreams aren’t just achieved, they’re sustained."
+                },
+                {
+                  "name": "Lav Sharma",
+                  "photo": "builder/01K5VPVSGTX7N8E7JHX2T7Q7RZ.webp",
+                  "description": "At VGC Advisors, the best results come from the perfect blend of your vision and our expertise. Your goals shape the journey; our strategic approach ensures every step is precise, compliant, and growth-focused. We combine deep financial insight with hands-on execution, transforming complex challenges into clear opportunities. Through disciplined saving, budgeting, compliance, and accounting, we help you build a strong foundation for lasting success — so your dreams aren’t just achieved, they’re sustained."
+                },
+                {
+                  "name": "Vivek Tiwari",
+                  "photo": "builder/01K5VPVSGVRPNA1TBG6E3MQSDH.webp",
+                  "description": "At VGC Advisors, the best results come from the perfect blend of your vision and our expertise. Your goals shape the journey; our strategic approach ensures every step is precise, compliant, and growth-focused. We combine deep financial insight with hands-on execution, transforming complex challenges into clear opportunities. Through disciplined saving, budgeting, compliance, and accounting, we help you build a strong foundation for lasting success — so your dreams aren’t just achieved, they’re sustained."
+                },
+                {
+                  "name": "Vipin Gupta",
+                  "photo": "builder/01K5VPVSGVRPNA1TBG6E3MQSDJ.webp",
+                  "description": "At VGC Advisors, the best results come from the perfect blend of your vision and our expertise. Your goals shape the journey; our strategic approach ensures every step is precise, compliant, and growth-focused. We combine deep financial insight with hands-on execution, transforming complex challenges into clear opportunities. Through disciplined saving, budgeting, compliance, and accounting, we help you build a strong foundation for lasting success — so your dreams aren’t just achieved, they’re sustained."
+                }
+              ]
+            }
+          },
+          {
+            "type": "global_presence_section",
+            "data": {
+              "left_title": "Global Presence",
+              "right_image": "builder/01K5VPVSGW34QAVY5ZHW2ZT3VA.webp",
+              "left_description": "From our base in Noida (India) with a footprint in Surrey (Canada), we help MSMEs operate confidently within India and across borders.\nWe handle the finance stack end-to-end—entity/branch setup, IEC/GEM/DPIIT registrations, GST & direct-tax compliance, disciplined bookkeeping, monthly MIS, and bank-ready reports—while our cross-border team manages FEMA/FDI approvals, ODI/LRS filings, 15CA/CB certifications, and documentation for fund movements.\nWhether you’re expanding to a new state or a new country, our SLA-driven processes, audit-ready workpapers, and founder-friendly coordination keep timelines predictable and compliance clean. Global insight, local execution."
+            }
+          }
+        ],
+        "meta_title": "About US",
+        "meta_description": "About US",
+        "meta_keywords": "About US VGC",
+        "status": "Active",
+        "created_at": "2025-09-23T16:28:15.000000Z",
+        "updated_at": "2025-10-30T08:32:33.000000Z"
+      },
+      {
+        "id": 4,
+        "title": "Services",
+        "slug": "services",
+        "type": "services",
+        "blocks": [
+          {
+            "type": "banner_slider_section",
+            "data": {
+              "banners": [
+                {
+                  "image": "builder/01K62BAETE5AZD9CDGD5FBY22T.webp",
+                  "title": "End-to-End Finance, Tax & Compliance for MSMEs",
+                  "statics": [
+                    {
+                      "text": null,
+                      "count_percent": null
+                    }
+                  ],
+                  "cta_link": null,
+                  "cta_text": null,
+                  "subtitle": "From company/LLP registrations, GST & Income-tax, RBI/FEMA and statutory filings to daily accounting, MIS, AP/AR and CFO-style reporting—VGC delivers CA-led, reliable outcomes that keep you compliant and growth-ready."
+                }
+              ]
+            }
+          },
+          {
+            "type": "personal_note_section",
+            "data": {
+              "title": "A Personal Note from Our Co-Founders",
+              "position": "Vipin Gupta, Co-Founder & Managing Partner",
+              "signature": "builder/01K62B6SDEV094DA4X2JG607W5.svg",
+              "description": "Growing VGC Advisors from a boutique CA practice into a full-stack finance partner has taught us something simple: MSMEs don’t just need filings — they need clarity, speed, and trust.\nWe built VGC on that promise: Trust. Satisfaction. Growth. From registrations and GST/Income-tax to disciplined bookkeeping, MIS/VCFO, and FEMA/FDI support, our work is designed to be on-time, audit-ready, and founder-friendly.\nOur role is to turn complexity into calm – with clear checklists, SLAs, and communication that keeps you in control. Whether you’re formalising a new entity or scaling across borders, we’ll be in your corner with practical advice, clean documentation, and decision-ready numbers."
+            }
+          },
+          {
+            "type": "services_section",
+            "data": {
+              "title": "A range of Services Provided by VGC",
+              "show_all": true,
+              "subtitle": null,
+              "service_ids": [],
+              "services": [
+                {
+                  "id": 1,
+                  "title": "Registration Services",
+                  "slug": "registration-services",
+                  "sub_heading": "\u003Cp\u003EEnd-to-end incorporation, statutory registrations and licenses.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe structure your entity, file documents correctly the first time, and obtain all the registrations your business needs to operate without friction.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EFrom new incorporations to sectoral licenses and conversions, our CA-led team manages name checks, documentation, e-sign/DSC, filings, approvals and post-incorporation tasks. You get a compliant start with zero follow-up hassle and a strong legal foundation.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EPrivate Limited Company (Pvt Ltd) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELimited Liability Partnership (LLP) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EOne Person Company (OPC) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPartnership Firm Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ESole Proprietorship Registration (via MSME/Udyam + GST)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ESection 8 Company (NGO) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProducer Company Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStartup India Registration (DPIIT)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Registration (Goods &amp; Services Tax)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPAN &amp; TAN Application\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProfessional Tax Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EImport Export Code (IEC) Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EESI Registration (Employee State Insurance)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPF Registration (Provident Fund)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Return Filing Setup\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Return (ITR) Filing Setup\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EDigital Signature Certificate (DSC)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EMSME / Udyam Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFSSAI License (for food businesses)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EShop &amp; Establishment Act License\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELabour License / Contract Labour Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGEM Portal Registration (for government tenders)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EISO Certification Support (via tie-ups)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrade License (Municipal level)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ERERA Registration (for builders/agents)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ENiti Aayog NGO Darpan Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrust, Society or NGO Registration\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003E80G &amp; 12A Registration (for tax exemption for NGOs)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETrademark Registration (often in collaboration with legal professionals)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EForeign Company/Branch Office Setup (FEMA, RBI Approvals)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStartup Funding Documentation &amp; Compliance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECMA Data &amp; Project Report Preparation for Loans\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EDIR-3 KYC &amp; DIN Compliance\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:12:48.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": "oklm,",
+                  "meta_keywords": null
+                },
+                {
+                  "id": 3,
+                  "title": "Taxation and Liability Compliance Services",
+                  "slug": "Taxation and Liability Compliance Services",
+                  "sub_heading": "\u003Cp\u003EComplete direct &amp; indirect tax compliance with notices and litigation support.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe plan, compute, file and defend—across Income-tax, TDS, GST, PF/ESI and corporate filings.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EOur tax engine combines process discipline with expert review to deliver timely computations, reconciliations and statutory submissions with documented trails. From e-way bills and ITC to scrutiny and refunds, we manage end-to-end so you stay compliant and confident.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Return (ITR) Filing – for individuals, businesses, and companies\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETax Audit under Section 44AB\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAdvance Tax Computation &amp; Payment\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS (Tax Deducted at Source) Compliance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Deduction &amp; Deposit\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Return Filing (Form 24Q, 26Q, etc.)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETDS Certificates (Form 16, Form 16A)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EForm 15CA/15CB Certification – for foreign remittances\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EIncome Tax Notices &amp; Scrutiny Handling\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EInput Tax Credit (ITC) Reconciliation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Audit &amp; Certification\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EE-way Bill Generation &amp; Support\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Refund Filing\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGST Notice Reply &amp; Litigation Handling\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAnnual ROC Filing (AOC-4, MGT-7, etc.)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELLP Annual Return (Form 8 &amp; 11)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProvident Fund (PF) Registration, Return Filing &amp; Payment\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003ELegal &amp; Regulatory Compliance Reviews\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:13:52.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 4,
+                  "title": "Accounting and Bookkeeping",
+                  "slug": "Accounting and Bookkeeping",
+                  "sub_heading": "\u003Cp\u003EReliable transaction capture to investor-grade financial statements.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe maintain day-to-day books, reconcile banks and ledgers, close months on time, and prepare financials your auditors and lenders will love.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EOur bookkeeping framework standardises your chart of accounts, documentation and cut-offs. We reconcile cash/bank/suspense, track ledgers precisely and prepare financial statements aligned with statutory and management needs—so MIS, audits and decisions become faster and simpler.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003ETransactional Bookkeeping\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EBank &amp; Cash Reconciliation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELedger Maintenance\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFinancial Statements Preparation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EYear-End Closing &amp; Auditor Assistance\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Cp\u003EPayroll Accounting\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:14:58.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 5,
+                  "title": "Complete accounts and Finance",
+                  "slug": "Complete accounts and Finance",
+                  "sub_heading": "\u003Cp\u003EProcess-driven finance operations across accounting, compliance and AR/AP.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe stitch accounting, compliance, payables and receivables into one controlled workflow with tools, SLAs and dashboards.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EWe design your finance operating model—workflows, maker-checker, document trails, automation and periodic controls—covering accounting, compliance, AP/AR and banking. The result is speed with reliability: faster closes, fewer follow-ups, and better vendor/customer experience.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EProcess Accounting Automation\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECompliances + Accounting &amp; Booking\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EAccount Payable &amp; Receivable + Compliance\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "featured_image": "builder/01K5VQGE8RNKKCKWSEMMXA9D9D.webp",
+                  "status": "Active",
+                  "created_at": "2025-09-23T01:13:36.000000Z",
+                  "updated_at": "2025-10-30T09:15:44.000000Z",
+                  "mobile_featured_image": "builder/01K5VQGE8TWPZ57X7TDD5XGW3Q.webp",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 6,
+                  "title": "F&A Mastry",
+                  "slug": "fa-mastry",
+                  "sub_heading": "\u003Cp\u003EInsightful analysis, robust compliance, and stronger internal capability.\u003C/p\u003E",
+                  "short_description": "\u003Cp\u003EWe turn data into dashboards and management views, tighten compliances, and build team/process capability to scale.\u003C/p\u003E",
+                  "long_description": "\u003Ch2 style=\"text-align: center;\"\u003E\u003Cstrong\u003E\u003Cu\u003EOur Key Offerings\u003C/u\u003E\u003C/strong\u003E\u003C/h2\u003E\u003Ch3\u003EBeyond bookkeeping and filings, we focus on what helps founders steer: timely MIS, variance analysis, trend views, and cash/working-capital visibility—backed by compliance hygiene and capability building. We help your team adopt best-practice rhythms so performance compounds month after month.\u003C/h3\u003E\u003Cp\u003E\u003Cstrong\u003EServices\u003C/strong\u003E\u003C/p\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EAnalysis and Reporting\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ECompliances\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProcess and Team Capability\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "featured_image": "builder/01K7PJNPD81801DZZ0MRFDN4XS.jpeg",
+                  "status": "Active",
+                  "created_at": "2025-10-14T08:24:08.000000Z",
+                  "updated_at": "2025-10-30T09:16:26.000000Z",
+                  "mobile_featured_image": "builder/01K7GX3MX3JEZTBSCJGTMDYAR8.png",
+                  "meta_title": "vb",
+                  "meta_description": "jgfh",
+                  "meta_keywords": "gcgh"
+                }
+              ]
+            }
+          }
+        ],
+        "meta_title": null,
+        "meta_description": null,
+        "meta_keywords": null,
+        "status": "Active",
+        "created_at": "2025-09-26T06:26:13.000000Z",
+        "updated_at": "2025-10-30T09:10:12.000000Z"
+      },
+      {
+        "id": 5,
+        "title": "Blog",
+        "slug": "blog",
+        "type": "blog",
+        "blocks": [
+          {
+            "type": "banner_slider_section",
+            "data": {
+              "banners": [
+                {
+                  "image": "builder/01K62BFC19VHA2Q3928S8GA7WQ.webp",
+                  "title": "Our Blogfjdjfdjfjdnjdcndjaishri",
+                  "statics": [
+                    {
+                      "text": null,
+                      "count_percent": null
+                    }
+                  ],
+                  "cta_link": null,
+                  "cta_text": null,
+                  "subtitle": "Home / Blogjnfdjnd"
+                }
+              ]
+            }
+          },
+          {
+            "type": "blog_section",
+            "data": {
+              "title": null,
+              "blog_ids": [],
+              "subtitle": null,
+              "show_latest": true,
+              "blogs": [
+                {
+                  "id": 5,
+                  "title": "Why are CFO Services Important?",
+                  "slug": "why-are-cfo-services-important",
+                  "short_description": "\u003Cp\u003ECFO refers to the Chief Financial Officer, a senior executive who is holistically responsible for the management of the financial undertakings of the company.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003EOften, companies commit small blunders in their pursuit of wanting to handle everything, starting from planning to taking over the finance part. This blunder can vanish if the mastermind of the company considers CFO Services and if, in case, you want your hands on the best services that are away from your reach. Then worry not! A virtual CFO is there for your rescue. Now, when it comes to virtual CFO, you might think it is less effective than offline CFO Services; however, contrary to that belief. Whether virtual or remote, CFO Services will always remain CFO Services.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EWho is a CFO?\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ECFO refers to the Chief Financial Officer, a senior executive who is holistically responsible for the management of the financial undertakings of the company. He/She is a topmost executive and is the financial controller, who takes it into his hands to solve everything relating to cash flow, financial planning, and taxation issues. Often considered to have the highest financial position and the third-highest position in the company, the CFO is vital in deciding the company&#039;s strategic initiatives.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EAre the CEO and CFO similar?\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ENo, the CEO and CFO are not similar, as CFOs are expected to work diligently with a company&#039;s other senior executives, including the CEO. Executives belonging to the CFO are referred to as the C-Suite of the company and represent themselves as the highest decision maker, thus marking all the boxes of other executives in the company. Although, the CFO is typically in a subordinate position to that of the CEO in the hierarchical structure of the corporate world. CFOs generally are the most efficient in terms of decision-making within the department, considering financial interactions in a particular firm.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EResponsibilities of a CFO\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003EControllership duties\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EControllership duties hold the CFO responsible for presenting and reporting accurate and timely financial information based on the historical shreds of evidence presented by the company. All stakeholders in the company, including shareholders, analysts, creditors, employees, future investors, and other members of the management, depend on the accuracy and timeliness of this information. The information reported by the CFO must be confidently deemed to be accurate, as many decisions are based on it.\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003ETreasury Duties\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EThe CFO is also responsible for the company&#039;s current financial condition; therefore, they must come to terms with how to invest the company&#039;s money, further taking into consideration the risk and liquidity associated with the company. Plus, the CFO oversees the company&#039;s capital structure, allowing them to determine the best mix of debt, equity, and internal financing. Resorting to address the issues surrounding the company&#039;s capital structure is one of the most important duties of a CFO and is considered vital.\u003C/p\u003E\u003Cp\u003E➔    \u003Cstrong\u003EEconomic forecasting\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EA CFO is responsible for a company&#039;s past ventures and its present financial situation, as they are regarded to be a key player in a company&#039;s future growth and its increased potential to achieve that. The officer must be able to identify and report what areas of a company are considered the most efficient and how the company can capitalise on this information.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EAdvantages of a CFO Services\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003EIncrease in Efficiency\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EGetting a CFO ticks all the boxes you require to focus on the success of your organisation as they help you make better decisions, optimise processes, and save money. Enrolling a CFO will allow them to look at every aspect of the business, not leaving behind any nook and corner. Through this, CFOs enable you to see where things could be streamlined to help reduce costs or maximise profits, thus making your company grow efficiently and make your business more efficient.\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003EBusiness Growth\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003EThe role of a CFO is primarily to help you achieve your goals in the market, especially if you are one of those companies who trust their CFO with their eyes closed. Then congratulations! You are already on the right path of advancement, and this is your call to continue doing so. CFOs have all the ideas about your goals and how you wish to achieve them. This enables them to assess your growth starting from where you started and helps you pave the paths of success by guiding you towards strategies that allow you to scale, thus preventing the scope of unsustainable growth.\u003C/p\u003E\u003Cp\u003E●      \u003Cstrong\u003ETax Compliance\u003C/strong\u003E\u003C/p\u003E\u003Cp\u003ECompanies are expected to deal with large-scale tax regulations. As much as complying with them is necessary, the need to adhere to the rules and regulations is also important, lest a disruption occur due to the regular audits that take place under Government Audits. However, if a CFO is enrolled in your company, then fear not! The CFO ensures the task of properly making your firm understand the tax obligations and helps you maintain the same.\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003E \u003C/strong\u003E\u003C/p\u003E\u003Cp\u003E\u003Cstrong\u003EFAQ’s (Frequently Asked Questions)\u003C/strong\u003E\u003C/p\u003E\u003Col start=\"1\"\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003EDecision-making is easy as I have a responsible team to give forward the best measures effectively. Why add up additional expenses by opening up space for a CFO?\u003C/strong\u003E\u003C/p\u003E\u003C/li\u003E\u003C/ol\u003E\u003Cp\u003EWe do not doubt your decision-making skills as we hold you highly concerned for single handedly bringing your company to such a large scale all these years. However, greater workloads require specially qualified people to look into it particularly because they will act as your helpful hand and provide the best measures to upgrade your company.\u003C/p\u003E\u003Cp\u003E\u003C/p\u003E\u003Col start=\"2\"\u003E\u003Cli\u003E\u003Cp\u003E\u003Cstrong\u003EWhat if a CFO makes a mistake in the financial report?\u003C/strong\u003E\u003C/p\u003E\u003C/li\u003E\u003C/ol\u003E\u003Cp\u003EIt is nearly impossible for a CFO to make calculation mistakes as they are well-known for their reputation as the company&#039;s C-suite, despite being subordinate to the CEOs. Still, if your CFO fails to make an accurate report of your company&#039;s financial accounting, consider checking your data or help your CFO as well. Humans are prone to mistakes, and our nature of dealing with them is the main answer.\u003C/p\u003E",
+                  "featured_image": "builder/01K8D54PX5JY2ZM630Q6E5R6PV.png",
+                  "cover_image": "builder/01K8D54PXC2DA9MAS8F000ABHC.png",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-10-25T07:43:16.000000Z",
+                  "updated_at": "2025-10-28T10:55:57.000000Z",
+                  "meta_title": "Why are CFO Services Important?",
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 4,
+                  "title": "The Importance of Diversification in Inve",
+                  "slug": "the-importance-of-diversification-in-inve",
+                  "short_description": "\u003Cp\u003EVenenatis aliquet odio orci viverra quisque ultricies nec. Mollis dolor diam vitae est varius magna.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003ERunning a business is challenging enough without getting tangled in tax errors. Yet, for many MSMEs, tax-related mistakes can lead to penalties, missed savings, and unnecessary stress. Here are the five most common mistakes we see — and how you can steer clear of them.vgsvgdvsgvdgj\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E1. Missing Filing Deadlines\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003ELate filings don&#039;t just result in fines; they can also damage your compliance record. Set reminders well in advance and work with a tax advisor to ensure timely submissions.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E2. Poor Record-Keeping\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncomplete or disorganized records make tax preparation harder and increase the risk of errors. Adopt a consistent system for storing invoices, receipts, and financial statements.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E3. Overlooking Eligible Deductions\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EMany MSMEs fail to claim deductions for expenses like office rent, utilities, and professional services. A knowledgeable accountant can identify these opportunities and reduce your taxable income.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E4. Misclassifying Income or Expenses\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncorrect categorization can trigger audits. Always f\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQ4RTRNQ4VX4RHAFD5B72M.webp",
+                  "cover_image": "builder/01K5VQ4RTS3Q0PB3H5X9TSP5Y3.webp",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-09-23T16:40:09.000000Z",
+                  "updated_at": "2025-09-27T08:10:24.000000Z",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                },
+                {
+                  "id": 3,
+                  "title": "The Importance of Diversification in Invest",
+                  "slug": "the-importance-of-diversification-in-invest",
+                  "short_description": "\u003Cp\u003EVenenatis aliquet odio orci viverra quisque ultricies nec. Mollis dolor diam vitae est varius magna.\u003C/p\u003E",
+                  "long_description": "\u003Cp\u003ERunning a business is challenging enough without getting tangled in tax errors. Yet, for many MSMEs, tax-related mistakes can lead to penalties, missed savings, and unnecessary stress. Here are the five most common mistakes we see — and how you can steer clear of them.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E1. Missing Filing Deadlines\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003ELate filings don&#039;t just result in fines; they can also damage your compliance record. Set reminders well in advance and work with a tax advisor to ensure timely submissions.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E2. Poor Record-Keeping\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncomplete or disorganized records make tax preparation harder and increase the risk of errors. Adopt a consistent system for storing invoices, receipts, and financial statements.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E3. Overlooking Eligible Deductions\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EMany MSMEs fail to claim deductions for expenses like office rent, utilities, and professional services. A knowledgeable accountant can identify these opportunities and reduce your taxable income.\u003C/p\u003E\u003Ch6\u003E\u003Cstrong\u003E4. Misclassifying Income or Expenses\u003C/strong\u003E\u003C/h6\u003E\u003Cp\u003EIncorrect categorization can trigger audits. Always f\u003C/p\u003E",
+                  "featured_image": "builder/01K5VQ396RDQAGW24Y6CNYN9GP.webp",
+                  "cover_image": "builder/01K5VQ396SWJKF895KKB996A43.webp",
+                  "user_id": 1,
+                  "status": "Active",
+                  "created_at": "2025-09-23T16:39:20.000000Z",
+                  "updated_at": "2025-09-23T16:39:20.000000Z",
+                  "meta_title": null,
+                  "meta_description": null,
+                  "meta_keywords": null
+                }
+              ]
+            }
+          }
+        ],
+        "meta_title": null,
+        "meta_description": null,
+        "meta_keywords": null,
+        "status": "Active",
+        "created_at": "2025-09-26T06:30:54.000000Z",
+        "updated_at": "2025-09-27T20:09:39.000000Z"
+      },
+      {
+        "id": 6,
+        "title": "Career",
+        "slug": "career",
+        "type": "career",
+        "blocks": [
+          {
+            "type": "career_header",
+            "data": {
+              "left_title": "Build a Career in Strategic Finance — With Impact",
+              "left_description": "Join VGC Advisors to help MSMEs and growing companies gain financial clarity, compliance, and momentum. Work with a CA-led team, solve real business problems, and grow your craft across registrations, tax, accounts, and CFO-style MIS. If you’re driven by ownership, speed, and measurable outcomes, you’ll thrive here.",
+              "right_image_main": "builder/01K62CHAJV1ZK23AK55T99JZHS.webp",
+              "right_image_main_mobile": "builder/01K62CHAJWZ9N2JS2QHF0J2093.webp"
+            }
+          },
+          {
+            "type": "career_section",
+            "data": {
+              "jobs_ids": [],
+              "main_text": "Ready to make an impact?",
+              "left_section": [
+                {
+                  "title": "Why Work With Us",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EAt VGC Advisors Private Limited, we believe in the Win–Win–Win strategy:\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EClient Satisfaction above all else.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETeam Empowerment for collective growth.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EOwner&#039;s Success as our shared goal.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "What we offer:",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EImpact-Driven Work: Help MSMEs achieve sustainable, profitable growth.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStrong Mentorship: Learn directly from Chartered Accountants, Business Analysts, and corporate finance experts.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProfessional Growth Path: From Junior to Senior roles, Partner, and HOD.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EContinuous Learning: Industry-leading training and exposure to complex finance, tax, and compliance projects.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "Our Culture & Values",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EYou will thrive here if you:\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETake ownership and show high accountability.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ELove solving problems and improving processes.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EValue accuracy, compliance, and timely delivery.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "This may not be for you if you:",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EAvoid client interaction.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStruggle with deadlines or long hours.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EDislike financial operations or managing people.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "Non-Negotiables:",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003E100% Office Presence (No Remote).\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003E6-Day Work Week.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003E9–10 hour workdays (flexible based on workload).\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "Life at VGG",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EWe are a fast-growing consulting firm that thrives on collaboration, innovation, and results. Our work environment is:\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ESupportive &amp; Collaborative: Open communication with management.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGrowth-Oriented: Opportunities for skill upgrades, leadership roles, and ESOP-based wealth creation.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EEngaging: Training sessions, team tours, celebrations, and professional networking.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                }
+              ],
+              "right_section": [
+                {
+                  "title": "Our Hiring Process",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EApplication Review &amp; Resume Screening\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EBasic Aptitude Test\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETechnical Test (Finance &amp; Compliance)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003ETask Round (Role-Specific Case)\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPersonal Interview\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EOffer &amp; Documentation\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                },
+                {
+                  "title": "Benefits & Perks",
+                  "description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003ECompetitive salaries &amp; bonuses.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EESOP opportunities for wealth creation.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EProfessional coaching &amp; industry exposure.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EStructured training resources.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EWork directly with decision-makers.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EGood comm\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E"
+                }
+              ],
+              "left_button_url": "#",
+              "left_button_text": "Apply Now",
+              "right_button_url": "#",
+              "show_jobs_latest": true,
+              "right_button_text": "Upload Resume",
+              "jobs": [
+                {
+                  "id": 2,
+                  "title": "2.developer",
+                  "slug": "2.developer",
+                  "short_description": "\u003Cp\u003Efrontend developer needed\u003C/p\u003E",
+                  "roles": "Manage end-to-end accounting operations & annual audits. Full ownership of tax & compliance processes. Prepare and develop MIS reports for management.",
+                  "long_description": "\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EManage end-to-end accounting operations &amp; annual audits.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFull ownership of tax &amp; compliance processes.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPrepare and develop MIS reports for management.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "status": "Active",
+                  "created_at": "2025-10-14T10:41:46.000000Z",
+                  "updated_at": "2025-10-16T12:01:31.000000Z",
+                  "job_description_doc": "builder/01K7KSNSJH867R8M5QE9HBMT2H.pdf"
+                },
+                {
+                  "id": 1,
+                  "title": "1. Senior Accountant",
+                  "slug": "1-senior-accountant",
+                  "short_description": "\u003Cp\u003E\u003C/p\u003E",
+                  "roles": "Senior Accountant",
+                  "long_description": "\u003Ch5\u003EResponsibilities:\u003C/h5\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EManage end-to-end accounting operations &amp; annual audits.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EFull ownership of tax &amp; compliance processes.\u003C/p\u003E\u003C/li\u003E\u003Cli\u003E\u003Cp\u003EPrepare and develop MIS reports for management.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E\u003Ch5\u003EIdeal For:\u003C/h5\u003E\u003Cul\u003E\u003Cli\u003E\u003Cp\u003EProfessionals comfortable with finance operations, client calls, and team management.\u003C/p\u003E\u003C/li\u003E\u003C/ul\u003E",
+                  "status": "Inactive",
+                  "created_at": "2025-09-26T06:49:13.000000Z",
+                  "updated_at": "2025-11-13T08:18:22.000000Z",
+                  "job_description_doc": "builder/01K7H5EVBBZ9X8GH7FC22XGCX0.pdf"
+                }
+              ]
+            }
+          }
+        ],
+        "meta_title": null,
+        "meta_description": null,
+        "meta_keywords": null,
+        "status": "Active",
+        "created_at": "2025-09-26T06:36:38.000000Z",
+        "updated_at": "2025-10-30T09:17:00.000000Z"
+      },
+      {
+        "id": 7,
+        "title": "Contact",
+        "slug": "contact",
+        "type": "contact",
+        "blocks": [
+          {
+            "type": "address_section",
+            "data": {
+              "addresses": [
+                {
+                  "email": "info@vgcadvisors.com",
+                  "phone": "+91 93549 88846",
+                  "map_url": null,
+                  "whatsapp": "+91 93549 88846",
+                  "full_address": "Address: 810, 8th Floor, Wave Silver Tower, Sector 18, Noida, UP — 201301",
+                  "short_address": "Mathura Bhuteshwar"
+                },
+                {
+                  "email": "info@vgcadvisors.com",
+                  "phone": "+91 93549 88846",
+                  "map_url": null,
+                  "whatsapp": "+91 93549 88846",
+                  "full_address": "Address: 810, 8th Floor, Wave Silver Tower, Sector 18, Noida, UP — 201301",
+                  "short_address": "Tower, Sector 18, Noida, UP"
+                },
+                {
+                  "email": "rr@gmail.com",
+                  "phone": "+91 93549 88846",
+                  "map_url": null,
+                  "whatsapp": "+91 93549 88846",
+                  "full_address": "bhuteshwar ",
+                  "short_address": "Tower, Sector 18, Noida, UP"
+                }
+              ],
+              "map_image": "builder/01K62CSXM4AC83QY6H8ZK8CHNF.webp"
+            }
+          }
+        ],
+        "meta_title": null,
+        "meta_description": null,
+        "meta_keywords": null,
+        "status": "Active",
+        "created_at": "2025-09-26T06:54:09.000000Z",
+        "updated_at": "2025-09-27T20:01:36.000000Z"
+      }
+    ]
+  }

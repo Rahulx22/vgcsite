@@ -1,98 +1,87 @@
 import InnerBanner from "../components/InnerBanner";
 import BlogCard from "../components/BlogCard";
-import { API_URL, fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
-import type { Metadata } from "next";
+import { fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
 
+import Head from "next/head";
+
+// ==========================
+// Dynamic Settings
+// ==========================
 export const dynamic = "force-dynamic";
-export const revalidate = 300; // Revalidate every 5 minutes
+export const revalidate = 300;
 
-// Add dynamic metadata
-export const metadata: Metadata = {
-  title: "Blog | VGC Consulting",
-  description: "Stay updated with the latest insights on business, tax, and compliance solutions from VGC Consulting experts.",
-  keywords: "business blog, tax insights, compliance updates, financial advice, industry news",
-};
+// ==========================
+// Pagination Settings
+// ==========================
+const PER_PAGE = 3; // ✅ Show only 3 blogs per page
 
-type ApiResponse = {
-  success: boolean;
-  data: ApiPage[];
-};
+// ==========================
+// Fetch Blogs API
+// ==========================
+async function getBlogs() {
+  try {
+    const res = await fetchWithTimeout(
+      "https://vgc.psofttechnologies.in/api/v1/blogs",
+      {
+        cache: "force-cache",
+        next: { revalidate: 300 },
+      }
+    );
 
-type ApiPage = {
-  id: number;
-  slug: string;
-  type: string; 
-  blocks: Array<{
-    type: string; 
-    data: any;
-  }>;
-  meta_title?: string | null;
-  meta_description?: string | null;
-  meta_keywords?: string | null;
-};
+    if (!res.ok) return [];
 
-function formatDate(iso?: string) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  return d.toLocaleDateString("en-GB", {
+    const json = await res.json();
+    return json?.data ?? [];
+  } catch {
+    return [];
+  }
+}
+
+// ==========================
+// Helper
+// ==========================
+function formatDate(dateStr?: string) {
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
   });
 }
 
-async function getBlogPage(): Promise<ApiPage | null> {
-  try {
-    const res = await fetchWithTimeout(API_URL, { 
-      cache: "force-cache",
-      next: { revalidate: 300 } // Cache for 5 minutes (300 seconds)
-    });
-    if (!res.ok) {
-      console.error(`Blog API returned status ${res.status}`);
-      return null;
-    }
-    const json: ApiResponse = await res.json();
-    const pages = json?.data ?? [];
-    return pages.find((p) => p.type === "blog") ?? null;
-  } catch (error) {
-    console.error('Error fetching blog page:', error);
-    return null;
-  }
-}
+// ==========================
+// PAGE COMPONENT
+// ==========================
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams?: { page?: string };
+}) {
+  const page = Number(searchParams?.page || 1);
 
-export default async function BlogPage() {
-  const page = await getBlogPage();
+  const blogsData = await getBlogs();
 
-  // Fallbacks if something goes wrong
-  const bannerBlock = page?.blocks.find((b) => b.type === "banner_slider_section");
-  const blogBlock = page?.blocks.find((b) => b.type === "blog_section");
+  // Filter & prepare blogs
+  const allBlogs = blogsData
+    .filter(
+      (b) =>
+        !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim())
+    )
+    .map((b) => ({
+      id: b.id,
+      title: b.title,
+      excerpt: stripHtml(b.short_description),
+      image: ensureUrl(b.featured_image || b.cover_image),
+      date: formatDate(b.created_at),
+      slug: b.slug,
+    }));
 
-  const banner = Array.isArray(bannerBlock?.data?.banners) && bannerBlock!.data.banners.length
-    ? bannerBlock!.data.banners[0]
-    : null;
+  // Pagination Logic
+  const totalBlogs = allBlogs.length;
+  const totalPages = Math.ceil(totalBlogs / PER_PAGE);
+  const start = (page - 1) * PER_PAGE;
+  const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
-  const blogs: Array<{
-    id: string | number;
-    title: string;
-    excerpt: string;
-    image: string;
-    date: string;
-    slug: string;
-  }> = Array.isArray(blogBlock?.data?.blogs)
-    ? blogBlock!.data.blogs
-        .filter((b: any) => !b.status || b.status === 'active' || b.status === 'Active' || b.status === 'ACTIVE')
-        .map((b: any) => ({
-          id: b.id,
-          title: b.title,
-          excerpt: stripHtml(b.short_description),
-          image: ensureUrl(b.featured_image || b.cover_image),
-          date: formatDate(b.created_at),
-          slug: b.slug,
-        }))
-    : [];
-
-  const pageTitle = blogBlock?.data?.title || banner?.title || "Our Blog";
-  const bannerImg = ensureUrl(banner?.image);
   const breadcrumb = [
     { label: "Home", href: "/" },
     { label: "Blog", href: "/blog" },
@@ -100,18 +89,30 @@ export default async function BlogPage() {
 
   return (
     <>
+
+
+    <Head><link rel="canonical" href="https://vgcadvisors.com/contact-us" />
+    <meta name="robots" content="index, follow"></meta>
+    </Head>
+
+
+
+
       <InnerBanner
-        title={pageTitle}
+        title="Our Blog"
         breadcrumb={breadcrumb}
-        image={bannerImg}
+        image="/default-banner.jpg"
         alt="Blog banner"
       />
 
       <div className="blog-sec dd">
-        <h2 data-aos="fade-up" data-aos-duration="1200">{pageTitle}</h2>
+        <h2 data-aos="fade-up" data-aos-duration="1200">
+          Our Blog
+        </h2>
+
         <div className="container">
           <div className="row">
-            {blogs.map((blog) => (
+            {paginatedBlogs.map((blog) => (
               <BlogCard
                 key={blog.id}
                 id={String(blog.id)}
@@ -123,11 +124,45 @@ export default async function BlogPage() {
               />
             ))}
 
-            {/* Optional: graceful empty state */}
-            {blogs.length === 0 && (
+            {paginatedBlogs.length === 0 && (
               <div className="col-12">
-                <p>No blog posts available right now.</p>
+                <p>No blog posts available.</p>
               </div>
+            )}
+          </div>
+
+          {/* ======================
+                PAGINATION UI
+              ====================== */}
+          <div className="pagination mt-5 d-flex justify-content-center gap-2">
+            {/* Prev Button */}
+            {page > 1 && (
+              <a href={`?page=${page - 1}`} className="btn btn-outline-primary">
+                Prev
+              </a>
+            )}
+
+            {/* Page Numbers */}
+            {Array.from({ length: totalPages }).map((_, i) => {
+              const pageNumber = i + 1;
+              return (
+                <a
+                  key={i}
+                  href={`?page=${pageNumber}`}
+                  className={`btn ${
+                    pageNumber === page ? "btn-primary" : "btn-outline-primary"
+                  }`}
+                >
+                  {pageNumber}
+                </a>
+              );
+            })}
+
+            {/* Next Button */}
+            {page < totalPages && (
+              <a href={`?page=${page + 1}`} className="btn btn-outline-primary">
+                Next
+              </a>
             )}
           </div>
         </div>

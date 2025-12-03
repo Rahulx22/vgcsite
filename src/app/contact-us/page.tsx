@@ -7,6 +7,7 @@ import { API_URL, fetchWithTimeout, ensureUrl } from "../../lib/api";
 import type { ContactApiResponse, ContactAddressBlock, ContactAddress } from "../../types/pages";
 import type { Metadata } from "next";
 
+import Head from "next/head";
 // Add static metadata
 // Note: Metadata cannot be exported from client components
 // Move to a separate metadata file or remove "use client" directive if metadata is needed
@@ -91,6 +92,8 @@ export default function ContactUsPage() {
 
   return (
     <>
+    <Head><link rel="canonical" href="https://vgcadvisors.com/contact-us" />
+    <meta name="robots" content="index, follow"></meta></Head>
       <div className="contact-sec">
         <div className="container-fluid">
           <div className="row">

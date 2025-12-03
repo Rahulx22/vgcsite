@@ -18,6 +18,9 @@ interface ServicesProps {
 }
 
 export default function Services({ services, offerings }: ServicesProps) {
+
+
+
   return (
     <div className="service-sec">
       <div className="container">
@@ -54,32 +57,38 @@ export default function Services({ services, offerings }: ServicesProps) {
               Our Services
             </h2>
             <div className="row">
-              {services.map((s) => (
-                <div key={s.title} className="col-lg-6 col-md-6">
-                  <div
-                    className="serv-box"
-                    data-aos="zoom-in"
-                    data-aos-duration="1200"
-                  >
-                    <strong>
-                      <Image
-                        src="/images/check.svg"
-                        alt="check"
-                        width={20}
-                        height={20}
-                        loading="eager"
-                        quality={90}
-                      />
-                    </strong>
-                    <h3>{s.title}</h3>
-                    <p>{s.desc}</p>
+              {services.map((s, index) => {
+                if (index>= 4) return null; // skip all others
 
-                    <Link href={s.link} className="learn-link">
-                      Learn More
-                    </Link>
+                return (
+                  <div key={s.title} className="col-lg-6 col-md-6">
+                    <div
+                      className="serv-box"
+                      data-aos="zoom-in"
+                      data-aos-duration="1200"
+                    >
+                      <strong>
+                        <Image
+                          src="/images/check.svg"
+                          alt="check"
+                          width={20}
+                          height={20}
+                          loading="eager"
+                          quality={90}
+                        />
+                        {index}
+                      </strong>
+                      <h3>{s.title}</h3>
+                      <p>{s.desc}</p>
+
+                      <Link href={s.link} className="learn-link">
+                        Learn More
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
+
             </div>
 
             {/* See All Services */}

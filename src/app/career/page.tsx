@@ -5,6 +5,7 @@ import Image from "next/image";
 import { API_URL, fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
 import type { CareerApiResponse, CareerHeaderBlock, CareerSectionBlock, CareerSection, CareerJob } from "../../types/pages";
 import type { Metadata } from "next";
+import Head from "next/head"; 
 
 // Add static metadata
 // Note: Metadata cannot be exported from client components
@@ -457,7 +458,10 @@ export default function CareerPage() {
   });
 
   return (
-    <>     
+    <>    
+    <Head>  <link rel="canonical" href="https://vgcadvisors.com/career" />
+    <meta name="robots" content="index, follow"></meta></Head>
+
       <div className="business-banner dd">
         <div className="container-fluid">
           <div className="row">
