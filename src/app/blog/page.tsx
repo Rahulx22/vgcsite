@@ -1,33 +1,59 @@
 import InnerBanner from "../components/InnerBanner";
 import BlogCard from "../components/BlogCard";
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
-
+import Link from "next/link";
 import Head from "next/head";
 
-// ==========================
+// =============================
 // Dynamic Settings
-// ==========================
+// =============================
 export const dynamic = "force-dynamic";
 export const revalidate = 300;
 
-// ==========================
-// Pagination Settings
-// ==========================
-const PER_PAGE = 3; // ✅ Show only 3 blogs per page
+const PER_PAGE = 3;
 
-// ==========================
-// Fetch Blogs API
-// ==========================
+// =============================
+// Fetch Page SEO + Banner from API
+// =============================
+async function getPageSEO() {
+  try {
+    const res = await fetchWithTimeout(
+      "https://vgc.psofttechnologies.in/api/v1/pages",
+      { cache: "force-cache", next: { revalidate: 300 } }
+    );
+
+    if (!res.ok) return null;
+
+    const json = await res.json();
+    console.log("Fetched Pages Data:", json);
+    const page = json?.data?.find((p) => p?.slug === "blog");
+
+
+    // console.log("Fetched Page SEO Data:", page);
+    if (!page) return null;
+    
+
+    return {
+      title: page.meta_title || "Our Blog",
+      description: page.meta_description || "",
+      keywords: page.meta_keywords || "",
+      banner: ensureUrl(page.banner_image),
+      alt: page.banner_alt || "Blog Banner",
+    };
+  } catch {
+    return null;
+  }
+}
+
+// =============================
+// Fetch Blogs
+// =============================
 async function getBlogs() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/blogs",
-      {
-        cache: "force-cache",
-        next: { revalidate: 300 },
-      }
+      { cache: "force-cache", next: { revalidate: 300 } }
     );
-
     if (!res.ok) return [];
 
     const json = await res.json();
@@ -37,10 +63,10 @@ async function getBlogs() {
   }
 }
 
-// ==========================
-// Helper
-// ==========================
-function formatDate(dateStr?: string) {
+// =============================
+// Format Date
+// =============================
+function formatDate(dateStr) {
   if (!dateStr) return "";
   return new Date(dateStr).toLocaleDateString("en-GB", {
     day: "2-digit",
@@ -49,24 +75,17 @@ function formatDate(dateStr?: string) {
   });
 }
 
-// ==========================
+// =============================
 // PAGE COMPONENT
-// ==========================
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams?: { page?: string };
-}) {
+// =============================
+export default async function BlogPage({ searchParams }) {
   const page = Number(searchParams?.page || 1);
 
+  const pageSEO = await getPageSEO();
   const blogsData = await getBlogs();
 
-  // Filter & prepare blogs
   const allBlogs = blogsData
-    .filter(
-      (b) =>
-        !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim())
-    )
+    .filter((b) => !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim()))
     .map((b) => ({
       id: b.id,
       title: b.title,
@@ -76,7 +95,6 @@ export default async function BlogPage({
       slug: b.slug,
     }));
 
-  // Pagination Logic
   const totalBlogs = allBlogs.length;
   const totalPages = Math.ceil(totalBlogs / PER_PAGE);
   const start = (page - 1) * PER_PAGE;
@@ -87,28 +105,32 @@ export default async function BlogPage({
     { label: "Blog", href: "/blog" },
   ];
 
+  console.log("Rendered Blog Page:", { page, pageSEO, totalPages });
+
+
   return (
     <>
+      {/* =============================
+            DYNAMIC SEO META TAGS
+        ============================= */}
+      <Head>
+        <title>{pageSEO?.title || "Our Blog"}</title>
+        <link rel="canonical" href="https://vgcadvisors.com/blog" />
+        <meta name="robots" content="index, follow" />
+      </Head>
 
-
-    <Head><link rel="canonical" href="https://vgcadvisors.com/contact-us" />
-    <meta name="robots" content="index, follow"></meta>
-    </Head>
-
-
-
-
+      {/* =============================
+            BANNER FROM PAGE API
+        ============================= */}
       <InnerBanner
-        title="Our Blog"
+        title={pageSEO?.title || "Our Blog"}
         breadcrumb={breadcrumb}
-        image="/default-banner.jpg"
-        alt="Blog banner"
+        image={pageSEO?.banner || "/images/service-banner.webp"}
+        alt={pageSEO?.alt || "Blog Banner"}
       />
 
       <div className="blog-sec dd">
-        <h2 data-aos="fade-up" data-aos-duration="1200">
-          Our Blog
-        </h2>
+        <h2 data-aos="fade-up" data-aos-duration="1200">Our Blog</h2>
 
         <div className="container">
           <div className="row">
@@ -131,40 +153,37 @@ export default async function BlogPage({
             )}
           </div>
 
-          {/* ======================
-                PAGINATION UI
-              ====================== */}
+          {/* =============================
+                PAGINATION (NO RELOAD)
+            ============================= */}
+
           <div className="pagination mt-5 d-flex justify-content-center gap-2">
-            {/* Prev Button */}
             {page > 1 && (
-              <a href={`?page=${page - 1}`} className="btn btn-outline-primary">
+              <Link href={`?page=${page - 1}`} className="btn btn-outline-primary">
                 Prev
-              </a>
+              </Link>
             )}
 
-            {/* Page Numbers */}
             {Array.from({ length: totalPages }).map((_, i) => {
               const pageNumber = i + 1;
               return (
-                <a
+                <Link
                   key={i}
                   href={`?page=${pageNumber}`}
-                  className={`btn ${
-                    pageNumber === page ? "btn-primary" : "btn-outline-primary"
-                  }`}
+                  className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
                 >
                   {pageNumber}
-                </a>
+                </Link>
               );
             })}
 
-            {/* Next Button */}
             {page < totalPages && (
-              <a href={`?page=${page + 1}`} className="btn btn-outline-primary">
+              <Link href={`?page=${page + 1}`} className="btn btn-outline-primary">
                 Next
-              </a>
+              </Link>
             )}
           </div>
+
         </div>
       </div>
     </>

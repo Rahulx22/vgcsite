@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-interface BlogCardProps {
-  id: string;
+interface BlogCardProps { id: string;
   title: string;
   excerpt: string;
   image: string;
@@ -31,7 +30,7 @@ export default function BlogCard({ id, title, excerpt, image, date, slug }: Blog
           <Link href={`/blog/${slug}`}>{title}</Link>
         </h3>
         <p>{excerpt}</p>
-        <p>{slug} shiv</p>
+        <p>{slug}</p>
         <Link className="read-btn" href={`/blog/${slug}`}>
           Read More
         </Link>

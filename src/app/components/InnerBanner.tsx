@@ -14,11 +14,14 @@ interface InnerBannerProps {
 }
 
 export default function InnerBanner({ title, breadcrumb, image, alt }: InnerBannerProps) {
+
+  console.log("Rendering InnerBanner with props:", { title, breadcrumb, image, alt });
   return (
     <div className="inner-banner">
       <Image 
         className="w-100" 
         src={image} 
+        // src={image} 
         alt={alt} 
         width={1920} 
         height={450} 

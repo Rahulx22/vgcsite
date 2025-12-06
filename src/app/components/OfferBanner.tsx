@@ -10,7 +10,7 @@ interface BannerItem {
   url: string;
 }
 
-export default function AutoBanner({ delay = 2000 }: { delay?: number }) {
+export default function AutoBanner({ delay = 90000 }: { delay?: number }) {
   const [banners, setBanners] = useState<BannerItem[]>([]);
   const [current, setCurrent] = useState(0);
   const [open, setOpen] = useState(false);

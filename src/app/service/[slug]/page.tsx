@@ -201,6 +201,7 @@ export async function generateMetadata(
 export default async function ServiceDetailPage({ params }: ServiceDetailProps) {
   const { slug } = await params;
   const service = await getServiceData(slug);
+    console.log("Service Data:",params, service);
 
   if (!service) {
     notFound();
@@ -263,6 +264,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
             <div className="col-xl-10 col-lg-12 col-md-12 offset-xl-1">
               <div className="business-box" data-aos="fade-up" data-aos-duration="1200">
                 {service.offerings.map((offering: any, index: number) => (
+                    
                   <div key={index}>
                     {offering.title && <h2>{offering.title}</h2>}
                     {offering.subtitle && <h3>{offering.subtitle}</h3>}

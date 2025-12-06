@@ -49,6 +49,12 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await fetchSettingsOnce();
 
+
+  console.log("Layout settings fetched:", settings);  
+
+
+
+
   return (
     <html lang="en">
       <head>
@@ -119,6 +125,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
           strategy="lazyOnload"
         />
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
         {/* Load custom scripts last */}
         <Script
