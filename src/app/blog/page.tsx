@@ -19,19 +19,18 @@ async function getPageSEO() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/pages",
-      { cache: "force-cache", next: { revalidate: 300 } }
+      {
+        cache: "force-cache",
+        next: { revalidate: 300 },
+      }
     );
 
     if (!res.ok) return null;
 
     const json = await res.json();
-    console.log("Fetched Pages Data:", json);
     const page = json?.data?.find((p) => p?.slug === "blog");
 
-
-    // console.log("Fetched Page SEO Data:", page);
     if (!page) return null;
-    
 
     return {
       title: page.meta_title || "Our Blog",
@@ -52,8 +51,12 @@ async function getBlogs() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/blogs",
-      { cache: "force-cache", next: { revalidate: 300 } }
+      {
+        cache: "force-cache",
+        next: { revalidate: 300 },
+      }
     );
+
     if (!res.ok) return [];
 
     const json = await res.json();
@@ -66,7 +69,7 @@ async function getBlogs() {
 // =============================
 // Format Date
 // =============================
-function formatDate(dateStr) {
+function formatDate(dateStr: string) {
   if (!dateStr) return "";
   return new Date(dateStr).toLocaleDateString("en-GB", {
     day: "2-digit",
@@ -78,15 +81,19 @@ function formatDate(dateStr) {
 // =============================
 // PAGE COMPONENT
 // =============================
-export default async function BlogPage({ searchParams }) {
+export default async function BlogPage({ searchParams }: any) {
   const page = Number(searchParams?.page || 1);
 
   const pageSEO = await getPageSEO();
   const blogsData = await getBlogs();
 
   const allBlogs = blogsData
-    .filter((b) => !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim()))
-    .map((b) => ({
+    .filter(
+      (b: any) =>
+        !b.status ||
+        ["active", "Active", "ACTIVE"].includes(b.status.trim())
+    )
+    .map((b: any) => ({
       id: b.id,
       title: b.title,
       excerpt: stripHtml(b.short_description),
@@ -97,6 +104,7 @@ export default async function BlogPage({ searchParams }) {
 
   const totalBlogs = allBlogs.length;
   const totalPages = Math.ceil(totalBlogs / PER_PAGE);
+
   const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
@@ -105,23 +113,22 @@ export default async function BlogPage({ searchParams }) {
     { label: "Blog", href: "/blog" },
   ];
 
-  console.log("Rendered Blog Page:", { page, pageSEO, totalPages });
-
-
   return (
     <>
       {/* =============================
-            DYNAMIC SEO META TAGS
-        ============================= */}
+          DYNAMIC SEO META TAGS
+      ============================= */}
       <Head>
         <title>{pageSEO?.title || "Our Blog"}</title>
+        <meta name="description" content={pageSEO?.description || ""} />
+        <meta name="keywords" content={pageSEO?.keywords || ""} />
         <link rel="canonical" href="https://vgcadvisors.com/blog" />
         <meta name="robots" content="index, follow" />
       </Head>
 
       {/* =============================
-            BANNER FROM PAGE API
-        ============================= */}
+          BANNER
+      ============================= */}
       <InnerBanner
         title={pageSEO?.title || "Our Blog"}
         breadcrumb={breadcrumb}
@@ -130,11 +137,13 @@ export default async function BlogPage({ searchParams }) {
       />
 
       <div className="blog-sec dd">
-        <h2 data-aos="fade-up" data-aos-duration="1200">Our Blog</h2>
+        <h2 data-aos="fade-up" data-aos-duration="1200">
+          Our Blog
+        </h2>
 
         <div className="container">
           <div className="row">
-            {paginatedBlogs.map((blog) => (
+            {paginatedBlogs.map((blog: any) => (
               <BlogCard
                 key={blog.id}
                 id={String(blog.id)}
@@ -154,36 +163,45 @@ export default async function BlogPage({ searchParams }) {
           </div>
 
           {/* =============================
-                PAGINATION (NO RELOAD)
-            ============================= */}
-
+              PAGINATION
+          ============================= */}
           <div className="pagination mt-5 d-flex justify-content-center gap-2">
+            {/* Prev Button */}
             {page > 1 && (
-              <Link href={`?page=${page - 1}`} className="btn btn-outline-primary">
+              <Link
+                href={`?page=${page - 1}`}
+                className="btn btn-outline-primary"
+              >
                 Prev
               </Link>
             )}
 
+            {/* Page Numbers */}
             {Array.from({ length: totalPages }).map((_, i) => {
               const pageNumber = i + 1;
               return (
                 <Link
                   key={i}
                   href={`?page=${pageNumber}`}
-                  className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
+                  className={`btn ${
+                    pageNumber === page ? "btn-primary" : "btn-outline-primary"
+                  }`}
                 >
                   {pageNumber}
                 </Link>
               );
             })}
 
+            {/* Next Button */}
             {page < totalPages && (
-              <Link href={`?page=${page + 1}`} className="btn btn-outline-primary">
+              <Link
+                href={`?page=${page + 1}`}
+                className="btn btn-outline-primary"
+              >
                 Next
               </Link>
             )}
           </div>
-
         </div>
       </div>
     </>
