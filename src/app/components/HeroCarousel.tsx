@@ -59,7 +59,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                       {/* COUNTERS */}
                       <ul className="list-unstyled d-flex flex-wrap mt-4 gap-4">
                         {(item.counters || []).map((c, i) => (
-                          <li key={i} className="me-4">
+                          <li key={i} className="me-2 text-center">
                             <h2 className="fw-bold m-0">
                               {c.value}
                               {c.suffix}
