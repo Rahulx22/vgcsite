@@ -25,7 +25,7 @@ export default function Services({ services, offerings }: ServicesProps) {
     <div className="service-sec">
       <div className="container">
         {/* Counters */}
-        <div className="row">
+        {/* <div className="row">
           <div className="col-lg-12 col-md-12">
             <ul className="count-list">
               <li>
@@ -48,7 +48,7 @@ export default function Services({ services, offerings }: ServicesProps) {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
 
         {/* Services */}
         <div className="row">

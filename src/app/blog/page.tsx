@@ -6,8 +6,8 @@ import Link from "next/link";
 // =============================
 // Settings
 // =============================
-export const dynamic = "force-dynamic";
-export const revalidate = 300;
+export const dynamic = "force-dynamic"; // Ensures dynamic rendering
+export const revalidate = 0;
 
 const PER_PAGE = 3;
 
@@ -18,7 +18,7 @@ async function getPageSEO() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/pages",
-      { cache: "force-cache", next: { revalidate: 300 } }
+      { cache: "no-store", next: { revalidate: 0 } } // FIX
     );
 
     if (!res.ok) return null;
@@ -41,7 +41,7 @@ async function getPageSEO() {
 }
 
 // =============================
-// Dynamic Metadata (Correct Way)
+// Dynamic Metadata
 // =============================
 export async function generateMetadata() {
   const seo = await getPageSEO();
@@ -58,13 +58,16 @@ export async function generateMetadata() {
 }
 
 // =============================
-// Fetch Blogs
+// Fetch Blogs (with FIXED caching)
 // =============================
 async function getBlogs() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/blogs",
-      { cache: "force-cache", next: { revalidate: 300 } }
+      {
+        cache: "no-store",      // IMPORTANT FIX
+        next: { revalidate: 0 } // IMPORTANT FIX
+      }
     );
 
     if (!res.ok) return [];
@@ -89,7 +92,7 @@ function formatDate(dateStr) {
 }
 
 // =============================
-// Main Blog Page (Server Component)
+// Main Blog Page
 // =============================
 export default async function BlogPage({ searchParams }) {
   const page = Number(searchParams?.page || 1);
@@ -185,6 +188,7 @@ export default async function BlogPage({ searchParams }) {
               </Link>
             )}
           </div>
+
         </div>
       </div>
     </>

@@ -102,8 +102,7 @@ export default function Testimonials({
                           {"★".repeat(parseInt(t.rating || "5", 10))}
                         </strong>{" "}
                         {t.author}
-                      </h5>
-                      
+                      </h5>                      
                       <Image
                         src={t.avatar}
                         alt={t.author}
