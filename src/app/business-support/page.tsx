@@ -6,7 +6,16 @@ import type { BusinessSupportPage } from "../../types/pages";
 import type { Metadata } from "next";
 
 // Add static metadata
-export const metadata: Metadata = {
+
+
+
+
+
+
+
+
+export const metadata: Metadata = 
+{
   title: "Business Support Services | VGC Consulting",
   description: "Comprehensive business support services tailored to empower MSMEs, corporates, and global ventures with expert financial and tax solutions.",
   keywords: "business support, MSME services, corporate advisory, business solutions, financial support",

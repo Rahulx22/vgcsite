@@ -5,13 +5,22 @@ import Image from "next/image";
 import { API_URL, fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
 import type { CareerApiResponse, CareerHeaderBlock, CareerSectionBlock, CareerSection, CareerJob } from "../../types/pages";
 import type { Metadata } from "next";
-import Head from "next/head"; 
+import Head from "next/head";
 
 // Add static metadata
 // Note: Metadata cannot be exported from client components
 // Move to a separate metadata file or remove "use client" directive if metadata is needed
 
 // Helper function to decode HTML entities
+
+
+
+
+
+
+
+
+
 function decodeHtmlEntities(text: string): string {
   const textArea = document.createElement('textarea');
   textArea.innerHTML = text;
@@ -21,10 +30,10 @@ function decodeHtmlEntities(text: string): string {
 // Enhanced helper function to parse HTML list items
 function parseHtmlList(html: string): string[] {
   const items: string[] = [];
-  
+
   // Try multiple parsing approaches
   if (!html) return items;
-  
+
   // Approach 1: Look for <li> tags with <p> inside
   const regex1 = /<li[^>]*>\s*<p[^>]*>([\s\S]*?)<\/p>\s*<\/li>/g;
   let match1;
@@ -38,7 +47,7 @@ function parseHtmlList(html: string): string[] {
       }
     }
   }
-  
+
   // If no items found, try <li> tags with direct text content
   if (items.length === 0) {
     const regex2 = /<li[^>]*>([\s\S]*?)<\/li>/g;
@@ -54,7 +63,7 @@ function parseHtmlList(html: string): string[] {
       }
     }
   }
-  
+
   // If still no items, try a simpler approach for plain text
   if (items.length === 0) {
     // Try to split by line breaks or other separators
@@ -66,7 +75,7 @@ function parseHtmlList(html: string): string[] {
       }
     }
   }
-  
+
   return items;
 }
 
@@ -74,24 +83,24 @@ function parseHtmlList(html: string): string[] {
 function parseJobDescription(longDescription: string) {
   const responsibilities: string[] = [];
   const idealFor: string[] = [];
-  
+
   // Handle case where longDescription might be empty or invalid
   if (!longDescription || typeof longDescription !== 'string') {
     return { responsibilities, idealFor };
   }
-  
+
   try {
     // Try to find sections by h5 tags first
     if (longDescription.includes('<h5')) {
       // Split by h5 tags to get sections
       const sections = longDescription.split(/<h5[^>]*>([^<]+)<\/h5>/i);
-      
+
       for (let i = 1; i < sections.length; i += 2) {
         const title = sections[i] ? sections[i].trim() : '';
         const content = sections[i + 1] || '';
-        
+
         const items = parseHtmlList(content);
-        
+
         if (title.toLowerCase().includes('responsibilities') || title.toLowerCase().includes('responsibility')) {
           responsibilities.push(...items);
         } else if (title.toLowerCase().includes('ideal')) {
@@ -102,21 +111,21 @@ function parseJobDescription(longDescription: string) {
       // If no h5 tags, try to parse the entire content as a single section
       // Look for keywords to determine section type
       const items = parseHtmlList(longDescription);
-      
+
       // If we have items, try to determine which section they belong to based on content
       if (items.length > 0) {
         // Simple heuristic: if any item contains responsibility-related words, put in responsibilities
         const responsibilityKeywords = ['responsible', 'responsibility', 'task', 'duty', 'handle', 'manage', 'coordinate'];
         const idealKeywords = ['ideal', 'candidate', 'qualification', 'requirement', 'skill', 'experience'];
-        
-        const hasResponsibilityKeywords = items.some(item => 
+
+        const hasResponsibilityKeywords = items.some(item =>
           responsibilityKeywords.some(keyword => item.toLowerCase().includes(keyword))
         );
-        
-        const hasIdealKeywords = items.some(item => 
+
+        const hasIdealKeywords = items.some(item =>
           idealKeywords.some(keyword => item.toLowerCase().includes(keyword))
         );
-        
+
         if (hasResponsibilityKeywords || (!hasIdealKeywords && items.length > 2)) {
           responsibilities.push(...items);
         } else if (hasIdealKeywords) {
@@ -139,7 +148,7 @@ function parseJobDescription(longDescription: string) {
       console.error('Fallback parsing also failed:', fallbackError);
     }
   }
-  
+
   return { responsibilities, idealFor };
 }
 
@@ -154,9 +163,9 @@ function extractRoleType(title: string): string {
     'analyst', 'associate',
     'senior', 'jr', 'junior'
   ];
-  
+
   const lowerTitle = title.toLowerCase();
-  
+
   // Check for specific role categories
   for (const category of roleCategories) {
     if (lowerTitle.includes(category)) {
@@ -164,7 +173,7 @@ function extractRoleType(title: string): string {
       return category.charAt(0).toUpperCase() + category.slice(1);
     }
   }
-  
+
   // Default to "Other" if no category found
   return "Other";
 }
@@ -197,30 +206,30 @@ export default function CareerPage() {
       try {
         setLoading(true);
         // Fetch all pages from API with 5-minute caching
-        const response = await fetchWithTimeout(API_URL, { 
+        const response = await fetchWithTimeout(API_URL, {
           cache: 'force-cache',
           next: { revalidate: 300 } // Cache for 5 minutes (300 seconds)
         });
-        
+
         if (!response.ok) {
           throw new Error(`Failed to fetch pages data: ${response.status}`);
         }
-        
+
         const apiResponse = await response.json();
         const pages = Array.isArray(apiResponse?.data) ? apiResponse.data : [];
-        
+
         // Find the career page from all pages
-        const careerPage = pages.find((page: any) => 
+        const careerPage = pages.find((page: any) =>
           page.type === 'career' || page.slug === 'career'
         );
-        
+
         if (!careerPage) {
           throw new Error('Career page not found in API response');
         }
-        
+
         // Debug log to see the career page data
         console.log('Career page data:', careerPage);
-        
+
         setCareerData(careerPage);
       } catch (err) {
         console.error('Error fetching career data:', err);
@@ -244,7 +253,7 @@ export default function CareerPage() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setResume(file);
-      
+
       // Create preview for image files
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
@@ -262,7 +271,7 @@ export default function CareerPage() {
     e.preventDefault();
     setSubmitting(true);
     setSubmitError(null);
-    
+
     try {
       // Prepare the data to match API expected format
       const submitData = new FormData();
@@ -275,7 +284,7 @@ export default function CareerPage() {
       submitData.append('linkedin_url', formData.linkedin);
       submitData.append('degree', formData.degree);
       submitData.append('personal_note', formData.personalNote);
-      
+
       // Add resume file if selected
       if (resume) {
         submitData.append('resume', resume);
@@ -293,7 +302,7 @@ export default function CareerPage() {
       const result = await response.json();
       console.log("Form submitted successfully:", result);
       setSubmitSuccess(true);
-      
+
       // Reset form after successful submission
       setFormData({
         firstName: "",
@@ -308,7 +317,7 @@ export default function CareerPage() {
       });
       setResume(null);
       setResumePreview(null);
-      
+
       // Hide success message after 5 seconds
       setTimeout(() => {
         setSubmitSuccess(false);
@@ -340,7 +349,7 @@ export default function CareerPage() {
   // Extract data from API response
   const headerBlock = careerData.blocks.find(block => block.type === 'career_header') as CareerHeaderBlock;
   const sectionBlock = careerData.blocks.find(block => block.type === 'career_section') as CareerSectionBlock;
-  
+
   if (!headerBlock || !sectionBlock) {
     return (
       <div className="container" style={{ textAlign: 'center', padding: '50px 0' }}>
@@ -356,22 +365,22 @@ export default function CareerPage() {
   const handleJobPdfDownload = (job: CareerJob) => {
     // Debug log to see the job data
     console.log('Job data for PDF download:', job);
-    
+
     // Check if job has a PDF document URL
     if (job.job_description_doc) {
       // Construct the full URL for the PDF using the correct path
       const baseUrl = 'https://vgc.psofttechnologies.in';
       const cleanPath = job.job_description_doc.replace(/^\/+/, ''); // Remove leading slashes
       const pdfUrl = `${baseUrl}/storage/${cleanPath}`;
-      
+
       // Debug log to see the final URL
       console.log('Final PDF URL:', pdfUrl);
-      
+
       // Check if the URL looks correct
       if (pdfUrl.endsWith('.pdf')) {
         // Try to open the PDF in a new tab
         const newWindow = window.open(pdfUrl, '_blank');
-        
+
         // If popup blocking prevents opening, provide a fallback
         if (!newWindow) {
           // Create a temporary link and trigger download
@@ -406,7 +415,7 @@ export default function CareerPage() {
   const getUniqueResponsibilities = () => {
     const responsibilitiesSet = new Set<string>();
     responsibilitiesSet.add('All'); // Add 'All' option
-    
+
     activeJobs.forEach(job => {
       const parsedJob = parseJobDescription(job.long_description);
       parsedJob.responsibilities.forEach(resp => {
@@ -429,7 +438,7 @@ export default function CareerPage() {
         }
       });
     });
-    
+
     return Array.from(responsibilitiesSet);
   };
 
@@ -457,17 +466,22 @@ export default function CareerPage() {
     });
   });
 
+
+//
+
+
+
   return (
-    <>    
-    <Head>  <link rel="canonical" href="https://vgcadvisors.com/career" />
-    <meta name="robots" content="index, follow"></meta></Head>
+    <>
+      <Head>  <link rel="canonical" href="https://vgcadvisors.com/career" />
+        <meta name="robots" content="index, follow"></meta></Head>
 
       <div className="business-banner dd">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-xl-5 col-lg-6 col-md-12 offset-xl-1" 
-                 data-aos="fade-right" 
-                 data-aos-duration="1200">
+            <div className="col-xl-5 col-lg-6 col-md-12 offset-xl-1"
+              data-aos="fade-right"
+              data-aos-duration="1200">
               <nav>
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
@@ -481,14 +495,14 @@ export default function CareerPage() {
               <h1>{headerData.left_title}</h1>
               <p>{headerData.left_description}</p>
             </div>
-            
+
             <div className="col-xl-6 col-lg-6 col-md-12">
-              <Image 
-                className="w-100" 
-                src={ensureUrl(headerData.right_image_main)} 
-                alt="career-banner" 
-                width={800} 
-                height={600} 
+              <Image
+                className="w-100"
+                src={ensureUrl(headerData.right_image_main)}
+                alt="career-banner"
+                width={800}
+                height={600}
                 loading="eager"
                 quality={85}
                 style={{
@@ -523,9 +537,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>First Name</label>
-                        <input 
-                          className="box" 
-                          type="text" 
+                        <input
+                          className="box"
+                          type="text"
                           name="firstName"
                           placeholder="First Name"
                           value={formData.firstName}
@@ -537,9 +551,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>Last Name</label>
-                        <input 
-                          className="box" 
-                          type="text" 
+                        <input
+                          className="box"
+                          type="text"
                           name="lastName"
                           placeholder="Last Name"
                           value={formData.lastName}
@@ -551,9 +565,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>Email</label>
-                        <input 
-                          className="box" 
-                          type="email" 
+                        <input
+                          className="box"
+                          type="email"
                           name="email"
                           placeholder="Email"
                           value={formData.email}
@@ -565,9 +579,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>Phone</label>
-                        <input 
-                          className="box" 
-                          type="tel" 
+                        <input
+                          className="box"
+                          type="tel"
                           name="phone"
                           placeholder="Phone"
                           value={formData.phone}
@@ -579,9 +593,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>City</label>
-                        <input 
-                          className="box" 
-                          type="text" 
+                        <input
+                          className="box"
+                          type="text"
                           name="city"
                           placeholder="City"
                           value={formData.city}
@@ -605,9 +619,9 @@ export default function CareerPage() {
                     <div className="col-lg-3 col-md-4">
                       <div className="in-box">
                         <label>LinkedIn Profile URL</label>
-                        <input 
-                          className="box" 
-                          type="url" 
+                        <input
+                          className="box"
+                          type="url"
                           name="linkedin"
                           placeholder="https://linkedin.com/in/username"
                           value={formData.linkedin}
@@ -630,9 +644,9 @@ export default function CareerPage() {
                     <div className="col-lg-6 col-md-12">
                       <div className="in-box">
                         <label>Upload Resume</label>
-                        <input 
-                          className="box" 
-                          type="file" 
+                        <input
+                          className="box"
+                          type="file"
                           name="resume"
                           accept=".pdf,.doc,.docx,.txt,.rtf,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword"
                           onChange={handleFileChange}
@@ -651,29 +665,29 @@ export default function CareerPage() {
 
                   <div className="in-box">
                     <label>Personal Note</label>
-                    <textarea 
-                      className="box" 
+                    <textarea
+                      className="box"
                       name="personalNote"
-                      placeholder="Tell us why you're interested in joining our team..." 
+                      placeholder="Tell us why you're interested in joining our team..."
                       rows={5}
                       value={formData.personalNote}
                       onChange={handleChange}
                     />
                   </div>
-                  <input 
-                    type="submit" 
-                    className="call-btn" 
-                    value={submitting ? "Submitting..." : "Submit Application →"} 
+                  <input
+                    type="submit"
+                    className="call-btn"
+                    value={submitting ? "Submitting..." : "Submit Application →"}
                     disabled={submitting}
                   />
                 </form>
               </div>
             </div>
-            
+
             <div className="col-xl-12 col-lg-12 col-md-12">
               <Image className="filter-img" src="/images/filter.png" alt="filter" width={1200} height={200} loading="eager" quality={80} />
             </div>
-            
+
             <div className="col-xl-6 col-lg-6 col-md-12">
               {sectionData.left_section.map((section, index) => (
                 <div key={index} className="career-box career-box-top-spacing">
@@ -682,13 +696,13 @@ export default function CareerPage() {
                 </div>
               ))}
             </div>
-            
+
             <div className="col-xl-6 col-lg-6 col-md-12">
               {/* Show job openings if available */}
               {sectionData.jobs && sectionData.jobs.length > 0 && (
                 <div className="career-box career-box-top-spacing">
                   <h3>Current Openings</h3>
-                  
+
                   {/* Scrollable container for job listings */}
                   <div className="job-listings-scroll">
                     {/* Show only active jobs without filtering */}
@@ -701,7 +715,7 @@ export default function CareerPage() {
                           if (lowerTitle.includes('developer') && !lowerTitle.includes('senior consultant')) return 1;
                           return 2; // All other jobs
                         };
-                        
+
                         return getOrder(a.title) - getOrder(b.title);
                       })
                       .map((job: CareerJob, index: number) => {
@@ -755,7 +769,7 @@ export default function CareerPage() {
                   <div dangerouslySetInnerHTML={{ __html: section.description }} />
                 </div>
               ))}
-                
+
               <div className="career-box">
                 <h6>{sectionData.main_text}</h6>
                 <div className="btn-sec">

@@ -7,8 +7,6 @@ import type { Hero } from "../../types/home";
 export default function HeroCarousel({ hero }: { hero: Hero }) {
   if (!hero || !Array.isArray(hero.banners)) return null;
 
-  console.log("HeroCarousel hero:", hero);
-
   return (
 
     <div className="main">
