@@ -75,13 +75,13 @@ header .dropdown-menu li:last-child a { border-bottom:none; }
   .main .carousel-caption .row { margin: 0; }
   .main .carousel-caption .col-xl-7 { padding: 0; }
 }
-/* .count-list { border-top:1px solid #ECF1F6; display:flex; gap:45px; margin:48px 0 0; padding:32px 0 0; }
+.count-list { border-top:1px solid #ECF1F6; display:flex; gap:45px; margin:48px 0 0; padding:32px 0 0; }
 .main .carousel-control-prev, .main .carousel-control-next { opacity:1; width:75px; z-index:1; }
 .main .carousel-control-prev span, .main .carousel-control-next span { background-color:var(--main-color); background-size:18px; border-radius:50%; height:40px; width:40px; }
 .main .carousel-control-prev span:hover, .main .carousel-control-next span:hover { background-color:var(--main-color-2); }
 .main .call-btn { margin:20px 0 0; }
 .call-btn { background-color:var(--main-color); border:none; border-radius:5px; color:#fff; display:inline-block; font-size:16px; padding:9px 20px; }
-.call-btn:hover, .ready-sec a:hover, .see-btn:hover, .up-btn:hover { background-color:var(--main-color-2) !important; color:#fff !important; } */
+.call-btn:hover, .ready-sec a:hover, .see-btn:hover, .up-btn:hover { background-color:var(--main-color-2) !important; color:#fff !important; }
 
 /* Mobile button improvements */
 @media (max-width: 767.98px) {
