@@ -79,7 +79,7 @@ function formatDate(dateStr) {
 // PAGE COMPONENT
 // =============================
 export default async function BlogPage({ searchParams }) {
-  const page = Number(searchParams?.page || 1);
+  const pageRequested = Number(searchParams?.page || 1);
 
   const pageSEO = await getPageSEO();
   const blogsData = await getBlogs();
@@ -96,7 +96,10 @@ export default async function BlogPage({ searchParams }) {
     }));
 
   const totalBlogs = allBlogs.length;
-  const totalPages = Math.ceil(totalBlogs / PER_PAGE);
+  const totalPages = Math.max(0, Math.ceil(totalBlogs / PER_PAGE));
+
+  // Clamp requested page to valid range
+  const page = Math.max(1, Math.min(pageRequested || 1, totalPages || 1));
   const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
@@ -157,32 +160,34 @@ export default async function BlogPage({ searchParams }) {
                 PAGINATION (NO RELOAD)
             ============================= */}
 
-          <div className="pagination mt-5 d-flex justify-content-center gap-2">
-            {page > 1 && (
-              <Link href={`?page=${page - 1}`} className="btn btn-outline-primary">
-                Prev
-              </Link>
-            )}
-
-            {Array.from({ length: totalPages }).map((_, i) => {
-              const pageNumber = i + 1;
-              return (
-                <Link
-                  key={i}
-                  href={`?page=${pageNumber}`}
-                  className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
-                >
-                  {pageNumber}
+          {totalPages > 1 && (
+            <div className="pagination mt-5 d-flex justify-content-center gap-2">
+              {page > 1 && (
+                <Link href={`/blog?page=${page - 1}`} className="btn btn-outline-primary">
+                  Prev
                 </Link>
-              );
-            })}
+              )}
 
-            {page < totalPages && (
-              <Link href={`?page=${page + 1}`} className="btn btn-outline-primary">
-                Next
-              </Link>
-            )}
-          </div>
+              {Array.from({ length: totalPages }).map((_, i) => {
+                const pageNumber = i + 1;
+                return (
+                  <Link
+                    key={i}
+                    href={`/blog?page=${pageNumber}`}
+                    className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
+                  >
+                    {pageNumber}
+                  </Link>
+                );
+              })}
+
+              {page < totalPages && (
+                <Link href={`/blog?page=${page + 1}`} className="btn btn-outline-primary">
+                  Next
+                </Link>
+              )}
+            </div>
+          )}
 
         </div>
       </div>

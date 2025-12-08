@@ -8,7 +8,8 @@ export const revalidate = 300;
 export const dynamicParams = true;
 
 interface BlogSingleProps {
-  params: { slug: string };
+  // `params` can be a promise in some Next.js resolver contexts — allow both.
+  params: { slug: string } | Promise<{ slug: string }>;
 }
 
 interface BlogPost {
@@ -27,7 +28,7 @@ interface BlogPost {
 }
 
 // ---------------------------
-// Helper: Decode Escaped HTML
+// Decode escaped HTML
 // ---------------------------
 function decodeHtml(html: string) {
   if (!html) return "";
@@ -39,8 +40,6 @@ function decodeHtml(html: string) {
     .replace(/&#39;/g, "'");
 }
 
-// ---------------------------
-// Format Date
 // ---------------------------
 function formatDate(iso?: string) {
   if (!iso) return "";
@@ -58,7 +57,7 @@ async function getAllBlogs(): Promise<BlogPost[]> {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/blogs",
-      { cache: "force-cache", next: { revalidate: 300 } }
+      { cache: "no-store" }
     );
 
     if (!res.ok) return [];
@@ -71,8 +70,6 @@ async function getAllBlogs(): Promise<BlogPost[]> {
 }
 
 // ---------------------------
-// Fetch Single Blog
-// ---------------------------
 async function getBlogPost(slug: string) {
   const blogs = await getAllBlogs();
   return blogs.find((b) => b.slug === slug) || null;
@@ -82,10 +79,11 @@ async function getBlogPost(slug: string) {
 // Dynamic Metadata
 // ---------------------------
 export async function generateMetadata(
-  { params }: { params: { slug: string } },
+  { params }: { params: { slug: string } | Promise<{ slug: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const blog = await getBlogPost(params.slug);
+  const resolvedParams = (await params) as { slug: string };
+  const blog = await getBlogPost(resolvedParams.slug);
 
   if (!blog) {
     return {
@@ -105,57 +103,91 @@ export async function generateMetadata(
 }
 
 // ---------------------------
-// MAIN PAGE COMPONENT
+// MAIN PAGE
 // ---------------------------
 export default async function BlogSinglePage({ params }: BlogSingleProps) {
-  const blog = await getBlogPost(params.slug);
+  const resolvedParams = (await params) as { slug: string };
+  const blog = await getBlogPost(resolvedParams.slug);
 
   if (!blog) return notFound();
 
   const image = ensureUrl(blog.featured_image || blog.cover_image);
   const date = formatDate(blog.created_at);
 
-  // FIX: Decode HTML so it renders correctly
+  // decode long description
   const htmlContent = decodeHtml(blog.long_description || blog.content || "");
 
   return (
-    <div className="blog-txt">
+    <div className="blog-txt py-4">
       <div className="container">
-        <div className="row">
-          <div className="col-lg-12">
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
 
             {image && (
               <Image
-                className="w-100"
                 src={image}
                 alt={blog.title}
-                width={1920}
+                className="w-100 rounded"
+                width={1200}
                 height={500}
                 loading="lazy"
               />
             )}
 
             <h1 className="mt-4">{blog.title}</h1>
-            <h5 className="mb-4">{date}</h5>
+            <p className="text-muted mb-4">{date}</p>
 
+            {/* BLOG CONTENT */}
             <div className="blog-wrapper">
-  <style>
-    {`
-      .blog-wrapper * {
-        color: black !important;
-      }
-    `}
-  </style>
+              <style>
+                {`
+                  /* Ensure blog content is readable regardless of global theme */
+                  .blog-wrapper {
+                    color: #222 !important;
+                    background: #fff !important;
+                    font-size: 1.1rem;
+                    line-height: 1.7;
+                    padding: 12px 16px;
+                    border-radius: 4px;
+                  }
 
-  <div
-    className="blog-content"
-    dangerouslySetInnerHTML={{ __html: htmlContent }}
-  />
-</div>
+                  /* Force all child elements to inherit the readable color */
+                  .blog-wrapper, .blog-wrapper * {
+                    color: inherit !important;
+                    background: transparent !important;
+                    box-shadow: none !important;
+                  }
 
-            {/* {htmlContent} */}
-            {/* <div className="blog-content" style={{ color: "black" }} dangerouslySetInnerHTML={{ __html: htmlContent }} /> */}
+                  .blog-wrapper img {
+                    max-width: 100%;
+                    height: auto;
+                    display: block;
+                    margin: 20px 0;
+                  }
 
+                  .blog-wrapper p {
+                    margin-bottom: 1rem;
+                  }
+
+                  .blog-wrapper h2,
+                  .blog-wrapper h3,
+                  .blog-wrapper h4 {
+                    margin-top: 1.5rem;
+                    margin-bottom: 1rem;
+                  }
+
+                  .blog-wrapper ul, .blog-wrapper ol {
+                    padding-left: 20px;
+                    margin-bottom: 1rem;
+                  }
+                `}
+              </style>
+
+              <div
+                className="blog-content"
+                dangerouslySetInnerHTML={{ __html: htmlContent }}
+              />
+            </div>
 
           </div>
         </div>
