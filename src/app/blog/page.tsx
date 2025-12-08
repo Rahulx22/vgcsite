@@ -1,6 +1,7 @@
 import InnerBanner from "../components/InnerBanner";
-import BlogCard from "../components/BlogCard";
+import BlogSlider from "./BlogSlider";
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
+import BlogCard from "../components/BlogCard";
 import Link from "next/link";
 import Head from "next/head";
 
@@ -79,7 +80,7 @@ function formatDate(dateStr) {
 // PAGE COMPONENT
 // =============================
 export default async function BlogPage({ searchParams }) {
-  const pageRequested = Number(searchParams?.page || 1);
+  const page = Number(searchParams?.page || 1);
 
   const pageSEO = await getPageSEO();
   const blogsData = await getBlogs();
@@ -96,10 +97,7 @@ export default async function BlogPage({ searchParams }) {
     }));
 
   const totalBlogs = allBlogs.length;
-  const totalPages = Math.max(0, Math.ceil(totalBlogs / PER_PAGE));
-
-  // Clamp requested page to valid range
-  const page = Math.max(1, Math.min(pageRequested || 1, totalPages || 1));
+  const totalPages = Math.ceil(totalBlogs / PER_PAGE);
   const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
@@ -137,58 +135,9 @@ export default async function BlogPage({ searchParams }) {
 
         <div className="container">
           <div className="row">
-            {paginatedBlogs.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                id={String(blog.id)}
-                title={blog.title}
-                excerpt={blog.excerpt}
-                image={blog.image}
-                date={blog.date}
-                slug={blog.slug}
-              />
-            ))}
-
-            {paginatedBlogs.length === 0 && (
-              <div className="col-12">
-                <p>No blog posts available.</p>
-              </div>
-            )}
+            {/* Render slider (client component) showing 3 items per slide */}
+            <BlogSlider blogs={allBlogs} itemsPerSlide={3} />
           </div>
-
-          {/* =============================
-                PAGINATION (NO RELOAD)
-            ============================= */}
-
-          {totalPages > 1 && (
-            <div className="pagination mt-5 d-flex justify-content-center gap-2">
-              {page > 1 && (
-                <a href={`/blog?page=${page - 1}`} className="btn btn-outline-primary">
-                  Prev
-                </a>
-              )}
-
-              {Array.from({ length: totalPages }).map((_, i) => {
-                const pageNumber = i + 1;
-                return (
-                  <a
-                    key={i}
-                    href={`/blog?page=${pageNumber}`}
-                    className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
-                    aria-current={pageNumber === page ? 'page' : undefined}
-                  >
-                    {pageNumber}
-                  </a>
-                );
-              })}
-
-              {page < totalPages && (
-                <Link href={`/blog?page=${page + 1}`} className="btn btn-outline-primary">
-                  Next
-                </Link>
-              )}
-            </div>
-          )}
 
         </div>
       </div>

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import ContactClient from "./page";
+import ContactClient from "./ContactClient";
 
 // Fetch CMS page data
 async function getContactPage() {
   try {
     const res = await fetch(
-      "https://vgc.psofttechnologies.in/api/v1/pages?slug=contact-us",
+      "https://vgc.psofttechnologies.in/api/v1/pages?slug=contact",
       { next: { revalidate: 300 } }
     );
 
@@ -23,7 +23,6 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getContactPage();
 
   if (!page) {
-    console.warn("Contact page data not found for metadata generation.");
     return {
       title: "Contact Us - VGC Advisors",
       description: "Reach out to VGC Advisors for tax, compliance, and consulting.",
