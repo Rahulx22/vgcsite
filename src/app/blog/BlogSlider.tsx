@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import BlogCard from "../components/BlogCard";
+import { style } from "framer-motion/client";
 
 interface Blog {
     id: number | string;
@@ -62,7 +63,11 @@ export default function BlogSlider({ blogs, itemsPerSlide = 3 }: BlogSliderProps
                     </div>
                 </div>
             ))}
-            <div className="d-flex justify-content-between align-items-center mb-3">
+
+
+            <div class="d-flex justify-content-center align-items-center" style={{ marginTop: "1rem", gap: "0rem" }}>
+
+
                 <button type="button" className="btn btn-outline-primary" onClick={prev} aria-label="Previous slide">Prev</button>
 
 
