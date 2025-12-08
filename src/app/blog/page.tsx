@@ -32,7 +32,7 @@ async function getPageSEO() {
 
     // console.log("Fetched Page SEO Data:", page);
     if (!page) return null;
-    
+
 
     return {
       title: page.meta_title || "Our Blog",
