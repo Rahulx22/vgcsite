@@ -63,6 +63,11 @@ export default async function RootLayout({
   const tracking = settings?.tracking || {};
   const gaEnabled = tracking?.analytics?.enabled;
   const GA_ID = tracking?.analytics?.tracking_id;
+  const gtmEnabled = tracking?.gtm?.enabled;
+  const GTM_ID = tracking?.gtm?.container_id;
+  const fbEnabled = tracking?.facebook_pixel?.enabled;
+  const FB_ID = tracking?.facebook_pixel?.pixel_id;
+  const customScripts = tracking?.custom_scripts || {};
 
   return (
     <html lang="en">
@@ -128,11 +133,65 @@ export default async function RootLayout({
             `}</Script>
           </>
         )}
+
+        {/* Google Tag Manager */}
+        {gtmEnabled && GTM_ID && (
+          <Script id="gtm-inline" strategy="afterInteractive">{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'? '&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${GTM_ID}');`}</Script>
+        )}
+
+        {/* Facebook Pixel */}
+        {fbEnabled && FB_ID && (
+          <>
+            <Script id="fb-pixel" strategy="afterInteractive">{`!function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+            n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+            (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${FB_ID}'); fbq('track', 'PageView');`}</Script>
+          </>
+        )}
+
+        {/* Custom scripts (e.g. JSON-LD) */}
+        {Object.entries(customScripts).map(([name, code], idx) => {
+          // If the stored value is a <script type="application/ld+json">...</script>
+          const match = String(code).match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+          if (match) {
+            const jsonLd = match[1];
+            return (
+              <script
+                key={`custom-jsonld-${idx}`}
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: jsonLd }}
+              />
+            );
+          }
+
+          // If the value contains a raw <script>...</script>, extract inner content
+          const genericMatch = String(code).match(/<script[^>]*>([\s\S]*?)<\/script>/i);
+          const inner = genericMatch ? genericMatch[1] : String(code);
+          return (
+            <Script key={`custom-${idx}`} id={`custom-script-${idx}`} strategy="afterInteractive">
+              {String(inner)}
+            </Script>
+          );
+        })}
       </head>
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+          {gtmEnabled && GTM_ID && (
+            <noscript
+              dangerouslySetInnerHTML={{
+                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+              }}
+            />
+          )}
         <AutoBanner />
         <GlobalLoader />
 
@@ -143,6 +202,15 @@ export default async function RootLayout({
         </AOSProvider>
 
         <PerformanceMonitor />
+
+        {/* noscript fallback for Facebook Pixel */}
+        {fbEnabled && FB_ID && (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${FB_ID}&ev=PageView&noscript=1" />`,
+            }}
+          />
+        )}
 
         {/* jQuery */}
         <Script
