@@ -2,31 +2,36 @@ import InnerBanner from "../components/InnerBanner";
 import BlogCard from "../components/BlogCard";
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
 import Link from "next/link";
+import Head from "next/head";
 
 // =============================
-// Settings
+// Dynamic Settings
 // =============================
-export const dynamic = "force-dynamic"; // Ensures dynamic rendering
-export const revalidate = 0;
+export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 const PER_PAGE = 3;
 
 // =============================
-// Fetch Page SEO + Banner
+// Fetch Page SEO + Banner from API
 // =============================
 async function getPageSEO() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/pages",
-      { cache: "no-store", next: { revalidate: 0 } } // FIX
+      { cache: "force-cache", next: { revalidate: 300 } }
     );
 
     if (!res.ok) return null;
 
     const json = await res.json();
-    const page = json?.data?.find((p) => p.slug === "blog");
+    console.log("Fetched Pages Data:", json);
+    const page = json?.data?.find((p) => p?.slug === "blog");
 
+
+    // console.log("Fetched Page SEO Data:", page);
     if (!page) return null;
+    
 
     return {
       title: page.meta_title || "Our Blog",
@@ -41,39 +46,18 @@ async function getPageSEO() {
 }
 
 // =============================
-// Dynamic Metadata
-// =============================
-export async function generateMetadata() {
-  const seo = await getPageSEO();
-
-  return {
-    title: seo?.title || "Our Blog",
-    description: seo?.description || "",
-    keywords: seo?.keywords || "",
-    robots: "index, follow",
-    alternates: {
-      canonical: "https://vgcadvisors.com/blog",
-    },
-  };
-}
-
-// =============================
-// Fetch Blogs (with FIXED caching)
+// Fetch Blogs
 // =============================
 async function getBlogs() {
   try {
     const res = await fetchWithTimeout(
       "https://vgc.psofttechnologies.in/api/v1/blogs",
-      {
-        cache: "no-store",      // IMPORTANT FIX
-        next: { revalidate: 0 } // IMPORTANT FIX
-      }
+      { cache: "force-cache", next: { revalidate: 300 } }
     );
-
     if (!res.ok) return [];
 
     const json = await res.json();
-    return json?.data || [];
+    return json?.data ?? [];
   } catch {
     return [];
   }
@@ -92,7 +76,7 @@ function formatDate(dateStr) {
 }
 
 // =============================
-// Main Blog Page
+// PAGE COMPONENT
 // =============================
 export default async function BlogPage({ searchParams }) {
   const page = Number(searchParams?.page || 1);
@@ -101,10 +85,7 @@ export default async function BlogPage({ searchParams }) {
   const blogsData = await getBlogs();
 
   const allBlogs = blogsData
-    .filter(
-      (b) =>
-        !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim())
-    )
+    .filter((b) => !b.status || ["active", "Active", "ACTIVE"].includes(b.status.trim()))
     .map((b) => ({
       id: b.id,
       title: b.title,
@@ -116,7 +97,6 @@ export default async function BlogPage({ searchParams }) {
 
   const totalBlogs = allBlogs.length;
   const totalPages = Math.ceil(totalBlogs / PER_PAGE);
-
   const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
@@ -125,9 +105,23 @@ export default async function BlogPage({ searchParams }) {
     { label: "Blog", href: "/blog" },
   ];
 
+  console.log("Rendered Blog Page:", { page, pageSEO, totalPages });
+
+
   return (
     <>
-      {/* Banner */}
+      {/* =============================
+            DYNAMIC SEO META TAGS
+        ============================= */}
+      <Head>
+        <title>{pageSEO?.title || "Our Blog"}</title>
+        <link rel="canonical" href="https://vgcadvisors.com/blog" />
+        <meta name="robots" content="index, follow" />
+      </Head>
+
+      {/* =============================
+            BANNER FROM PAGE API
+        ============================= */}
       <InnerBanner
         title={pageSEO?.title || "Our Blog"}
         breadcrumb={breadcrumb}
@@ -159,7 +153,10 @@ export default async function BlogPage({ searchParams }) {
             )}
           </div>
 
-          {/* Pagination */}
+          {/* =============================
+                PAGINATION (NO RELOAD)
+            ============================= */}
+
           <div className="pagination mt-5 d-flex justify-content-center gap-2">
             {page > 1 && (
               <Link href={`?page=${page - 1}`} className="btn btn-outline-primary">
@@ -173,9 +170,7 @@ export default async function BlogPage({ searchParams }) {
                 <Link
                   key={i}
                   href={`?page=${pageNumber}`}
-                  className={`btn ${
-                    pageNumber === page ? "btn-primary" : "btn-outline-primary"
-                  }`}
+                  className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
                 >
                   {pageNumber}
                 </Link>

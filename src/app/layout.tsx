@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   title: "VGC Consulting - Business, Tax & Compliance Solutions",
   description:
     "VGC Consulting provides comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   other: {
     "google-site-verification":
       "dQfS1gfzdBySBdAcoPTdOltneKPZB8gWMIeDBKf8G2I",
@@ -37,9 +36,10 @@ async function fetchSettingsOnce() {
   const h = await headers();
   const host = h.get("x-forwarded-host") || h.get("host");
   const proto = h.get("x-forwarded-proto") || "http";
-  const base = `${proto}://${host}`;
-
-  const res = await fetch(`${base}/api/config`, { cache: "no-store" });
+  // In server runtime avoid fetching the local API route (which can cause
+  // self-connection timeouts in some dev environments). Fetch the upstream
+  // settings endpoint directly instead.
+  const res = await fetch("https://vgc.psofttechnologies.in/api/v1/settings", { cache: "no-store" });
   if (!res.ok) throw new Error(`Settings fetch failed: ${res.status}`);
 
   return res.json();
