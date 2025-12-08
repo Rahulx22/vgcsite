@@ -8,7 +8,6 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
   if (!hero || !Array.isArray(hero.banners)) return null;
 
   return (
-
     <div className="main">
       <div
         id="carouselExampleControls"
@@ -16,7 +15,6 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
-
           {hero.banners.map((item, idx) => (
             <div
               key={idx}
@@ -32,15 +30,13 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                 priority={idx === 0}
               />
 
-              {/* CAPTION */}
-              <div className="carousel-caption text-start">
-
-                <div className="container">
+              {/* CAPTION (Added 'd-flex flex-column h-100' for better vertical control) */}
+              <div className="carousel-caption text-start d-flex flex-column h-100">
+                <div className="container mt-auto mb-auto"> {/* Added mt-auto mb-auto for vertical centering within the caption area */}
                   <div className="row">
                     <div className="col-lg-7 col-md-9 col-12">
-
-                      {/* TITLE */}
-                      <h1 className="fw-bold display-5 display-md-3 display-lg-2">
+                      {/* TITLE (Adjusted display classes for smaller screens) */}
+                      <h1 className="fw-bold display-6 display-md-4 display-lg-2 text-wrap">
                         {item.title}
                       </h1>
 
@@ -68,15 +64,12 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                           </li>
                         ))}
                       </ul>
-
                     </div>
                   </div>
                 </div>
-
               </div>
             </div>
           ))}
-
         </div>
 
         {/* Browser Controls */}
@@ -99,8 +92,5 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
         </button>
       </div>
     </div>
-
-
-
   );
 }

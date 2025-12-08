@@ -192,10 +192,16 @@ export default async function Page() {
   const proto = h.get("x-forwarded-proto") || "http";
   const base = `${proto}://${host}`;
 
-  const pagesRes = await fetchWithTimeout(`${base}/api/pages`, {
-    cache: "force-cache",
-    next: { revalidate: 300 },
-  });
+  // Fetch pages directly from the upstream API to avoid making an internal
+  // request to our own API route (which can cause partial responses or timeouts
+  // during server-side execution). This returns the full CMS pages data.
+  const pagesRes = await fetchWithTimeout(
+    "https://vgc.psofttechnologies.in/api/v1/pages",
+    {
+      cache: "force-cache",
+      next: { revalidate: 300 },
+    }
+  );
 
   if (!pagesRes.ok) {
     const text = await pagesRes.text().catch(() => "<no body>");
