@@ -163,21 +163,22 @@ export default async function BlogPage({ searchParams }) {
           {totalPages > 1 && (
             <div className="pagination mt-5 d-flex justify-content-center gap-2">
               {page > 1 && (
-                <Link href={`/blog?page=${page - 1}`} className="btn btn-outline-primary">
+                <a href={`/blog?page=${page - 1}`} className="btn btn-outline-primary">
                   Prev
-                </Link>
+                </a>
               )}
 
               {Array.from({ length: totalPages }).map((_, i) => {
                 const pageNumber = i + 1;
                 return (
-                  <Link
+                  <a
                     key={i}
                     href={`/blog?page=${pageNumber}`}
                     className={`btn ${pageNumber === page ? "btn-primary" : "btn-outline-primary"}`}
+                    aria-current={pageNumber === page ? 'page' : undefined}
                   >
                     {pageNumber}
-                  </Link>
+                  </a>
                 );
               })}
 
