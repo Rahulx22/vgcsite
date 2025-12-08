@@ -319,14 +319,8 @@ export default function Header({ data }: HeaderProps) {
                 </li>
               );
             })}
-            {/* 
-            <li className="mobile-cta-button" style={{ borderTop: "1px solid #eef0f2", marginTop: "15px", paddingTop: "15px", paddingBottom: "10px" }}>
-              <Link href={buttonHref} onClick={closeMenu} className="mobile-cta-link">
-                {buttonText}
-              </Link>
-            </li>
-             */}
-
+ 
+ 
             <li className="mobile-cta-button" style={styles}>
               <a href={buttonHref} onClick={closeMenu} style={linkStyles}>
                 {buttonText}
