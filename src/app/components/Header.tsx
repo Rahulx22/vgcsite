@@ -236,7 +236,7 @@ export default function Header({ data }: HeaderProps) {
             </div>
 
             {/* Navbar */}
-            <nav className="navbar navbar-expand-md" style={{ marginLeft: "auto", marginRight: "10px" }}>
+            <nav className="navbar navbar-expand-md" style={{ marginLeft: "auto", marginRight: "9px" }}>
               <button
                 className={`navbar-toggler ${menuOpen ? "open" : "collapsed"} d-flex flex-column justify-content-center `}
                 type="button"
