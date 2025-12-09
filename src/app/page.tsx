@@ -216,7 +216,6 @@ export default async function Page() {
   return (
     <>
     <Head>  <link rel="canonical" href="https://vgcadvisors.com/" /></Head>
-
     
       <HeroCarousel hero={data.hero}  />
       <Services services={data.services} />

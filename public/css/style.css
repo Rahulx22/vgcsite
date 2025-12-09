@@ -739,13 +739,26 @@ header .navbar .dropdown i, .mob-logo { display:none; }
     -webkit-tap-highlight-color: transparent !important;
   }
 
+  /* Show a visible logo/header inside the mobile drawer */
   .offcanvas-left .offcanvas-logo,
   .offcanvas-left .offcanvas-header .offcanvas-logo {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    padding: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    padding: 12px 18px !important;
     margin: 0 !important;
+  }
+
+  /* Make the mobile drawer full-screen width so items are not cut off */
+  .offcanvas-left {
+    left: -100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: none !important;
+  }
+
+  .offcanvas-left.open {
+    left: 0 !important;
   }
 
   .offcanvas-left .offcanvas-header {
@@ -763,6 +776,13 @@ header .navbar .dropdown i, .mob-logo { display:none; }
   header .mob-logo { display: none !important; }
   header .navbar-toggler { display: none !important; transform: none !important; top: auto !important; }
   .main, .inner-banner { margin-top: 84px !important; } 
+}
+
+/* Hide desktop CTA on tablets/phones so it doesn't appear between logo and toggle */
+@media (max-width: 991.98px) {
+  header .cont-btn { display: none !important; }
+  /* Ensure header content is centered and the toggle remains at right */
+  header .col-lg-12 { justify-content: space-between !important; }
 }
 /* ---------- Clients section (icons + labels) ---------- */
 .client-sec {
