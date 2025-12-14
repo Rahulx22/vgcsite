@@ -20,15 +20,16 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
               key={idx}
               className={`carousel-item ${idx === 0 ? "active" : ""}`}
             >
-              {/* IMAGE (Bootstrap responsive) */}
-              <Image
-                className="d-block w-100 img-fluid"
-                src={item.image}
-                alt={`banner-${idx}`}
-                width={1920}
-                height={500}
-                priority={idx === 0}
-              />
+              {/* IMAGE (Next/Image in fill mode to avoid swapping/placeholder issues) */}
+              <div className="carousel-img-wrapper">
+                <Image
+                  src={item.image}
+                  alt={`banner-${idx}`}
+                  fill
+                  priority={idx === 0}
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
 
               {/* CAPTION (Added 'd-flex flex-column h-100' for better vertical control) */}
               <div className="carousel-caption text-start d-flex flex-column h-100">

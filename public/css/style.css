@@ -95,13 +95,46 @@ header .dropdown-menu li:last-child a { border-bottom:none; }
   object-fit: cover !important;
 }
 
+/* Wrapper used by HeroCarousel for Next/Image fill mode */
+.carousel-img-wrapper {
+  position: relative;
+  width: 100%;
+  /* Fill viewport below the fixed header. Desktop header uses ~84px margin, mobile uses ~56px */
+  height: calc(100vh - 84px) !important;
+  min-height: 420px;
+}
+
+@media (max-width: 991.98px) {
+  .carousel-img-wrapper {
+    height: calc(100vh - 56px) !important;
+  }
+}
+
 /* Mobile button improvements */
+/* @media (max-width: 767.98px) {
+  .call-btn { font-size:14px; padding:8px 16px; }
+  .ready-sec a, .see-btn { font-size:14px; padding:8px 16px; }
+  .cont-btn { font-size:12px; padding:6px 12px; min-width: auto; white-space: nowrap; }
+  header .cont-btn { font-size:11px; padding:5px 10px; }
+  header .col-lg-12 > div:last-child { margin-left: 8px !important; }
+
+  height: calc(100vh - 84px) !important;
+  min-height: 420px;
+} */
+
+
 @media (max-width: 767.98px) {
   .call-btn { font-size:14px; padding:8px 16px; }
   .ready-sec a, .see-btn { font-size:14px; padding:8px 16px; }
   .cont-btn { font-size:12px; padding:6px 12px; min-width: auto; white-space: nowrap; }
   header .cont-btn { font-size:11px; padding:5px 10px; }
   header .col-lg-12 > div:last-child { margin-left: 8px !important; }
+
+  /* Full screen section */
+  .your-section {
+    height: calc(100dvh - 84px); /* modern mobile-safe viewport */
+    min-height: 420px;
+  }
 }
 
 .service-sec { background-color:var(--main-color); padding:80px 0; text-align:center; }
