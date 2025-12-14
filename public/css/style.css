@@ -83,6 +83,18 @@ header .dropdown-menu li:last-child a { border-bottom:none; }
 .call-btn { background-color:var(--main-color); border:none; border-radius:5px; color:#fff; display:inline-block; font-size:16px; padding:9px 20px; }
 .call-btn:hover, .ready-sec a:hover, .see-btn:hover, .up-btn:hover { background-color:var(--main-color-2) !important; color:#fff !important; }
 
+/* Fix: force hero carousel images to full-width to avoid layout shift
+   caused by global `img { width: auto }` rules. This targets only the
+   hero carousel images so other images are unaffected. */
+.main .carousel-item img,
+.main .carousel-item .img-fluid,
+.main .carousel-inner img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  object-fit: cover !important;
+}
+
 /* Mobile button improvements */
 @media (max-width: 767.98px) {
   .call-btn { font-size:14px; padding:8px 16px; }
