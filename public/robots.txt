@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Primary sitemap
+Sitemap: https://vgcadvisors.com/sitemap.xml
+# If you use a preview/staging domain, add it here as needed
+# Sitemap: https://vgcsite.netlify.app/sitemap.xml

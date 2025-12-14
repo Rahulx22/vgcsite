@@ -169,12 +169,7 @@ function mapApiToHomeDataStrict(apiJson: any): HomeData {
         ctaText: "",
       };
 
-  return {
-    hero,
-    services,
-    blog,
-    blogTitle,
-    clients,
+  return {hero,services,blog,blogTitle,    clients,
     clientsTitle,
     clientsSubtitle,
     testimonials,

@@ -83,7 +83,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
         </button>
 
         <button
-          className="carousel-control-next"
+          className="carousel-control-next" 
           type="button"
           data-bs-target="#carouselExampleControls"
           data-bs-slide="next"

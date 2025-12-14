@@ -3,7 +3,9 @@ import BlogSlider from "./BlogSlider";
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../lib/api";
 import BlogCard from "../components/BlogCard";
 import Link from "next/link";
-import Head from "next/head";
+import type { Metadata } from "next";
+
+// Note: we'll use `generateMetadata` (App Router) for per-page dynamic meta tags
 
 // =============================
 // Dynamic Settings
@@ -28,12 +30,15 @@ async function getPageSEO() {
     const json = await res.json();
     console.log("Fetched Pages Data:", json);
     const page = json?.data?.find((p) => p?.slug === "blog");
-
-
+    
+    
     // console.log("Fetched Page SEO Data:", page);
-    if (!page) return null;
+    
+    // if (!page) return null;
+    console.log("Identified Blog Page Data:", page);
 
-
+    // 
+    
     return {
       title: page.meta_title || "Our Blog",
       description: page.meta_description || "",
@@ -44,6 +49,33 @@ async function getPageSEO() {
   } catch {
     return null;
   }
+}
+
+// ----------------------------
+// Next metadata generation
+// ----------------------------
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getPageSEO();
+  if (!seo) return {};
+
+  const siteUrl = "https://vgcadvisors.com/blog";
+
+  return {
+    title: seo.title || "Our Blog",
+    description: seo.description || "",
+    keywords: seo.keywords || "",
+    alternates: { canonical: siteUrl },
+    openGraph: {
+      title: seo.title || "Our Blog",
+      description: seo.description || "",
+      url: siteUrl,
+      images: seo.banner ? [{ url: seo.banner, alt: seo.alt || "Blog Banner" }] : undefined,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
 }
 
 // =============================
@@ -111,15 +143,6 @@ export default async function BlogPage({ searchParams }) {
 
   return (
     <>
-      {/* =============================
-            DYNAMIC SEO META TAGS
-        ============================= */}
-      <Head>
-        <title>{pageSEO?.title || "Our Blog"}</title>
-        <link rel="canonical" href="https://vgcadvisors.com/blog" />
-        <meta name="robots" content="index, follow" />
-      </Head>
-
       {/* =============================
             BANNER FROM PAGE API
         ============================= */}
