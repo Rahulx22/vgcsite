@@ -99,28 +99,34 @@ header .dropdown-menu li:last-child a { border-bottom:none; }
 .carousel-img-wrapper {
   position: relative;
   width: 100%;
-  /* Fill viewport below the fixed header. Desktop header uses ~84px margin, mobile uses ~56px */
-  height: calc(100vh - 84px) !important;
-  min-height: 420px;
+  /* Use 'dvh' (dynamic viewport height) for better mobile browser support */
+  height: calc(100dvh - 84px); 
+  min-height: 400px;
+}
+
+/* Ensure the Next.js Image inside uses object-fit */
+.carousel-img-wrapper img {
+  object-fit: cover;
+  object-position: center;
 }
 
 @media (max-width: 991.98px) {
   .carousel-img-wrapper {
-    height: calc(100vh - 56px) !important;
+    /* Adjust for mobile header height */
+    height: calc(100dvh - 56px);
+    /* Lowering min-height prevents the banner from being too tall on small phones */
+    min-height: 300px; 
   }
 }
 
-/* Mobile button improvements */
-/* @media (max-width: 767.98px) {
-  .call-btn { font-size:14px; padding:8px 16px; }
-  .ready-sec a, .see-btn { font-size:14px; padding:8px 16px; }
-  .cont-btn { font-size:12px; padding:6px 12px; min-width: auto; white-space: nowrap; }
-  header .cont-btn { font-size:11px; padding:5px 10px; }
-  header .col-lg-12 > div:last-child { margin-left: 8px !important; }
+@media (max-width: 575.98px) {
+  .carousel-img-wrapper {
+    /* On very small screens, 100vh can be too much; 60-70vh often looks better */
+    height: 60vh;
+    min-height: 250px;
+  }
+}
 
-  height: calc(100vh - 84px) !important;
-  min-height: 420px;
-} */
 
 
 @media (max-width: 767.98px) {

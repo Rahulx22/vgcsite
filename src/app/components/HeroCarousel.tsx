@@ -20,16 +20,15 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
               key={idx}
               className={`carousel-item ${idx === 0 ? "active" : ""}`}
             >
-              {/* IMAGE (Next/Image in fill mode to avoid swapping/placeholder issues) */}
-              <div className="carousel-img-wrapper">
-                <Image
-                  src={item.image}
-                  alt={`banner-${idx}`}
-                  fill
-                  priority={idx === 0}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              {/* IMAGE (Bootstrap responsive) */}
+              <Image
+                className="d-block w-100 img-fluid"
+                src={item.image}
+                alt={`banner-${idx}`}
+                width={1920}
+                height={500}
+                priority={idx === 0}
+              />
 
               {/* CAPTION (Added 'd-flex flex-column h-100' for better vertical control) */}
               <div className="carousel-caption text-start d-flex flex-column h-100">
@@ -56,7 +55,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                       {/* COUNTERS */}
                       <ul className="list-unstyled d-flex flex-wrap mt-4 gap-4">
                         {(item.counters || []).map((c, i) => (
-                          <li key={i} className="me-4">
+                          <li key={i} >
                             <h2 className="fw-bold m-0">
                               {c.value}
                               {c.suffix}
@@ -84,7 +83,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
         </button>
 
         <button
-          className="carousel-control-next" 
+          className="carousel-control-next"
           type="button"
           data-bs-target="#carouselExampleControls"
           data-bs-slide="next"
