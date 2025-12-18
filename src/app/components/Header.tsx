@@ -204,7 +204,7 @@ export default function Header({ data }: HeaderProps) {
             style={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}
           >
             {/* Desktop logo */}
-            <div className="d-none d-md-inline-flex" style={{ alignItems: "center" }}>
+            <div className="d-none d-md-inline-flex " style={{ alignItems: "center"  }}>
               <Link href="/" aria-label="Home">
                 <Image
                   src={logoSrc}
@@ -236,9 +236,9 @@ export default function Header({ data }: HeaderProps) {
             </div>
 
             {/* Navbar */}
-            <nav className="navbar navbar-expand-md" style={{ flex: 1, marginLeft: 20 }}>
+            <nav className="navbar navbar-expand-md" style={{ marginLeft: "auto", marginRight: "9px" }}>
               <button
-                className={`navbar-toggler ${menuOpen ? "open" : "collapsed"}`}
+                className={`navbar-toggler ${menuOpen ? "open" : "collapsed"} d-flex flex-column justify-content-center `}
                 type="button"
                 aria-controls="navbarCollapse"
                 aria-expanded={menuOpen}
@@ -285,8 +285,8 @@ export default function Header({ data }: HeaderProps) {
             </nav>
 
             {/* CTA Button - Hidden on mobile */}
-            <div style={{ marginLeft: 20 }} className="d-none d-md-block">
-              <Link href={buttonHref} className="cont-btn" aria-label={buttonText}>
+            <div style={{ marginLeft: 20 }} className="d-none d-md-block ">
+              <Link href={buttonHref} className="cont-btn " aria-label={buttonText}>
                 {buttonText}
               </Link>
             </div>
