@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import Head from "next/head";
 
 
@@ -282,7 +282,8 @@ export default function ServicePage() {
     <>
       {/* Banner */}
     <Head><link rel="canonical" href="https://vgcadvisors.com/service" />
-    <meta name="robots" content="index, follow"></meta></Head>
+    <meta name="robots" content="index, follow"></meta>
+    </Head>
       <div
         className="service-banner"
         style={{

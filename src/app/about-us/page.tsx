@@ -219,6 +219,11 @@ async function fetchAboutPage() {
   return { banner: bannerData, about, whyChoose, beliefs, team, globalPresence, cta };
 }
 
+
+
+
+
+
 export default async function AboutPage() {
   const data = await fetchAboutPage();
 

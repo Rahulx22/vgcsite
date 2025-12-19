@@ -9,20 +9,67 @@ import { fetchWithTimeout, ensureUrl, stripHtml } from "../lib/api";
 import * as NextCache from "next/cache";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
-import { head } from "framer-motion/client";
+// import { head } from "framer-motion/client";
 import Head from "next/head";
 
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "VGC Consulting - Business, Tax & Compliance Solutions",
-  description:
-    "VGC Consulting provides comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures.",
-  keywords:
-    "business consulting, tax services, compliance services, MSME support, corporate advisory",
-    
+
+export async function generateMetadata(): Promise<Metadata> {
+  const res = await fetch(
+    "https://vgc.psofttechnologies.in/api/v1/pages",
+    {
+      cache: "force-cache",
+      next: { revalidate: 300 },
+    }
+  );
+
+  if (!res.ok) {
+    return {
+      title: "VGC Consulting",
+      description:
+        "Business, tax & compliance solutions for MSMEs and corporates.",
+    };
+  }
+
+  const json = await res.json();
+  const homePage =
+    json?.data?.find((p: any) => p.slug === "homepage") || {};
+
+  return {
+    title:
+      homePage?.meta_title ||
+      "VGC Consulting - Business, Tax & Compliance Solutions",
+
+    description:
+      homePage?.meta_description ||
+      "VGC Consulting provides comprehensive business, tax, and compliance solutions.",
+
+    keywords: homePage?.meta_keywords || "",
+
+    alternates: {
+      canonical: "https://vgcadvisors.com/",
+    },
+
+    openGraph: {
+      title:
+        homePage?.meta_title ||
+        "VGC Consulting",
+      description:
+        homePage?.meta_description ||
+        "Business, tax & compliance solutions.",
+      url: "https://vgcadvisors.com/",
+      siteName: "VGC Advisors",
+      type: "website",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
+}
 
 const noStoreCompat =
   (NextCache as any).noStore ??

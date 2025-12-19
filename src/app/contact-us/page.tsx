@@ -1,163 +1,82 @@
-"use client";
+// src/app/contact/page.tsx
+import { Metadata } from 'next';
+import ContactClient from './contact';
+import type { ContactApiResponse } from '../../types/pages'; // Adjust type name if needed
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import ContactForm from "../components/ContactForm";
-import { API_URL, fetchWithTimeout, ensureUrl } from "../../lib/api";
-import type { ContactApiResponse, ContactAddressBlock } from "../../types/pages";
-import Head from "next/head";
+// Helper to fetch the contact page data (shared between metadata and page)
+async function fetchContactPage(): Promise<ContactApiResponse | null> {
+  try {
+    const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
+      next: { revalidate: 300 }, // Cache for 5 minutes
+    });
 
+    if (!res.ok) return null;
 
-function transformContactData(apiData: ContactApiResponse) {
-  const addressBlock = apiData.blocks.find(
-    (block) => block.type === "address_section"
-  ) as ContactAddressBlock;
+    const json = await res.json();
+    const pages = Array.isArray(json?.data) ? json.data : [];
 
-  if (!addressBlock) {
-    throw new Error("Address section not found in contact data");
+    // Find contact page by type or slug (adjust if your API uses different identifiers)
+    return pages.find((page: any) => page.type === 'contact' || page.slug === 'contact') ?? null;
+  } catch (error) {
+    console.error('Failed to fetch contact page for metadata:', error);
+    return null;
+  }
+}
+
+// Dynamic metadata based on API data
+export async function generateMetadata(): Promise<Metadata> {
+  const contactPage = await fetchContactPage();
+  console.log("Contact Page Data for Metadata:", contactPage);
+  // Fallback if no data
+  if (!contactPage) {
+    return {
+      title: "Contact Us | VGC Consulting",
+      description: "Get in touch with VGC Consulting for business, tax, and compliance solutions.",
+      alternates: { canonical: "https://vgcadvisors.com/contact" },
+      robots: "index, follow",
+      other: {
+        "google-site-verification": "dQfS1gfzdBySBdAcoPTdOltneKPZB8gWMIeDBKf8G2I",
+      },
+    };
   }
 
+
+
+
+  "Contact us at VGC Consulting for queries, support, or consultations. Our team is ready to assist MSMEs, corporates, and global ventures efficiently."
   return {
-    addresses: addressBlock.data.addresses,
-    mapImage: addressBlock.data.map_image,
+    title: contactPage.meta_title || contactPage.title || "Contact Us | VGC Consulting",
+    description: contactPage.meta_description || "Contact VGC Consulting for expert advice and support.",
+    keywords: contactPage.meta_keywords || "contact, VGC Consulting, inquiry, support",
+    alternates: {
+      canonical: "https://vgcadvisors.com/contact",
+    },
+    robots: "index, follow",
+    openGraph: {
+      title: contactPage.meta_title || contactPage.title,
+      description: contactPage.meta_description,
+      url: "https://vgcadvisors.com/contact",
+      type: "website",
+      // Add images if your API provides og_image or similar
+    },
+    other: {
+      "google-site-verification": "dQfS1gfzdBySBdAcoPTdOltneKPZB8gWMIeDBKf8G2I",
+    },
   };
 }
 
-export default function ContactClient() {
-  const [contactData, setContactData] = useState<ContactApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default async function ContactPage() {
+  const contactData = await fetchContactPage();
 
-  useEffect(() => {
-    const fetchContactData = async () => {
-      try {
-        setLoading(true);
-
-        const response = await fetchWithTimeout(API_URL, {
-          cache: "force-cache",
-          next: { revalidate: 300 },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch pages data: ${response.status}`);
-        }
-
-        const apiResponse = await response.json();
-        const pages = Array.isArray(apiResponse?.data)
-          ? apiResponse.data
-          : [];
-
-        const contactPage = pages.find(
-          (page: any) => page.type === "contact" || page.slug === "contact"
-        );
-
-        if (!contactPage) {
-          throw new Error("Contact page not found in API response");
-        }
-
-        setContactData(contactPage);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load contact data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchContactData();
-  }, []);
-
-  if (loading)
+  // Optional: handle no data gracefully (show error or fallback UI)
+  if (!contactData) {
     return (
-      <div className="container" style={{ textAlign: "center", padding: "50px 0" }}>
-        <h2>Loading...</h2>
+      <div className="container" style={{ textAlign: 'center', padding: '50px 0' }}>
+        <h2>Failed to load contact page data</h2>
       </div>
     );
+  }
 
-  if (error || !contactData)
-    return (
-      <div className="container" style={{ textAlign: "center", padding: "50px 0" }}>
-        <h2>Error: {error || "Failed to load contact data"}</h2>
-      </div>
-    );
-
-  const { addresses, mapImage } = transformContactData(contactData);
-
-
-
-
-
-  
-
-  return (
-    <>
-      <Head>
-        <link rel="canonical" href="https://vgcadvisors.com/contact-us" />
-        <meta name="robots" content="index, follow" />
-      </Head>
-
-      <div className="contact-sec">
-        <div className="container-fluid">
-          <div className="row">
-
-            <div className="col-xl-6 col-lg-6 col-md-12">
-              <ContactForm title="Get In Touch" />
-            </div>
-
-            <div className="col-xl-6 col-lg-6 col-md-12">
-              <div className="cont-box">
-                {addresses.map((address, index) => (
-                  <div key={index}>
-                    <h3>Contact Information</h3>
-                    <ul>
-                      <li>
-                        <span>Address: </span>
-                        <span>{address.full_address}</span>
-                      </li>
-                      <li>
-                        <span>Phone: </span>
-                        <a href={`tel:${address.phone}`}>{address.phone}</a>
-                      </li>
-                      <li>
-                        <span>Email: </span>
-                        <a href={`mailto:${address.email}`}>{address.email}</a>
-                      </li>
-                      <li>
-                        <span>WhatsApp: </span>
-                        <a
-                          href={`https://wa.me/${address.whatsapp.replace(
-                            /[^0-9]/g,
-                            ""
-                          )}`}
-                        >
-                          {address.whatsapp}
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                ))}
-
-                {mapImage && (
-                  <div className="map-section" style={{ marginTop: "20px" }}>
-                    <Image
-                      src={ensureUrl(mapImage)}
-                      alt="Map Location"
-                      width={500}
-                      height={300}
-                      style={{ width: "100%", height: "auto" }}
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </>
-  );
+  // Pass the server-fetched data to the client component
+  return <ContactClient initialData={contactData} />;
 }
-
-
-
-

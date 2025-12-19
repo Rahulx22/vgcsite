@@ -7,7 +7,6 @@ import FooterContainer from "./components/FooterContainer";
 import PerformanceMonitor from "./components/PerformanceMonitor";
 import GlobalLoader from "./components/GlobalLoader";
 import "./globals.css";
-
 import * as NextCache from "next/cache";
 import AutoBanner from "./components/OfferBanner";
 import { headers } from "next/headers";
