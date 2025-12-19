@@ -1,10 +1,9 @@
 // src/app/contact/page.tsx
 import { Metadata } from 'next';
 import ContactClient from './contact';
-import type { ContactApiResponse } from '../../types/pages'; // Adjust type name if needed
 
 // Helper to fetch the contact page data (shared between metadata and page)
-async function fetchContactPage(): Promise<ContactApiResponse | null> {
+async function fetchContactPage(): Promise<null> {
   try {
     const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
       next: { revalidate: 300 }, // Cache for 5 minutes

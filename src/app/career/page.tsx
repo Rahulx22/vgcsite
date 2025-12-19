@@ -1,10 +1,9 @@
 // src/app/career/page.tsx
 import { Metadata } from 'next';
 import CareerClient from './CareerClient';
-import type { CareerApiResponse } from '../../types/pages';
 
 // Helper to fetch the career page data (shared between metadata and page)
-async function fetchCareerPage(): Promise<CareerApiResponse | null> {
+async function fetchCareerPage(): Promise<null> {
   try {
     const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
       next: { revalidate: 300 }, // Cache for 5 minutes
@@ -26,7 +25,7 @@ async function fetchCareerPage(): Promise<CareerApiResponse | null> {
 // Dynamic metadata based on API data
 export async function generateMetadata(): Promise<Metadata> {
   const careerPage = await fetchCareerPage();
-  console.log("Career Page Data for Metadata:", careerPage);  
+  console.log("Career Page Data for Metadata:", careerPage);
 
   // Fallback if no data
   if (!careerPage) {
@@ -44,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: careerPage.meta_title || careerPage.title || "Careers at VGC Consulting",
     description: careerPage.meta_description || "Join our team at VGC Consulting – explore career opportunities.",
-    keywords: careerPage.meta_keywords||"careers, jobs, VGC Consulting, join our team",
+    keywords: careerPage.meta_keywords || "careers, jobs, VGC Consulting, join our team",
     alternates: {
       canonical: "https://vgcadvisors.com/career",
     },
