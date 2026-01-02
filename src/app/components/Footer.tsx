@@ -1,258 +1,385 @@
 "use client";
 
-import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
 
-type NavigationItem = {
-  label: string;
-  url: string;
-  is_external: boolean;
-  order: number;
+
+/* ───────────────────────── Types ───────────────────────── */
+
+type Block = {
+  type: string;
+  data: {
+    title?: string;
+    description?: string;
+  };
 };
 
-type SocialLink = {
-  platform: string;
-  url: string;
-  icon: string | null;
+type PageItem = {
+  slug: string;
+  title: string;
+  blocks: Block[];
 };
 
-type FooterData = {
-  column_1: {
-    logo: string;           // e.g. "builder/footer/01K6....png"
-    description: string;
-    phone: string;
-    email: string;
-  };
-  column_2: {
-    show_navigation: boolean;
-    navigation: NavigationItem[];
-  };
-  column_3: {
-    social_links: SocialLink[];
-    newsletter: {
-      enabled: boolean;
-      heading: string;
-      subtext: string;
+/* ─────────────────────── Constants ─────────────────────── */
+
+const SETTINGS_API = "https://vgc.psofttechnologies.in/api/v1/settings";
+const PAGES_API = "https://vgc.psofttechnologies.in/api/v1/pages";
+
+/* ─────────────────────── Helpers ───────────────────────── */
+
+function getPoliciesDescription(page?: PageItem | null) {
+  return (
+    page?.blocks?.find((b) => b.type === "Policies")?.data?.description || null
+  );
+}
+
+/* ─────────────────────── Component ─────────────────────── */
+
+export default function Footer({ data }: { data: any }) {
+  const footerData = data;
+
+  const logoUrl = footerData?.logoUrl || "/images/logo.svg";
+  const description = footerData?.description || "VGC Consulting provides comprehensive business, tax, and compliance solutions.";
+  const phoneHref = footerData?.phoneHref || "tel:+123456789100";
+  const displayPhone = footerData?.displayPhone || "+123 456 789 100";
+  const email = footerData?.email || "hi@vgc@gmail.com";
+  const showNav = footerData?.showNav ?? true;
+  const navItems = footerData?.navItems || [
+    { label: "Home", url: "/", is_external: false, order: 1 },
+    { label: "About Us", url: "/about-us", is_external: false, order: 2 },
+    { label: "Services", url: "/service", is_external: false, order: 3 },
+    { label: "Career", url: "/career", is_external: false, order: 4 },
+    { label: "Contact Us", url: "/contact-us", is_external: false, order: 5 },
+  ];
+  const normalizeUrl = footerData?.normalizeUrl || ((url: string) => url);
+  const socialLinks = footerData?.socialLinks || [];
+  const pickIcon = footerData?.pickIcon || ((platform: string, icon?: string) => {
+    if (icon) return icon;
+    const icons: Record<string, string> = {
+      facebook: "/images/fb.svg",
+      twitter: "/images/tw.svg",
+      linkedin: "/images/li.svg",
+      instagram: "/images/ig.svg",
+      youtube: "/images/yt.svg",
     };
+    return icons[platform.toLowerCase()] || "/images/link.svg";
+  });
+  const newsletter = footerData?.newsletter || { enabled: false, heading: "Newsletter", subtext: "Subscribe to our newsletter" };
+  const leftText = footerData?.leftText || "© 2025 VGC Consulting. All rights reserved.";
+  const rightText = footerData?.rightText || "Powered by VGC";
+
+  const [activeModal, setActiveModal] =
+    useState<"policies" | null>(null);
+
+  const [termsHtml, setTermsHtml] = useState<string | null>(null);
+  const [privacyHtml, setPrivacyHtml] = useState<string | null>(null);
+
+  /* ───────── Bottom Sheet States ───────── */
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [translateY, setTranslateY] = useState(0);
+
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  /* ───────── Fetch Policies ───────── */
+  useEffect(() => {
+    fetch(PAGES_API)
+      .then((res) => res.json())
+      .then((json) => {
+        const pages: PageItem[] = json?.data || json;
+
+        setTermsHtml(
+          getPoliciesDescription(
+            pages.find((p) => p.slug === "terms-conditions")
+          )
+        );
+
+        setPrivacyHtml(
+          getPoliciesDescription(
+            pages.find((p) => p.slug === "privacy-policy")
+          )
+        );
+      })
+      .catch(console.error);
+  }, []);
+
+  /* ───────── Animate OPEN ───────── */
+  useEffect(() => {
+    if (activeModal) {
+      setTranslateY(window.innerHeight);
+      requestAnimationFrame(() => {
+        setTranslateY(0);
+      });
+    }
+  }, [activeModal]);
+
+  /* ───────── Close with animation ───────── */
+  const closeModal = () => {
+    setTranslateY(window.innerHeight);
+    setTimeout(() => {
+      setActiveModal(null);
+      setTranslateY(0);
+    }, 300);
   };
-  bottom_bar: {
-    left_text: string;
-    right_text: string;
+
+  /* ───────── Drag Logic ───────── */
+  const startDrag = (y: number) => {
+    setIsDragging(true);
+    setStartY(y);
   };
-};
 
-type FooterProps = { data?: FooterData | null };
+  const moveDrag = (y: number) => {
+    if (!isDragging) return;
+    const delta = y - startY;
+    if (delta > 0) setTranslateY(delta);
+  };
 
-const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
+  const endDrag = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
 
-function normalizeUrl(raw?: string) {
-  if (!raw) return "/";
-  let url = raw.trim().replace(/\\/g, "");
-  if (/^https?:\/\//i.test(url)) return url;   // absolute/external
-  if (!url.startsWith("/")) url = `/${url}`;
-  if (url === "/home") return "/";
-  return url; // keep /about-us, /services as-is
-}
+    if (translateY > 150) {
+      closeModal();
+      return;
+    }
 
-function normalizePhoneToHref(raw?: string) {
-  if (!raw) return "tel:+123456789100";
-  const trimmed = raw.trim();
-  if (trimmed.startsWith("tel:")) return trimmed;
-  const digits = trimmed.replace(/\s+/g, "");
-  return `tel:${digits}`;
-}
+    setTranslateY(0);
+  };
 
-const iconMap: Record<string, string> = {
-  facebook: "fb.svg",
-  twitter: "tw.svg",
-  linkedin: "link.svg",
-  instagram: "ins.svg",
-  pinterest: "pint.svg",
-};
+  useEffect(() => {
+    if (!isDragging) return;
 
-function pickIcon(platform: string, explicit?: string | null) {
-  if (explicit && explicit.trim()) {
-    // if backend ever sends relative path like "builder/icons/xyz.svg"
-    return /^https?:\/\//i.test(explicit)
-      ? explicit
-      : `${STORAGE_BASE}${explicit.replace(/^\/+/, "")}`;
-  }
-  const local = iconMap[(platform || "").toLowerCase()] ?? "link.svg";
-  return `/images/${local}`;
-}
+    const mouseMove = (e: MouseEvent) => moveDrag(e.clientY);
+    const touchMove = (e: TouchEvent) => moveDrag(e.touches[0].clientY);
+    const end = () => endDrag();
 
-export default function Footer({ data }: FooterProps) {
-  // --- Column 1 (branding)
-  const logoPath = data?.column_1?.logo?.trim() || "";
-  const logoUrl = logoPath
-    ? `${STORAGE_BASE}${logoPath.replace(/^\/+/, "")}` // ✅ no extra "builder/"
-    : "/images/logo.svg";
+    window.addEventListener("mousemove", mouseMove);
+    window.addEventListener("mouseup", end);
+    window.addEventListener("touchmove", touchMove);
+    window.addEventListener("touchend", end);
 
-  const description =
-    data?.column_1?.description ??
-    "Don't let finance and tax problems hold you back. At VGC Advisors, we are committed to empowering your business with expert financial advice and tailored solutions.";
+    return () => {
+      window.removeEventListener("mousemove", mouseMove);
+      window.removeEventListener("mouseup", end);
+      window.removeEventListener("touchmove", touchMove);
+      window.removeEventListener("touchend", end);
+    };
+  }, [isDragging, translateY]);
 
-  const displayPhone = data?.column_1?.phone ?? "+123 456 789 100";
-  const phoneHref = normalizePhoneToHref(displayPhone);
-  const email = data?.column_1?.email ?? "hi@vgc@gmail.com";
+  const modalHtml = (termsHtml ?? "<p>Terms not available.</p>") + "<br/><br/>" + (privacyHtml ?? "<p>Privacy not available.</p>");
 
-  // --- Column 2 (navigation)
-  const navItems: NavigationItem[] =
-    data?.column_2?.navigation?.length
-      ? [...data.column_2.navigation].sort((a, b) => a.order - b.order)
-      : [
-          { label: "Home", url: "/", is_external: false, order: 1 },
-          { label: "About", url: "/about-us", is_external: false, order: 2 },
-          { label: "Services", url: "/services", is_external: false, order: 3 },
-          { label: "Blog", url: "/blog", is_external: false, order: 4 },
-          { label: "Contact", url: "/contact", is_external: false, order: 5 },
-        ];
-  const showNav = data?.column_2?.show_navigation ?? true;
-
-  // --- Column 3 (social + newsletter)
-  const socialLinks = data?.column_3?.social_links || [];
-  const newsletter = data?.column_3?.newsletter;
-
-  // --- Bottom bar
-  const leftText = data?.bottom_bar?.left_text || "VGC Consulting Pvt. Ltd.";
-  const rightText = data?.bottom_bar?.right_text || "Copyright © 2025. All rights reserved.";
+  /* ─────────────────────── JSX ─────────────────────── */
 
   return (
+    <>
     <footer>
-      <div className="container">
-        <div className="row" style={{ alignItems: "flex-start" }}>
-          {/* Branding */}
-          <div className="col-xl-4 col-lg-4 col-md-4" style={{ minWidth: 0 }}>
-            <Link href="/" aria-label="Home">
-              <Image
-                src={logoUrl}
-                alt="logo"
-                width={220}
-                height={64}
-                loading="lazy"
-                unoptimized
-                // Clamp the visual height to avoid layout break
-                style={{
-                  height: "clamp(32px, 6vw, 56px)",
-                  width: "auto",
-                  maxWidth: "100%",
-                  objectFit: "contain",
-                  display: "block",
-                }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/images/logo.svg";
-                }}
-              />
-            </Link>
+        <div className="container">
+          <div className="row" style={{ alignItems: "flex-start" }}>
+            <div className="col-xl-4 col-lg-4 col-md-4" style={{ minWidth: 0 }}>
+              <Link href="/" aria-label="Home">
 
-            <p style={{ marginTop: 12 }}>{description}</p>
 
-            <ul className="info-list">
-              <li>
-                <a href={phoneHref} style={{ display: "inline-flex", alignItems: "center" }}>
-                  <Image src="/images/ph.svg" alt="phone icon" width={15} height={15} loading="lazy" />
-                  <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{displayPhone}</span>
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${email}`} style={{ display: "inline-flex", alignItems: "center" }}>
-                  <Image src="/images/ms.svg" alt="email icon" width={15} height={15} loading="lazy" />
-                  <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{email}</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+                <Image
+                  src={logoUrl}
+                  alt="logo"
+                  width={220}
+                  height={64}
+                  loading="lazy"
+                  unoptimized
+                  // Clamp the visual height to avoid layout break
+                  style={{
+                    height: "clamp(32px, 6vw, 56px)",
+                    width: "auto",
+                    maxWidth: "100%",
+                    objectFit: "contain",
+                    display: "block",
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/images/logo.svg";
+                  }}
+                />
+              </Link>
 
-          {/* Navigation */}
-          <div className="col-xl-3 col-lg-3 col-md-2 offset-xl-1" style={{ minWidth: 0 }}>
-            <h2>Navigation</h2>
-            {showNav && (
-              <ul>
-                {navItems.map((item) => {
-                  const href = normalizeUrl(item.url);
-                  const external = item.is_external || /^https?:\/\//i.test(item.url || "");
+              <p style={{ marginTop: 12 }}>{description}</p>
+
+              <ul className="info-list">
+                <li>
+                  <a href={phoneHref} style={{ display: "inline-flex", alignItems: "center" }}>
+                    <Image src="/images/ph.svg" alt="phone icon" width={15} height={15} loading="lazy" />
+                    <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{displayPhone}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href={`mailto:${email}`} style={{ display: "inline-flex", alignItems: "center" }}>
+                    <Image src="/images/ms.svg" alt="email icon" width={15} height={15} loading="lazy" />
+                    <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{email}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="col-xl-3 col-lg-3 col-md-2 offset-xl-1" style={{ minWidth: 0 }}>
+              <h2>Navigation</h2>
+              {showNav && (
+                <ul>
+                  {navItems.map((item) => {
+                    const href = normalizeUrl(item.url);
+                    const external = item.is_external || /^https?:\/\//i.test(item.url || "");
+                    return (
+                      <li key={`${item.order}-${item.label}`}>
+                        {external ? (
+                          <a href={href} target="_blank" rel="noopener noreferrer">
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link href={href}>{item.label}</Link>
+                        )}
+                      </li>
+                    );
+                  })}
+                  <li>
+                    <button
+                      onClick={() => setActiveModal("policies")}
+                      className="hover:text-white underline"
+                      style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
+                    >
+                      Terms & Conditions
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => setActiveModal("policies")}
+                      className="hover:text-white underline"
+                      style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
+                    >
+                      Privacy Policy
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+
+            {/* Social + Newsletter? */}
+
+            
+            <div className="col-xl-4 col-lg-5 col-md-6" style={{ minWidth: 0 }}>
+              <ul className="social-icon" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                {socialLinks.map((social, idx) => {
+                  const iconSrc = pickIcon(social.platform, social.icon || undefined);
+                  const href = social.url?.trim() ? social.url : "#";
+                  const label = (social.platform || "social").toLowerCase();
+                  const external = /^https?:\/\//i.test(href);
                   return (
-                    <li key={`${item.order}-${item.label}`}>
-                      {external ? (
-                        <a href={href} target="_blank" rel="noopener noreferrer">
-                          {item.label}
-                        </a>
-                      ) : (
-                        <Link href={href}>{item.label}</Link>
-                      )}
+                    <li key={idx} style={{ listStyle: "none" }}>
+                      <a
+                        href={href}
+                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        aria-label={`${label} social link`}
+                      >
+                        <Image
+                          src={iconSrc}
+                          alt={`${label} icon`}
+                          width={30}
+                          height={30}
+                          loading="lazy"
+                          unoptimized
+                          style={{ display: "block", objectFit: "contain" }}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/images/link.svg";
+                          }}
+                        />
+                      </a>
                     </li>
                   );
                 })}
               </ul>
-            )}
-          </div>
 
-          {/* Social + Newsletter */}
-          <div className="col-xl-4 col-lg-5 col-md-6" style={{ minWidth: 0 }}>
-            <ul className="social-icon" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              {socialLinks.map((social, idx) => {
-                const iconSrc = pickIcon(social.platform, social.icon || undefined);
-                const href = social.url?.trim() ? social.url : "#";
-                const label = (social.platform || "social").toLowerCase();
-                const external = /^https?:\/\//i.test(href);
-                return (
-                  <li key={idx} style={{ listStyle: "none" }}>
-                    <a
-                      href={href}
-                      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      aria-label={`${label} social link`}
-                    >
-                      <Image
-                        src={iconSrc}
-                        alt={`${label} icon`}
-                        width={30}
-                        height={30}
-                        loading="lazy"
-                        unoptimized
-                        style={{ display: "block", objectFit: "contain" }}
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = "/images/link.svg";
-                        }}
-                      />
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
+              {newsletter?.enabled && (
+                <>
+                  <h2>{newsletter.heading}</h2>
+                  <p>{newsletter.subtext}</p>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const input = (e.currentTarget.querySelector(".box") as HTMLInputElement) || null;
+                      const emailVal = input?.value?.trim();
+                      if (!emailVal) alert("Please enter your email");
+                      else {
+                        alert(`Subscribed: ${emailVal}`);
+                        if (input) input.value = "";
+                      }
+                    }}
+                  >
+                    <input className="box" type="text" placeholder="Your Email" />
+                    <input type="submit" className="call-btn" value="Subscribe" />
+                  </form>
+                </>
+              )}
+            </div>
 
-            {newsletter?.enabled && (
-              <>
-                <h2>{newsletter.heading}</h2>
-                <p>{newsletter.subtext}</p>
-                <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    const input = (e.currentTarget.querySelector(".box") as HTMLInputElement) || null;
-                    const emailVal = input?.value?.trim();
-                    if (!emailVal) alert("Please enter your email");
-                    else {
-                      alert(`Subscribed: ${emailVal}`);
-                      if (input) input.value = "";
-                    }
-                  }}
-                >
-                  <input className="box" type="text" placeholder="Your Email" />
-                  <input type="submit" className="call-btn" value="Subscribe" />
-                </form>
-              </>
-            )}
-          </div>
-
-          {/* Bottom bar */}
-          <div className="col-lg-12 col-md-12">
-            <div className="copy-txt" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-              <h6 style={{ margin: 0 }}>{leftText}</h6>
-              <h6 style={{ margin: 0, textAlign: "center", flex: "1 1 auto" }}>{rightText}</h6>
+            {/* Bottom bar */}
+            <div className="col-lg-12 col-md-12">
+              <div className="copy-txt" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+                <h6 style={{ margin: 0 }}>{leftText}</h6>
+                <h6 style={{ margin: 0, textAlign: "center", flex: "1 1 auto" }}>{rightText}</h6>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+
+            {/* ── Bottom Sheet Modal ── */}
+            {activeModal && (
+              <>
+                {/* Backdrop */}
+                <div
+                  className="fixed inset-0 z-[1000] bg-black/60"
+                  onClick={closeModal}
+                />
+
+                {/* Sheet */}
+                <div className="fixed inset-x-0 bottom-0 z-[1001]">
+                  <div
+                    ref={modalRef}
+                    className="mx-4 bg-gradient-to-t from-gray-900 via-gray-900 to-gray-950 rounded-3xl rounded-b-none shadow-2xl max-h-[90vh] overflow-y-auto pb-10 pt-6"
+                    style={{
+                      transform: `translateY(${translateY}px)`,
+                      transition: isDragging
+                        ? "none"
+                        : "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Drag Handle */}
+                    <div
+                      className="mx-auto mb-6 h-1.5 w-20 bg-gray-500 rounded-full cursor-grab active:cursor-grabbing"
+                      onMouseDown={(e) => startDrag(e.clientY)}
+                      onTouchStart={(e) => startDrag(e.touches[0].clientY)}
+                    />
+
+                    {/* Header */}
+                    <div className="px-8 pb-6 border-b border-gray-800 flex justify-between items-center">
+                      <h2 className="text-xl font-semibold text-white">
+                        Terms & Conditions & Privacy Policy
+                      </h2>
+                      <button
+                        onClick={closeModal}
+                        className="text-gray-400 hover:text-white text-xl"
+                      >
+                        ✕
+                      </button>
+                    </div>
+
+                    {/* Content */}
+                    <div
+                      className="px-8 pt-6 text-gray-300 prose prose-invert max-w-none"
+                      dangerouslySetInnerHTML={{ __html: modalHtml }}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+    </>
   );
 }
