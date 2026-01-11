@@ -53,19 +53,29 @@ export default function Footer({ data }: { data: any }) {
     { label: "Contact Us", url: "/contact-us", is_external: false, order: 5 },
   ];
   const normalizeUrl = footerData?.normalizeUrl || ((url: string) => url);
-  const socialLinks = footerData?.socialLinks || [];
+  const socialLinks = footerData?.socialLinks || [
+    { platform: "facebook", url: "https://www.facebook.com/vgcconsulting", icon: "/images/fb.svg" },
+    { platform: "youtube", url: "https://www.youtube.com/@vgcconsulting", icon: "/images/yt.svg" },
+    { platform: "linkedin", url: "https://www.linkedin.com/company/vgcconsulting", icon: "/images/li.svg" },
+    { platform: "instagram", url: "https://www.instagram.com/vgcconsulting", icon: "/images/ig.svg" },
+    { platform: "whatsapp", url: "https://wa.me/919354988846", icon: "/images/ws.svg" },
+  ];
   const pickIcon = footerData?.pickIcon || ((platform: string, icon?: string) => {
     if (icon) return icon;
     const icons: Record<string, string> = {
       facebook: "/images/fb.svg",
-      twitter: "/images/tw.svg",
+      youtube: "/images/yt.svg",
       linkedin: "/images/li.svg",
       instagram: "/images/ig.svg",
-      youtube: "/images/yt.svg",
+      whatsapp: "/images/ws.svg",
     };
     return icons[platform.toLowerCase()] || "/images/link.svg";
   });
-  const newsletter = footerData?.newsletter || { enabled: false, heading: "Newsletter", subtext: "Subscribe to our newsletter" };
+  const newsletter = footerData?.newsletter || { 
+    enabled: true, 
+    heading: "STAY COMPLIANT & INFORMED", 
+    subtext: "Stay audit-ready every quarter. Get timely tax deadlines, GST compliance tips, and practical financial advice delivered to your inbox—designed for Indian MSMEs." 
+  };
   const leftText = footerData?.leftText || "© 2025 VGC Consulting. All rights reserved.";
   const rightText = footerData?.rightText || "Powered by VGC";
 
@@ -264,27 +274,34 @@ export default function Footer({ data }: { data: any }) {
 
             
             <div className="col-xl-4 col-lg-5 col-md-6" style={{ minWidth: 0 }}>
-              <ul className="social-icon" style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+              <h2>Follow Us</h2>
+              <ul className="social-icon" style={{ display: "flex", gap: 15, flexWrap: "wrap", alignItems: "center", padding: 0, margin: 0 }}>
                 {socialLinks.map((social, idx) => {
                   const iconSrc = pickIcon(social.platform, social.icon || undefined);
                   const href = social.url?.trim() ? social.url : "#";
                   const label = (social.platform || "social").toLowerCase();
                   const external = /^https?:\/\//i.test(href);
                   return (
-                    <li key={idx} style={{ listStyle: "none" }}>
+                    <li key={idx} style={{ listStyle: "none", display: "inline-block" }}>
                       <a
                         href={href}
                         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         aria-label={`${label} social link`}
+                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
                       >
                         <Image
                           src={iconSrc}
                           alt={`${label} icon`}
-                          width={30}
-                          height={30}
+                          width={36}
+                          height={36}
                           loading="lazy"
                           unoptimized
-                          style={{ display: "block", objectFit: "contain" }}
+                          style={{ 
+                            display: "block", 
+                            objectFit: "contain",
+                            width: "36px",
+                            height: "36px"
+                          }}
                           onError={(e) => {
                             (e.target as HTMLImageElement).src = "/images/link.svg";
                           }}
@@ -297,8 +314,8 @@ export default function Footer({ data }: { data: any }) {
 
               {newsletter?.enabled && (
                 <>
-                  <h2>{newsletter.heading}</h2>
-                  <p>{newsletter.subtext}</p>
+                  <h2 style={{ marginTop: "24px" }}>{newsletter.heading}</h2>
+                  <p style={{ fontSize: "14px", lineHeight: "1.6", marginBottom: "16px" }}>{newsletter.subtext}</p>
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -311,8 +328,30 @@ export default function Footer({ data }: { data: any }) {
                       }
                     }}
                   >
-                    <input className="box" type="text" placeholder="Your Email" />
-                    <input type="submit" className="call-btn" value="Subscribe" />
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <label htmlFor="newsletter-email" style={{ fontSize: "12px", fontWeight: "500" }}>YOUR EMAIL</label>
+                      <input 
+                        id="newsletter-email"
+                        className="box" 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        required
+                        style={{
+                          padding: "10px 12px",
+                          border: "1px solid #ccc",
+                          borderRadius: "4px",
+                          fontSize: "14px",
+                          backgroundColor: "transparent",
+                          color: "inherit"
+                        }}
+                      />
+                      <input 
+                        type="submit" 
+                        className="call-btn" 
+                        value="Subscribe"
+                        style={{ marginTop: "8px" }}
+                      />
+                    </div>
                   </form>
                 </>
               )}
