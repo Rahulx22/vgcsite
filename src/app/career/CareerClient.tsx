@@ -425,111 +425,85 @@ export default function CareerClient() {
               </div>
             </div>
 
-            <div className="col-xl-12 col-lg-12 col-md-12">
-              <Image className="filter-img" src="/images/filter.png" alt="filter" width={1200} height={200} loading="eager" quality={80} />
-            </div>
 
-            <div className="col-xl-6 col-lg-6 col-md-12">
-              {sectionData.left_section.map((section, index) => (
-                <div key={index} className="career-box career-box-top-spacing">
-                  <h3>{section.title}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: section.description }} />
-                </div>
-              ))}
-            </div>
 
-            <div className="col-xl-6 col-lg-6 col-md-12">
-              {/* Show job openings if available */}
-              {sectionData.jobs && sectionData.jobs.length > 0 && (
-                <div className="career-box career-box-top-spacing">
-                  <h3>Current Openings</h3>
 
-                  {/* Scrollable container for job listings */}
-                  <div className="job-listings-scroll">
-                    {/* Show only active jobs without filtering */}
-                    {activeJobs
-                      .sort((a: CareerJob, b: CareerJob) => {
-                        // Define custom order - more specific matching
-                        const getOrder = (title: string) => {
-                          const lowerTitle = title.toLowerCase();
-                          if (lowerTitle.includes('senior consultant')) return 0;
-                          if (lowerTitle.includes('developer') && !lowerTitle.includes('senior consultant')) return 1;
-                          return 2; // All other jobs
-                        };
+            {sectionData.jobs?.length > 0 && (
+  <div className="col-12">
+    <div className="career-box career-box-top-spacing">
+      <h3 className="text-center fw-bold mb-4">Current Openings</h3>
 
-                        return getOrder(a.title) - getOrder(b.title);
-                      })
-                      .map((job: CareerJob, index: number) => {
-                        const parsedJob = parseJobDescription(job.long_description);
-                        return (
-                          <div key={job.id} id={`job-${job.id}`} style={{ marginBottom: '20px' }}>
-                            <h4>
-                              {job.title}
-                              <button
-                                className="call-btn"
-                                onClick={() => handleJobPdfDownload(job)}
-                                style={{ marginLeft: '10px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--main-color)' }}
-                              >
-                                {job.job_description_doc ? 'Download PDF' : 'Learn More'}
-                              </button>
-                            </h4>
-                            {parsedJob.responsibilities.length > 0 && (
-                              <>
-                                <h5>Responsibilities:</h5>
-                                <ul className="with-bullets">
-                                  {parsedJob.responsibilities.map((resp, respIndex) => (
-                                    <li key={respIndex}>{resp}</li>
-                                  ))}
-                                </ul>
-                              </>
-                            )}
-                            {parsedJob.idealFor.length > 0 && (
-                              <>
-                                <h5>Ideal For:</h5>
-                                <ul className="with-bullets">
-                                  {parsedJob.idealFor.map((ideal, idealIndex) => (
-                                    <li key={idealIndex}>{ideal}</li>
-                                  ))}
-                                </ul>
-                              </>
-                            )}
-                            {/* Fallback: if no parsed content, show raw description */}
-                            {parsedJob.responsibilities.length === 0 && parsedJob.idealFor.length === 0 && job.long_description && (
-                              <div dangerouslySetInnerHTML={{ __html: job.long_description }} />
-                            )}
-                          </div>
-                        );
-                      })}
+      <div className="row g-4">
+        {activeJobs.map((job: CareerJob) => {
+          const parsedJob = parseJobDescription(job.long_description);
+
+          return (
+            <div key={job.id} className="col-12">
+              <div className="card shadow-sm border-0">
+                <div className="card-body">
+                  {/* Job Header */}
+                  <div className="d-flex justify-content-between mb-3">
+                    <h5 className="fw-bold mb-0">{job.title}</h5>
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleJobPdfDownload(job)}
+                    >
+                      {job.job_description_doc ? "PDF" : "Details"}
+                    </button>
                   </div>
-                </div>
-              )}
 
-              {sectionData.right_section.map((section, index) => (
-                <div key={index} className="career-box">
-                  <h3>{section.title}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: section.description }} />
-                </div>
-              ))}
-
-              <div className="career-box">
-                <h6>{sectionData.main_text}</h6>
-                <div className="btn-sec">
-                  {sectionData.left_button_text && (
-                    <a className="call-btn" href={sectionData.left_button_url}>
-                      {sectionData.left_button_text}
-                    </a>
+                  {/* RESPONSIBILITIES */}
+                  {parsedJob.responsibilities?.length > 0 && (
+                    <>
+                      <h6 className="fw-semibold mb-3">Responsibilities</h6>
+                      <div className="row g-3">
+                        {parsedJob.responsibilities.map((item, i) => (
+                          <div key={i} className="col-md-6 col-lg-4">
+                            <div className="card h-100 border shadow-sm">
+                              <div className="card-body text-center">
+                                <i className="bi bi-check-circle-fill text-primary fs-4 mb-2" />
+                                <p className="mb-0 fw-medium">{item}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </>
                   )}
-                  {sectionData.right_button_text && (
-                    <a className="up-btn" href={sectionData.right_button_url}>
-                      {sectionData.right_button_text}
-                    </a>
+
+                  {/* IDEAL FOR */}
+                  {parsedJob.idealFor?.length > 0 && (
+                    <>
+                      <h6 className="fw-semibold mt-4 mb-3">Ideal For</h6>
+                      <div className="row g-3">
+                        {parsedJob.idealFor.map((item, i) => (
+                          <div key={i} className="col-md-6 col-lg-4">
+                            <div className="card h-100 border shadow-sm">
+                              <div className="card-body text-center">
+                                <i className="bi bi-person-check-fill text-success fs-4 mb-2" />
+                                <p className="mb-0 fw-medium">{item}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
             </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+)}
+
+
           </div>
         </div>
       </div>
+
     </>
   );
 }
