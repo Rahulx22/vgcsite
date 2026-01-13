@@ -1,241 +1,198 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
+/* ================= TYPES ================= */
 
-/* ───────────────────────── Types ───────────────────────── */
+type NavigationItem = {
+  label: string;
+  url: string;
+  is_external: boolean;
+  order: number;
+};
 
-type Block = {
-  type: string;
-  data: {
-    title?: string;
-    description?: string;
+type SocialLink = {
+  platform: string;
+  url: string;
+  icon: string | null;
+};
+
+type FooterData = {
+  column_1: {
+    logo: string;
+    description: string;
+    phone: string;
+    email: string;
+  };
+  column_2: {
+    show_navigation: boolean;
+    navigation: NavigationItem[];
+  };
+  column_3: {
+    social_links: SocialLink[];
+    newsletter: {
+      enabled: boolean;
+      heading: string;
+      subtext: string;
+    };
+  };
+  bottom_bar: {
+    left_text: string;
+    right_text: string;
   };
 };
 
-type PageItem = {
-  slug: string;
-  title: string;
-  blocks: Block[];
-};
+type FooterProps = { data?: FooterData | null };
 
-/* ─────────────────────── Constants ─────────────────────── */
+/* ================= CONSTANTS ================= */
 
-const SETTINGS_API = "https://vgc.psofttechnologies.in/api/v1/settings";
+const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
 const PAGES_API = "https://vgc.psofttechnologies.in/api/v1/pages";
 
-/* ─────────────────────── Helpers ───────────────────────── */
+/* ================= HELPERS ================= */
 
-function getPoliciesDescription(page?: PageItem | null) {
-  return (
-    page?.blocks?.find((b) => b.type === "Policies")?.data?.description || null
-  );
+function normalizeUrl(raw?: string) {
+  if (!raw) return "/";
+  let url = raw.trim().replace(/\\/g, "");
+  if (/^https?:\/\//i.test(url)) return url;
+  if (!url.startsWith("/")) url = `/${url}`;
+  if (url === "/home") return "/";
+  return url;
 }
 
-/* ─────────────────────── Component ─────────────────────── */
+function normalizePhoneToHref(raw?: string) {
+  if (!raw) return "tel:+123456789100";
+  if (raw.startsWith("tel:")) return raw;
+  return `tel:${raw.replace(/\s+/g, "")}`;
+}
 
-export default function Footer({ data }: { data: any }) {
-  const footerData = data;
+const iconMap: Record<string, string> = {
+  facebook: "fb.svg",
+  twitter: "tw.svg",
+  linkedin: "link.svg",
+  instagram: "ins.svg",
+  pinterest: "pint.svg",
+};
 
-  const logoUrl = footerData?.logoUrl || "/images/logo.svg";
-  const description = footerData?.description || "VGC Consulting provides comprehensive business, tax, and compliance solutions.";
-  const phoneHref = footerData?.phoneHref || "tel:+123456789100";
-  const displayPhone = footerData?.displayPhone || "+123 456 789 100";
-  const email = footerData?.email || "hi@vgc@gmail.com";
-  const showNav = footerData?.showNav ?? true;
-  const navItems = footerData?.navItems || [
-    { label: "Home", url: "/", is_external: false, order: 1 },
-    { label: "About Us", url: "/about-us", is_external: false, order: 2 },
-    { label: "Services", url: "/service", is_external: false, order: 3 },
-    { label: "Career", url: "/career", is_external: false, order: 4 },
-    { label: "Contact Us", url: "/contact-us", is_external: false, order: 5 },
-  ];
-  const normalizeUrl = footerData?.normalizeUrl || ((url: string) => url);
-  const socialLinks = footerData?.socialLinks || [
-    { platform: "facebook", url: "https://www.facebook.com/vgcconsulting", icon: "/images/fb.svg" },
-    { platform: "youtube", url: "https://www.youtube.com/@vgcconsulting", icon: "/images/yt.svg" },
-    { platform: "linkedin", url: "https://www.linkedin.com/company/vgcconsulting", icon: "/images/li.svg" },
-    { platform: "instagram", url: "https://www.instagram.com/vgcconsulting", icon: "/images/ig.svg" },
-    { platform: "whatsapp", url: "https://wa.me/919354988846", icon: "/images/ws.svg" },
-  ];
-  const pickIcon = footerData?.pickIcon || ((platform: string, icon?: string) => {
-    if (icon) return icon;
-    const icons: Record<string, string> = {
-      facebook: "/images/fb.svg",
-      youtube: "/images/yt.svg",
-      linkedin: "/images/li.svg",
-      instagram: "/images/ig.svg",
-      whatsapp: "/images/ws.svg",
-    };
-    return icons[platform.toLowerCase()] || "/images/link.svg";
-  });
-  const newsletter = footerData?.newsletter || { 
-    enabled: true, 
-    heading: "STAY COMPLIANT & INFORMED", 
-    subtext: "Stay audit-ready every quarter. Get timely tax deadlines, GST compliance tips, and practical financial advice delivered to your inbox—designed for Indian MSMEs." 
-  };
-  const leftText = footerData?.leftText || "© 2025 VGC Consulting. All rights reserved.";
-  const rightText = footerData?.rightText || "Powered by VGC";
+function pickIcon(platform: string, explicit?: string | null) {
+  if (explicit && explicit.trim()) {
+    return /^https?:\/\//i.test(explicit)
+      ? explicit
+      : `${STORAGE_BASE}${explicit.replace(/^\/+/, "")}`;
+  }
+  return `/images/${iconMap[platform.toLowerCase()] ?? "link.svg"}`;
+}
 
-  const [activeModal, setActiveModal] =
-    useState<"policies" | null>(null);
+/* ================= FOOTER ================= */
 
+export default function Footer({ data }: FooterProps) {
+  /* ===== Policy States ===== */
+  const [activePolicy, setActivePolicy] = useState<"terms" | "privacy" | null>(null);
   const [termsHtml, setTermsHtml] = useState<string | null>(null);
   const [privacyHtml, setPrivacyHtml] = useState<string | null>(null);
 
-  /* ───────── Bottom Sheet States ───────── */
-  const [isDragging, setIsDragging] = useState(false);
-  const [startY, setStartY] = useState(0);
-  const [translateY, setTranslateY] = useState(0);
-
-  const modalRef = useRef<HTMLDivElement | null>(null);
-
-  /* ───────── Fetch Policies ───────── */
+  /* ===== Fetch Policies ===== */
   useEffect(() => {
     fetch(PAGES_API)
       .then((res) => res.json())
-      .then((json) => {
-        const pages: PageItem[] = json?.data || json;
+      .then((res) => {
+        const pages = res?.data || res;
 
-        setTermsHtml(
-          getPoliciesDescription(
-            pages.find((p) => p.slug === "terms-conditions")
-          )
-        );
+        const getPolicy = (slug: string) =>
+          pages
+            ?.find((p: any) => p.slug === slug)
+            ?.blocks?.find((b: any) => b.type === "Policies")?.data
+            ?.description || null;
 
-        setPrivacyHtml(
-          getPoliciesDescription(
-            pages.find((p) => p.slug === "privacy-policy")
-          )
-        );
+        setTermsHtml(getPolicy("terms-conditions"));
+        setPrivacyHtml(getPolicy("privacy-policy"));
       })
       .catch(console.error);
   }, []);
 
-  /* ───────── Animate OPEN ───────── */
-  useEffect(() => {
-    if (activeModal) {
-      setTranslateY(window.innerHeight);
-      requestAnimationFrame(() => {
-        setTranslateY(0);
-      });
-    }
-  }, [activeModal]);
+  /* ===== Column 1 ===== */
+  const logoPath = data?.column_1?.logo?.trim() || "";
+  const logoUrl = logoPath
+    ? `${STORAGE_BASE}${logoPath.replace(/^\/+/, "")}`
+    : "/images/logo.svg";
 
-  /* ───────── Close with animation ───────── */
-  const closeModal = () => {
-    setTranslateY(window.innerHeight);
-    setTimeout(() => {
-      setActiveModal(null);
-      setTranslateY(0);
-    }, 300);
-  };
+  const description =
+    data?.column_1?.description ??
+    "Don't let finance and tax problems hold you back. At VGC Advisors, we are committed to empowering your business with expert financial advice and tailored solutions.";
 
-  /* ───────── Drag Logic ───────── */
-  const startDrag = (y: number) => {
-    setIsDragging(true);
-    setStartY(y);
-  };
+  const displayPhone = data?.column_1?.phone ?? "+123 456 789 100";
+  const phoneHref = normalizePhoneToHref(displayPhone);
+  const email = data?.column_1?.email ?? "hi@vgc@gmail.com";
 
-  const moveDrag = (y: number) => {
-    if (!isDragging) return;
-    const delta = y - startY;
-    if (delta > 0) setTranslateY(delta);
-  };
+  /* ===== Column 2 ===== */
+  const navItems =
+    data?.column_2?.navigation?.length
+      ? [...data.column_2.navigation].sort((a, b) => a.order - b.order)
+      : [];
 
-  const endDrag = () => {
-    if (!isDragging) return;
-    setIsDragging(false);
+  const showNav = data?.column_2?.show_navigation ?? true;
 
-    if (translateY > 150) {
-      closeModal();
-      return;
-    }
+  /* ===== Column 3 ===== */
+  const socialLinks = data?.column_3?.social_links || [];
+  const newsletter = data?.column_3?.newsletter;
 
-    setTranslateY(0);
-  };
+  /* ===== Bottom ===== */
+  const leftText = data?.bottom_bar?.left_text || "VGC Consulting Pvt. Ltd.";
+  const rightText =
+    data?.bottom_bar?.right_text ||
+    "Copyright © 2025. All rights reserved.";
 
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const mouseMove = (e: MouseEvent) => moveDrag(e.clientY);
-    const touchMove = (e: TouchEvent) => moveDrag(e.touches[0].clientY);
-    const end = () => endDrag();
-
-    window.addEventListener("mousemove", mouseMove);
-    window.addEventListener("mouseup", end);
-    window.addEventListener("touchmove", touchMove);
-    window.addEventListener("touchend", end);
-
-    return () => {
-      window.removeEventListener("mousemove", mouseMove);
-      window.removeEventListener("mouseup", end);
-      window.removeEventListener("touchmove", touchMove);
-      window.removeEventListener("touchend", end);
-    };
-  }, [isDragging, translateY]);
-
-  const modalHtml = (termsHtml ?? "<p>Terms not available.</p>") + "<br/><br/>" + (privacyHtml ?? "<p>Privacy not available.</p>");
-
-  /* ─────────────────────── JSX ─────────────────────── */
+  /* ================= JSX ================= */
 
   return (
     <>
-    <footer>
+
+
+
+      <footer>
         <div className="container">
-          <div className="row" style={{ alignItems: "flex-start" }}>
-            <div className="col-xl-4 col-lg-4 col-md-4" style={{ minWidth: 0 }}>
-              <Link href="/" aria-label="Home">
+          <div className="row">
 
-
-                <Image
-                  src={logoUrl}
-                  alt="logo"
-                  width={220}
-                  height={64}
-                  loading="lazy"
-                  unoptimized
-                  // Clamp the visual height to avoid layout break
-                  style={{
-                    height: "clamp(32px, 6vw, 56px)",
-                    width: "auto",
-                    maxWidth: "100%",
-                    objectFit: "contain",
-                    display: "block",
-                  }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "/images/logo.svg";
-                  }}
-                />
+            {/* Branding */}
+            <div className="col-xl-4 col-lg-4 col-md-4">
+              <Link href="/">
+                <Image src={logoUrl} alt="logo" width={220} height={64} unoptimized />
               </Link>
 
-              <p style={{ marginTop: 12 }}>{description}</p>
+              <p>{description}</p>
 
               <ul className="info-list">
                 <li>
-                  <a href={phoneHref} style={{ display: "inline-flex", alignItems: "center" }}>
-                    <Image src="/images/ph.svg" alt="phone icon" width={15} height={15} loading="lazy" />
-                    <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{displayPhone}</span>
+                  <a href={phoneHref}>
+                    <Image src="/images/ph.svg" alt="" width={15} height={15} />
+                    <span>{displayPhone}</span>
                   </a>
                 </li>
                 <li>
-                  <a href={`mailto:${email}`} style={{ display: "inline-flex", alignItems: "center" }}>
-                    <Image src="/images/ms.svg" alt="email icon" width={15} height={15} loading="lazy" />
-                    <span style={{ paddingLeft: 6, wordBreak: "break-word" }}>{email}</span>
+                  <a href={`mailto:${email}`}>
+                    <Image src="/images/ms.svg" alt="" width={15} height={15} />
+                    <span>{email}</span>
                   </a>
                 </li>
               </ul>
             </div>
 
-            <div className="col-xl-3 col-lg-3 col-md-2 offset-xl-1" style={{ minWidth: 0 }}>
+            {/* Navigation */}
+            <div className="col-xl-3 col-lg-3 col-md-2 offset-xl-1">
               <h2>Navigation</h2>
               {showNav && (
                 <ul>
                   {navItems.map((item) => {
                     const href = normalizeUrl(item.url);
                     const external = item.is_external || /^https?:\/\//i.test(item.url || "");
+
+                    // Skip Terms & Privacy here
+                    if (item.label === 'Terms Conditions' || item.label === 'Privacy Policy') {
+                      return null;
+                    }
+
                     return (
                       <li key={`${item.order}-${item.label}`}>
                         {external ? (
@@ -248,177 +205,109 @@ export default function Footer({ data }: { data: any }) {
                       </li>
                     );
                   })}
-                  <li>
-                    <button
-                      onClick={() => setActiveModal("policies")}
-                      className="hover:text-white underline"
-                      style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
-                    >
-                      Terms & Conditions
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => setActiveModal("policies")}
-                      className="hover:text-white underline"
-                      style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer' }}
-                    >
-                      Privacy Policy
-                    </button>
-                  </li>
+
+                  {/* ✅ Separate Policy Buttons */}
+                  {termsHtml && (
+                    <li>
+                      <button
+                        onClick={() => setActivePolicy("terms")}
+                        style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                      >
+                        Terms & Conditions
+                      </button>
+                    </li>
+                  )}
+
+                  {privacyHtml && (
+                    <li>
+                      <button
+                        onClick={() => setActivePolicy("privacy")}
+                        style={{ background: "none", border: "none", padding: 0, cursor: "pointer" }}
+                      >
+                        Privacy Policy
+                      </button>
+                    </li>
+                  )}
                 </ul>
               )}
+
             </div>
 
-            {/* Social + Newsletter? */}
-
-            
-            <div className="col-xl-4 col-lg-5 col-md-6" style={{ minWidth: 0 }}>
-              <h2>Follow Us</h2>
-              <ul className="social-icon" style={{ display: "flex", gap: 15, flexWrap: "wrap", alignItems: "center", padding: 0, margin: 0 }}>
-                {socialLinks.map((social, idx) => {
-                  const iconSrc = pickIcon(social.platform, social.icon || undefined);
-                  const href = social.url?.trim() ? social.url : "#";
-                  const label = (social.platform || "social").toLowerCase();
-                  const external = /^https?:\/\//i.test(href);
-                  return (
-                    <li key={idx} style={{ listStyle: "none", display: "inline-block" }}>
-                      <a
-                        href={href}
-                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                        aria-label={`${label} social link`}
-                        style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}
-                      >
-                        <Image
-                          src={iconSrc}
-                          alt={`${label} icon`}
-                          width={36}
-                          height={36}
-                          loading="lazy"
-                          unoptimized
-                          style={{ 
-                            display: "block", 
-                            objectFit: "contain",
-                            width: "36px",
-                            height: "36px"
-                          }}
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = "/images/link.svg";
-                          }}
-                        />
-                      </a>
-                    </li>
-                  );
-                })}
+            {/* Social + Newsletter */}
+            <div className="col-xl-4 col-lg-5 col-md-6">
+              <ul className="social-icon">
+                {socialLinks.map((s, i) => (
+                  <li key={i}>
+                    <a href={s.url} target="_blank">
+                      <Image
+                        src={pickIcon(s.platform, s.icon)}
+                        alt=""
+                        width={30}
+                        height={30}
+                        unoptimized
+                      />
+                    </a>
+                  </li>
+                ))}
               </ul>
 
               {newsletter?.enabled && (
                 <>
-                  <h2 style={{ marginTop: "24px" }}>{newsletter.heading}</h2>
-                  <p style={{ fontSize: "14px", lineHeight: "1.6", marginBottom: "16px" }}>{newsletter.subtext}</p>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const input = (e.currentTarget.querySelector(".box") as HTMLInputElement) || null;
-                      const emailVal = input?.value?.trim();
-                      if (!emailVal) alert("Please enter your email");
-                      else {
-                        alert(`Subscribed: ${emailVal}`);
-                        if (input) input.value = "";
-                      }
-                    }}
-                  >
-                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                      <label htmlFor="newsletter-email" style={{ fontSize: "12px", fontWeight: "500" }}>YOUR EMAIL</label>
-                      <input 
-                        id="newsletter-email"
-                        className="box" 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        required
-                        style={{
-                          padding: "10px 12px",
-                          border: "1px solid #ccc",
-                          borderRadius: "4px",
-                          fontSize: "14px",
-                          backgroundColor: "transparent",
-                          color: "inherit"
-                        }}
-                      />
-                      <input 
-                        type="submit" 
-                        className="call-btn" 
-                        value="Subscribe"
-                        style={{ marginTop: "8px" }}
-                      />
-                    </div>
+                  <h2>{newsletter.heading}</h2>
+                  <p>{newsletter.subtext}</p>
+                  <form>
+                    <input className="box" placeholder="Your Email" />
+                    <input type="submit" className="call-btn" />
                   </form>
                 </>
               )}
             </div>
 
-            {/* Bottom bar */}
-            <div className="col-lg-12 col-md-12">
-              <div className="copy-txt" style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
-                <h6 style={{ margin: 0 }}>{leftText}</h6>
-                <h6 style={{ margin: 0, textAlign: "center", flex: "1 1 auto" }}>{rightText}</h6>
+            {/* Bottom */}
+            <div className="col-lg-12">
+              <div className="copy-txt">
+                <h6>{leftText}</h6>
+                <h6>{rightText}</h6>
               </div>
             </div>
           </div>
         </div>
       </footer>
 
-            {/* ── Bottom Sheet Modal ── */}
-            {activeModal && (
-              <>
-                {/* Backdrop */}
-                <div
-                  className="fixed inset-0 z-[1000] bg-black/60"
-                  onClick={closeModal}
-                />
+      {/* ================= MODAL ================= */}
+      {activePolicy && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,.6)",
+            zIndex: 9999,
+          }}
+          onClick={() => setActivePolicy(null)}
+        >
+          <div
+            style={{
+              background: "#fff",
+              maxWidth: 900,
+              margin: "5vh auto",
+              padding: 30,
+              borderRadius: 8,
+              maxHeight: "90vh",
+              overflowY: "auto",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button onClick={() => setActivePolicy(null)}>✕</button>
 
-                {/* Sheet */}
-                <div className="fixed inset-x-0 bottom-0 z-[1001]">
-                  <div
-                    ref={modalRef}
-                    className="mx-4 bg-gradient-to-t from-gray-900 via-gray-900 to-gray-950 rounded-3xl rounded-b-none shadow-2xl max-h-[90vh] overflow-y-auto pb-10 pt-6"
-                    style={{
-                      transform: `translateY(${translateY}px)`,
-                      transition: isDragging
-                        ? "none"
-                        : "transform 0.3s cubic-bezier(0.22, 1, 0.36, 1)",
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    {/* Drag Handle */}
-                    <div
-                      className="mx-auto mb-6 h-1.5 w-20 bg-gray-500 rounded-full cursor-grab active:cursor-grabbing"
-                      onMouseDown={(e) => startDrag(e.clientY)}
-                      onTouchStart={(e) => startDrag(e.touches[0].clientY)}
-                    />
-
-                    {/* Header */}
-                    <div className="px-8 pb-6 border-b border-gray-800 flex justify-between items-center">
-                      <h2 className="text-xl font-semibold text-white">
-                        Terms & Conditions & Privacy Policy
-                      </h2>
-                      <button
-                        onClick={closeModal}
-                        className="text-gray-400 hover:text-white text-xl"
-                      >
-                        ✕
-                      </button>
-                    </div>
-
-                    {/* Content */}
-                    <div
-                      className="px-8 pt-6 text-gray-300 prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: modalHtml }}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+            <div
+              dangerouslySetInnerHTML={{
+                __html:
+                  activePolicy === "terms" ? termsHtml! : privacyHtml!,
+              }}
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
