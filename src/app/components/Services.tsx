@@ -76,7 +76,6 @@ export default function Services({ services, offerings }: ServicesProps) {
                           loading="eager"
                           quality={90}
                         />
-                        {index}
                       </strong>
                       <h3>{s.title}</h3>
                       <p>{s.desc}</p>
