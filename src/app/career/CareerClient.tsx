@@ -262,6 +262,17 @@ export default function CareerClient() {
     return text.length > max ? text.slice(0, max) + "..." : text;
   }
 
+
+
+
+  // Add this inside the if (formElement) block after scrollTo
+  setTimeout(() => {
+    const firstInput = document.querySelector('input[name="firstName"]') as HTMLInputElement;
+    firstInput?.focus();
+  }, 700);
+
+
+
   return (
     <>
       <div className="business-banner dd">
@@ -494,131 +505,135 @@ export default function CareerClient() {
                 quality={80}
               />
             </div>
-
-            <div className="col-xl-6 col-lg-6 col-md-12">
+            <div className="col-12">
               {activeJobs.length > 0 ? (
                 <>
-                  <h3 className="mb-4 text-center text-xl-start">Current Openings</h3>
+                  <h3 className="mb-5 text-center fw-bold">Current Openings</h3>
 
                   <div className="row g-4">
-                    {activeJobs
-                      .sort(sortJobs)
-                      .map((job: CareerJob) => {
-                        const sections = parseJobDescription(job.long_description);
+                    {activeJobs.sort(sortJobs).map((job: CareerJob) => {
+                      const sections = parseJobDescription(job.long_description);
 
-                        return (
+                      return (
+                        <div key={job.id} className="col-lg-6 col-md-12 mb-4">
+                          <div
+                            className="card shadow-sm border-0 h-100"
+                            style={{ borderRadius: "16px", overflow: "hidden" }}
+                          >
+                            {/* 
+                   Fixed Height Container: 
+                   Using d-flex flex-column ensures the middle content pushes the footer down 
+                */}
+                            <div className="card-body p-4 p-lg-5 d-flex flex-column" style={{ height: "650px" }}>
 
-                          <div className="row">
-                            <div key={job.id} className="col-lg-6 col-md-6 col-sm-12 mb-3">
-                              <div className="card">
-                                <div className="card-body">
-
-                                  <div key={job.id} className=" col-lg-6 col-md-12">
-                                    <div
-                                      id={`job-${job.slug || job.id}`}
-                                      className="card shadow-sm border-0 h-100"
-                                      style={{ borderRadius: "12px", overflow: "hidden" }}
-                                    >
-                                      <div className="card-body p-4 p-lg-5">
-                                        {/* Header - Title + Actions */}
-                                        <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
-                                          <div>
-                                            <h4 className="card-title mb-1 fw-bold">{job.title}</h4>
-                                            {job.roles && job.roles !== job.title && (
-                                              <p className="text-muted mb-0 small">{job.roles}</p>
-                                            )}
-                                          </div>
-
-                                          <div className="d-flex gap-2 flex-wrap">
-                                            {job.job_description_doc && (
-                                              <button
-                                                className="btn btn-outline-primary btn-sm"
-                                                onClick={() => handleJobPdfDownload(job)}
-                                              >
-                                                <i className="bi bi-download me-1"></i> Download JD
-                                              </button>
-                                            )}
-
-                                            {/* Quick apply button */}
-                                            <button
-                                              className="btn btn-primary btn-sm"
-                                              onClick={() => {
-                                                setFormData((prev) => ({ ...prev, position: job.title }));
-                                                window.scrollTo({ top: 0, behavior: "smooth" });
-                                              }}
-                                            >
-                                              Apply Now
-                                            </button>
-                                          </div>
-                                        </div>
-
-                                        {/* Short Description */}
-                                        {job.short_description && (
-                                          <div className="alert alert-light border p-3 mb-4">
-                                            <p className="mb-0 text-muted">
-                                              {getShortText(job.short_description, 240)}
-                                            </p>
-                                          </div>
-                                        )}
-
-                                        {/* Detailed Sections */}
-                                        {sections.length > 0 ? (
-                                          sections.map((section, idx) => (
-                                            <div key={idx} className="mb-4">
-                                              <h5 className="fw-bold text-primary mb-3 pb-2 border-bottom">
-                                                {section.title}
-                                              </h5>
-                                              <ul className="list-unstyled ps-0">
-                                                {section.items.map((item, i) => (
-                                                  <li key={i} className="mb-3 d-flex align-items-start">
-                                                    <span className="text-primary me-3 mt-1">•</span>
-                                                    <span>{item}</span>
-                                                  </li>
-                                                ))}
-                                              </ul>
-                                            </div>
-                                          ))
-                                        ) : (
-                                          <div className="text-center py-4 text-muted fst-italic">
-                                            Detailed description available in the Job Description document
-                                          </div>
-                                        )}
-
-                                        {/* Small footer info */}
-                                        <div className="mt-4 pt-3 border-top small text-muted">
-                                          <div className="d-flex justify-content-between align-items-center">
-                                            <span>
-                                              Posted: {new Date(job.created_at).toLocaleDateString("en-IN")}
-                                            </span>
-                                            {job.job_description_doc && (
-                                              <span className="text-primary">Full JD • PDF</span>
-                                            )}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                              {/* 1. HEADER: flex-shrink-0 keeps it from squishing */}
+                              <div className="flex-shrink-0 border-bottom pb-3 mb-4">
+                                <div className="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+                                  <div>
+                                    <h4 className="card-title mb-1 fw-bold text-dark">{job.title}</h4>
+                                    {job.roles && job.roles !== job.title && (
+                                      <p className="text-muted mb-0 small">{job.roles}</p>
+                                    )}
                                   </div>
 
-
+                                  <div className="d-flex gap-2">
+                                    {job.job_description_doc && (
+                                      <button
+                                        className="btn btn-outline-primary btn-sm rounded-pill px-3"
+                                        onClick={() => handleJobPdfDownload(job)}
+                                      >
+                                        <i className="bi bi-file-pdf me-1"></i> JD
+                                      </button>
+                                    )}
+                                    <button
+                                      className="btn btn-primary btn-sm rounded-pill px-3 shadow-sm"
+                                      onClick={() => {
+                                        setFormData((prev) => ({ ...prev, position: job.title }));
+                                        const formElement = document.querySelector('.cont-form');
+                                        if (formElement) {
+                                          const HEADER_OFFSET = 100;
+                                          const elementPosition = formElement.getBoundingClientRect().top;
+                                          const offsetPosition = elementPosition + window.scrollY - HEADER_OFFSET;
+                                          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                                        }
+                                      }}
+                                    >
+                                      Apply Now
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
+
+                              {/* 2. SCROLLABLE BODY: flex-grow-1 takes all available middle space */}
+                              <div
+                                className="flex-grow-1 overflow-auto pe-3"
+                                style={{
+                                  scrollbarWidth: 'thin',
+                                  scrollbarColor: '#0d6efd #f8f9fa'
+                                }}
+                              >
+                                {/* Short description */}
+                                {job.short_description && (
+                                  <div className="alert alert-primary bg-primary-subtle border-0 p-3 mb-4 rounded-3">
+                                    <p className="mb-0 text-dark small">
+                                      <i className="bi bi-info-circle-fill me-2"></i>
+                                      {getShortText(job.short_description, 240)}
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* Structured sections */}
+                                {sections.length > 0 ? (
+                                  sections.map((section, idx) => (
+                                    <div key={idx} className="mb-4">
+                                      <h6 className="fw-bold text-primary text-uppercase small mb-3 border-bottom pb-2" style={{ letterSpacing: '0.5px' }}>
+                                        {section.title}
+                                      </h6>
+                                      <ul className="list-unstyled ps-0">
+                                        {section.items.map((item, i) => (
+                                          <li key={i} className="mb-2 d-flex align-items-start small text-secondary">
+                                            <i className="bi bi-check-circle-fill text-primary me-2 mt-1" style={{ fontSize: '0.85rem' }}></i>
+                                            <span>{item}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  ))
+                                ) : (
+                                  <div className="text-center py-5 text-muted fst-italic small">
+                                    Detailed description available in the Job Description PDF
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* 3. FOOTER: flex-shrink-0 stays at the bottom */}
+                              <div className="flex-shrink-0 mt-3 pt-3 border-top small text-muted">
+                                <div className="d-flex justify-content-between align-items-center">
+                                  <span>
+                                    <i className="bi bi-calendar3 me-2"></i>
+                                    Posted: {new Date(job.created_at).toLocaleDateString("en-IN")}
+                                  </span>
+                                  <span className="badge rounded-pill bg-light text-primary border">
+                                    <i className="bi bi-briefcase me-1"></i> Full Time
+                                  </span>
+                                </div>
+                              </div>
+
                             </div>
                           </div>
-
-
-
-                        );
-                      })}
+                        </div>
+                      );
+                    })}
                   </div>
                 </>
               ) : (
-                <div className="text-center py-5">
-                  <h4 className="text-muted">No active openings at the moment</h4>
-                  <p className="text-muted">Please check back soon!</p>
+                <div className="text-center py-5 my-5">
+                  <div className="display-6 text-muted mb-3"><i className="bi bi-search"></i></div>
+                  <h4 className="text-muted">No active openings right now</h4>
+                  <p className="text-muted">Please check back later!</p>
                 </div>
               )}
             </div>
-
 
           </div>
         </div>
