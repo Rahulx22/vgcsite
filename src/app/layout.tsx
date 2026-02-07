@@ -38,7 +38,7 @@ async function fetchSettingsOnce() {
   // In server runtime avoid fetching the local API route (which can cause
   // self-connection timeouts in some dev environments). Fetch the upstream
   // settings endpoint directly instead.
-  const res = await fetch("https://vgc.psofttechnologies.in/api/v1/settings", { cache: "no-store" });
+  const res = await fetch("https://panel.vgcadvisors.com/api/v1/settings", { cache: "no-store" });
   if (!res.ok) throw new Error(`Settings fetch failed: ${res.status}`);
 
   return res.json();

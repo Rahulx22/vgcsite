@@ -41,7 +41,7 @@ export default function ContactForm({ title }: ContactFormProps) {
     const fetchServices = async () => {
       try {
         setLoadingServices(true);
-        const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", { 
+        const res = await fetch("https://panel.vgcadvisors.com/api/v1/pages", { 
           cache: "no-store" 
         });
         
@@ -97,7 +97,7 @@ export default function ContactForm({ title }: ContactFormProps) {
         message: formData.message
       };
 
-      const response = await fetch("https://vgc.psofttechnologies.in/api/v1/contact-form", {
+      const response = await fetch("https://panel.vgcadvisors.com/api/v1/contact-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

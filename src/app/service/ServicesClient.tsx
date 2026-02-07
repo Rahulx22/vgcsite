@@ -72,10 +72,10 @@ type CMSResponse = {
 };
 
 // ---------- Helpers ----------
-const API_URL = "https://vgc.psofttechnologies.in/api/v1/pages";
+const API_URL = "https://panel.vgcadvisors.com/api/v1/pages";
 const STORAGE_BASE =
   process.env.NEXT_PUBLIC_CMS_STORAGE_BASE ||
-  "https://vgc.psofttechnologies.in/storage";
+  "https://panel.vgcadvisors.com/storage";
 
 function assetUrl(path?: string | null): string {
   if (!path) return "";
@@ -145,7 +145,7 @@ export default function ServicePage() {
         message: formData.message
       };
 
-      const response = await fetch("https://vgc.psofttechnologies.in/api/v1/contact-form", {
+      const response = await fetch("https://panel.vgcadvisors.com/api/v1/contact-form", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -21,7 +21,7 @@ const PER_PAGE = 3;
 async function getPageSEO() {
   try {
     const res = await fetchWithTimeout(
-      "https://vgc.psofttechnologies.in/api/v1/pages",
+      "https://panel.vgcadvisors.com/api/v1/pages",
       { cache: "force-cache", next: { revalidate: 300 } }
     );
 
@@ -84,7 +84,7 @@ export async function generateMetadata(): Promise<Metadata> {
 async function getBlogs() {
   try {
     const res = await fetchWithTimeout(
-      "https://vgc.psofttechnologies.in/api/v1/blogs",
+      "https://panel.vgcadvisors.com/api/v1/blogs",
       { cache: "force-cache", next: { revalidate: 300 } }
     );
     if (!res.ok) return [];

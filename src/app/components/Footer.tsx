@@ -48,8 +48,8 @@ type FooterProps = { data?: FooterData | null };
 
 /* ================= CONSTANTS ================= */
 
-const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
-const PAGES_API = "https://vgc.psofttechnologies.in/api/v1/pages";
+const STORAGE_BASE = "https://panel.vgcadvisors.com/storage/";
+const PAGES_API = "https://panel.vgcadvisors.com/api/v1/pages";
 
 /* ================= HELPERS ================= */
 

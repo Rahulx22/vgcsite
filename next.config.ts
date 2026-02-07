@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "vgc.psofttechnologies.in",
+        hostname: "panel.vgcadvisors.com",
         pathname: "/storage/builder/**",
       },
     ],

@@ -24,7 +24,7 @@ const noStoreCompat =
   (NextCache as any).unstable_noStore ??
   (() => {});
 
-const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
+const STORAGE_BASE = "https://panel.vgcadvisors.com/storage/";
 
 function mkImage(path?: string | null) {
   if (!path) return null;

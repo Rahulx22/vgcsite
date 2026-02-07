@@ -1,6 +1,6 @@
 const https = require('https');
 
-https.get('https://vgc.psofttechnologies.in/api/v1/pages', (resp) => {
+https.get('https://panel.vgcadvisors.com/api/v1/pages', (resp) => {
   let data = '';
 
   resp.on('data', (chunk) => {

@@ -56,7 +56,7 @@ function formatDate(iso?: string) {
 async function getAllBlogs(): Promise<BlogPost[]> {
   try {
     const res = await fetchWithTimeout(
-      "https://vgc.psofttechnologies.in/api/v1/blogs",
+      "https://panel.vgcadvisors.com/api/v1/blogs",
       { cache: "no-store" }
     );
 

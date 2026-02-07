@@ -195,7 +195,7 @@ export default function CareerClient() {
       });
       if (resume) submitData.append("resume", resume);
 
-      const res = await fetch("https://vgc.psofttechnologies.in/api/v1/resume-form", {
+      const res = await fetch("https://panel.vgcadvisors.com/api/v1/resume-form", {
         method: "POST",
         body: submitData,
       });
@@ -226,7 +226,7 @@ export default function CareerClient() {
 
   const handleJobPdfDownload = (job: CareerJob) => {
     if (job.job_description_doc) {
-      const pdfUrl = `https://vgc.psofttechnologies.in/storage/${job.job_description_doc.replace(/^\/+/, "")}`;
+      const pdfUrl = `https://panel.vgcadvisors.com/storage/${job.job_description_doc.replace(/^\/+/, "")}`;
       if (pdfUrl.endsWith(".pdf")) {
         window.open(pdfUrl, "_blank");
       }

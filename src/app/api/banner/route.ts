@@ -1,5 +1,5 @@
 export async function GET() {
-    const r = await fetch("https://vgc.psofttechnologies.in/api/v1/banners", {
+    const r = await fetch("https://panel.vgcadvisors.com/api/v1/banners", {
       cache: "no-store",
     });
   

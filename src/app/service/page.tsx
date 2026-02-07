@@ -7,7 +7,7 @@ import ServicesClient from './ServicesClient';
 // Helper to fetch the services page data
 async function fetchServicesPage(): Promise< null> {
   try {
-    const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
+    const res = await fetch("https://panel.vgcadvisors.com/api/v1/pages", {
       next: { revalidate: 300 }, // ISR: revalidate every 5 minutes
     });
 

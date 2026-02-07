@@ -42,7 +42,7 @@ const isMiddleShape = (x: unknown): x is MiddleShape =>
   typeof x === "object" &&
   isHeaderData((x as MiddleShape)?.header);
 
-const STORAGE_BASE = "https://vgc.psofttechnologies.in/storage/";
+const STORAGE_BASE = "https://panel.vgcadvisors.com/storage/";
 
 const normalizeUrl = (raw?: string) => {
   if (!raw) return "/";
@@ -132,20 +132,17 @@ export default function Header({ data }: HeaderProps) {
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
-
-
-
-  const [styles, setStyles] = useState({
+  const [styles, setStyles] = useState<React.CSSProperties>({
     borderTop: "1px solid #eef0f2",
     marginTop: "15px",
     paddingTop: "15px",
     paddingBottom: "10px",
     width: "100%",
-    boxSizing: "border-box",
+    boxSizing: "border-box" as const,
     textAlign: "center",
   });
 
-  const [linkStyles, setLinkStyles] = useState({
+  const [linkStyles, setLinkStyles] = useState<React.CSSProperties>({
     display: "inline-block",
     background: "#0070f3",
     color: "#fff",
@@ -156,7 +153,7 @@ export default function Header({ data }: HeaderProps) {
     textDecoration: "none",
     transition: "background 0.2s",
     width: "auto",
-    boxSizing: "border-box",
+    boxSizing: "border-box" as const,
   });
 
   useEffect(() => {
@@ -196,6 +193,8 @@ export default function Header({ data }: HeaderProps) {
 
 
   return (
+
+
     <header ref={headerRef}>
       <div className="container">
         <div className="row">
@@ -204,7 +203,7 @@ export default function Header({ data }: HeaderProps) {
             style={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}
           >
             {/* Desktop logo */}
-            <div className="d-none d-md-inline-flex " style={{ alignItems: "center"  }}>
+            <div className="d-none d-md-inline-flex" style={{ alignItems: "center" }}>
               <Link href="/" aria-label="Home">
                 <Image
                   src={logoSrc}
@@ -285,8 +284,8 @@ export default function Header({ data }: HeaderProps) {
             </nav>
 
             {/* CTA Button - Hidden on mobile */}
-            <div style={{ marginLeft: 20 }} className="d-none d-md-block ">
-              <Link href={buttonHref} className="cont-btn " aria-label={buttonText}>
+            <div style={{ marginLeft: 20 }} className="d-none d-md-block">
+              <Link href={buttonHref} className="cont-btn" aria-label={buttonText}>
                 {buttonText}
               </Link>
             </div>
@@ -333,5 +332,8 @@ export default function Header({ data }: HeaderProps) {
       {/* Backdrop */}
       <div className={`offcanvas-backdrop ${menuOpen ? "show" : ""}`} onClick={closeMenu} />
     </header>
+
+
+
   );
 }

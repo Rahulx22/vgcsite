@@ -5,7 +5,7 @@ import CareerClient from './CareerClient';
 // Helper to fetch the career page data (shared between metadata and page)
 async function fetchCareerPage(): Promise<null> {
   try {
-    const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
+    const res = await fetch("https://panel.vgcadvisors.com/api/v1/pages", {
       next: { revalidate: 300 }, // Cache for 5 minutes
     });
 

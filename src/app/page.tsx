@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const res = await fetch(
-    "https://vgc.psofttechnologies.in/api/v1/pages",
+    "https://panel.vgcadvisors.com/api/v1/pages",
     {
       cache: "force-cache",
       next: { revalidate: 300 },
@@ -238,7 +238,7 @@ export default async function Page() {
   // request to our own API route (which can cause partial responses or timeouts
   // during server-side execution). This returns the full CMS pages data.
   const pagesRes = await fetchWithTimeout(
-    "https://vgc.psofttechnologies.in/api/v1/pages",
+    "https://panel.vgcadvisors.com/api/v1/pages",
     {
       cache: "force-cache",
       next: { revalidate: 300 },
@@ -254,6 +254,8 @@ export default async function Page() {
 
   const json = await pagesRes.json();
   const data = mapApiToHomeDataStrict(json);
+
+  console.log("Mapped home page data:", JSON.stringify(data, null, 2)); 
 
   return (
     <>

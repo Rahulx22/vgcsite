@@ -1,9 +1,9 @@
 // lib/api.ts
 import { DEFAULT_CACHE_OPTIONS } from './cache';
 
-export const API_URL = "https://vgc.psofttechnologies.in/api/v1/pages";
-export const SETTINGS_URL = "https://vgc.psofttechnologies.in/api/v1/settings";
-export const IMAGE_BASE = "https://vgc.psofttechnologies.in/storage/builder/";
+export const API_URL = "https://panel.vgcadvisors.com/api/v1/pages";
+export const SETTINGS_URL = "https://panel.vgcadvisors.com/api/v1/settings";
+export const IMAGE_BASE = "https://panel.vgcadvisors.com/storage/builder/";
 
 /**
  * Fetch with timeout

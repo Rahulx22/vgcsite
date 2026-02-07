@@ -1,6 +1,6 @@
 const https = require('https');
 
-https.get('https://vgc.psofttechnologies.in/api/v1/pages', (resp) => {
+https.get('https://panel.vgcadvisors.com/api/v1/pages', (resp) => {
   let data = '';
 
   resp.on('data', (chunk) => {
@@ -23,7 +23,7 @@ https.get('https://vgc.psofttechnologies.in/api/v1/pages', (resp) => {
               console.log(`PDF URL in API: ${job.job_description_doc}`);
               
               // Try different URL patterns
-              const baseUrl = 'https://vgc.psofttechnologies.in';
+              const baseUrl = 'https://panel.vgcadvisors.com';
               const patterns = [
                 `${baseUrl}/${job.job_description_doc}`,
                 `${baseUrl}/storage/${job.job_description_doc}`,

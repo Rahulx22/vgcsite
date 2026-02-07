@@ -1,7 +1,0 @@
-[
-  { "label": "Home", "href": "/" },
-  { "label": "About Us", "href": "/about-us" },
-  { "label": "Services", "href": "/service", "dropdown": true },
-  { "label": "Blog", "href": "/blog" },
-  { "label": "Career", "href": "/career" }
-]

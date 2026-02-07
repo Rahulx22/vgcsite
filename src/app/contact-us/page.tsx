@@ -5,7 +5,7 @@ import ContactClient from './contact';
 // Helper to fetch the contact page data (shared between metadata and page)
 async function fetchContactPage(): Promise<null> {
   try {
-    const res = await fetch("https://vgc.psofttechnologies.in/api/v1/pages", {
+    const res = await fetch("https://panel.vgcadvisors.com/api/v1/pages", {
       next: { revalidate: 300 }, // Cache for 5 minutes
     });
 
