@@ -335,5 +335,5 @@ export default function Header({ data }: HeaderProps) {
 
 
 
-  );
+);
 }

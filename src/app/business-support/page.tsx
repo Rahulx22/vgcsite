@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Image from "next/image";
-import businessSupportData from "../../data/business-support.json";
+// import businessSupportData from "../../data/business-support.json";
 import type { BusinessSupportPage } from "../../types/pages";
 import type { Metadata } from "next";
 
