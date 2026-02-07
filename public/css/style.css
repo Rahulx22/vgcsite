@@ -455,9 +455,13 @@ footer .col-xl-3, footer .col-xl-4 { padding:20px 12px; }
 }
 @media (min-width:320px) and (max-width:991.98px){
 .logo { margin:15px 0; }	
-.mob-logo { margin:20px auto; width:145px; }
-.mob-logo img, .business-txt .container { max-width:100%; width:100%; }
-header .navbar-expand-md { order:3; padding:10px 0; }	
+.business-txt .container { max-width:100%; width:100%; }
+header .navbar-expand-md { order:3; padding:0; margin: 0; }	
+header .navbar-collapse { background-color:#fff; box-shadow:0 0 5px #999; height:100%; left:-15px; overflow-y:auto; position:fixed; top:0; transform:translateX(-100%); transition:0.3s cubic-bezier(0.55,0,0.1,1); width:280px; z-index:11; -webkit-transform:translateX(-100%); -webkit-transition:0.3s cubic-bezier(0.55,0,0.1,1); }
+header .collapse.show { left:0; transform:translateX(0); -webkit-transform:translateX(0); } 
+header .navbar-nav { display:block; padding:0 15px; }
+header .navbar-toggler:focus { box-shadow:none; outline:none; }
+header .navbar-toggler .icon-bar { background-color:var(--main-color); display:block; height:3px; margin:5px 0; outline:none; transition:all 500ms; width:25px; }
 header .navbar-collapse { background-color:#fff; box-shadow:0 0 5px #999; height:100%; left:-15px; overflow-y:auto; position:fixed; top:0; transform:translateX(-100%); transition:0.3s cubic-bezier(0.55,0,0.1,1); width:280px; z-index:11; -webkit-transform:translateX(-100%); -webkit-transition:0.3s cubic-bezier(0.55,0,0.1,1); }
 header .collapse.show { left:0; transform:translateX(0); -webkit-transform:translateX(0); } 
 header .navbar-nav { display:block; padding:0 15px; }
@@ -864,9 +868,74 @@ header .navbar-toggler {
 /* Hide desktop CTA on tablets/phones so it doesn't appear between logo and toggle */
 @media (max-width: 991.98px) {
   header .cont-btn { display: none !important; }
-  hi
+  
   /* Ensure header content is centered and the toggle remains at right */
   header .col-lg-12 { justify-content: space-between !important; }
+  
+  /* Fix icon overlap on tablets by adding proper spacing */
+  header .navbar-toggler {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex-shrink: 0;
+  }
+  
+  header .navbar-expand-md {
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0 !important;
+  }
+  
+  /* Prevent logo from overlapping with hamburger */
+  header .d-md-inline-flex {
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+
+/* Tablet-specific refinements (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  header {
+    padding: 0;
+  }
+  
+  header .container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  header .col-lg-12 {
+    padding: 0 !important;
+    gap: 16px !important;
+  }
+  
+  header .d-none.d-md-inline-flex {
+    margin: 0;
+    padding: 0;
+  }
+  
+  header .d-none.d-md-inline-flex img {
+    height: 48px !important;
+    width: auto !important;
+  }
+  
+  header .mob-logo {
+    margin: 0;
+    width: 120px;
+  }
+  
+  header .navbar-toggler {
+    padding: 6px 8px !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    flex-shrink: 0;
+    min-width: 40px;
+  }
+  
+  header .navbar-toggler .icon-bar {
+    width: 20px;
+    height: 2.5px;
+    margin: 3px 0;
+  }
 }
 /* ---------- Clients section (icons + labels) ---------- */
 .client-sec {

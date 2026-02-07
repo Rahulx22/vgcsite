@@ -200,10 +200,10 @@ export default function Header({ data }: HeaderProps) {
         <div className="row">
           <div
             className="col-lg-12 col-md-12"
-            style={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}
+            style={{ alignItems: "center", display: "flex", justifyContent: "space-between", gap: "16px", minHeight: "50px" }}
           >
-            {/* Desktop logo */}
-            <div className="d-none d-md-inline-flex" style={{ alignItems: "center" }}>
+            {/* Single Logo - All Sizes */}
+            <div style={{ display: "flex", alignItems: "center", flex: "0 1 auto", minWidth: "0" }}>
               <Link href="/" aria-label="Home">
                 <Image
                   src={logoSrc}
@@ -212,30 +212,14 @@ export default function Header({ data }: HeaderProps) {
                   height={80}
                   priority
                   unoptimized
-                  style={{ height: "56px", width: "auto", objectFit: "contain" }}
-                  onError={() => setLogoSrc("/images/logo.svg")}
-                />
-              </Link>
-            </div>
-
-            {/* Mobile logo */}
-            <div className="mob-logo d-md-none" style={{ display: "flex", alignItems: "center" }}>
-              <Link href="/" aria-label="Home (mobile)">
-                <Image
-                  src={logoSrc}
-                  alt="Company logo"
-                  width={140}
-                  height={44}
-                  priority
-                  unoptimized
-                  style={{ height: "44px", width: "auto", objectFit: "contain" }}
+                  style={{ height: "48px", width: "auto", objectFit: "contain" }}
                   onError={() => setLogoSrc("/images/logo.svg")}
                 />
               </Link>
             </div>
 
             {/* Navbar */}
-            <nav className="navbar navbar-expand-md" style={{ marginLeft: "auto", marginRight: "9px" }}>
+            <nav className="navbar navbar-expand-md" style={{ marginLeft: "auto", marginRight: "0px", flexShrink: 0, padding: "0" }}>
               <button
                 className={`navbar-toggler ${menuOpen ? "open" : "collapsed"} d-flex flex-column justify-content-center `}
                 type="button"
@@ -243,7 +227,7 @@ export default function Header({ data }: HeaderProps) {
                 aria-expanded={menuOpen}
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 onClick={() => setMenuOpen((s) => !s)}
-                style={{ border: "none", background: "transparent" }}
+                style={{ border: "none", background: "transparent", padding: "6px 8px", marginLeft: "auto", flex: "0 0 auto" }}
               >
                 <span className="sr-only">Toggle navigation</span>
                 <span className="icon-bar top" />
