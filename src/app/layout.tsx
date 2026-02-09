@@ -27,7 +27,7 @@ export const dynamic = "force-dynamic";
 const noStoreCompat =
   (NextCache as any).noStore ??
   (NextCache as any).unstable_noStore ??
-  (() => {});
+  (() => { });
 
 async function fetchSettingsOnce() {
   noStoreCompat();
@@ -53,13 +53,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
+
+
+
+
+
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const settings = await fetchSettingsOnce();
-  const tracking = settings?.tracking || {};
+  const tracking = settings?.data?.tracking || {};
   const gaEnabled = tracking?.analytics?.enabled;
   const GA_ID = tracking?.analytics?.tracking_id;
   const gtmEnabled = tracking?.gtm?.enabled;
@@ -68,8 +75,24 @@ export default async function RootLayout({
   const FB_ID = tracking?.facebook_pixel?.pixel_id;
   const customScripts = tracking?.custom_scripts || {};
 
+
+  console.log("Settings loaded in RootLayout:", {
+    tracking,
+    gaEnabled,
+    GA_ID,
+    gtmEnabled,
+    GTM_ID,
+    fbEnabled,
+    FB_ID,
+    customScripts
+  }, tracking,settings);
+
   return (
     <html lang="en">
+
+
+
+
       <head>
         <meta
           name="viewport"
@@ -181,16 +204,17 @@ export default async function RootLayout({
         })}
       </head>
 
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-          {gtmEnabled && GTM_ID && (
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
-              }}
-            />
-          )}
+        {gtmEnabled && GTM_ID && (
+          <noscript
+            dangerouslySetInnerHTML={{
+              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`,
+            }}
+          />
+        )}
         <AutoBanner />
         <GlobalLoader />
 
