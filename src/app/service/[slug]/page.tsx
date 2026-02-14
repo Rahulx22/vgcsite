@@ -233,7 +233,8 @@ export async function generateMetadata(
     description,
     keywords,
 
-    alternates: { canonical: url },
+    alternates: { canonical: `https://vgcadvisors.com/service${service.slug.toLowerCase()}` },
+    // alternates: { canonical: url },
 
     robots: { index: true, follow: true },
 
@@ -258,7 +259,7 @@ export async function generateMetadata(
 export default async function ServiceDetailPage({ params }: ServiceDetailProps) {
   const { slug } = await params;
   const service = await getServiceData(slug);
-  console.log("Service Data:", { slug, serviceTitle: service?.title });
+  // console.log("Service Data:", { slug, serviceTitle: service?.title });o
    
   if (!service) {
     notFound();

@@ -35,11 +35,15 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                 <div className="container mt-auto mb-auto"> {/* Added mt-auto mb-auto for vertical centering within the caption area */}
                   <div className="row">
                     <div className="col-lg-7 col-md-9 col-12">
-                      {/* TITLE (Adjusted display classes for smaller screens) */}
-                      <h1 className="fw-bold display-6 display-md-4 display-lg-2 text-wrap">
-                        {item.title}
-                      </h1>
-
+               {idx === 0 ? (
+                        <h1 className="fw-bold display-6 display-md-4 display-lg-2 text-wrap">
+                          {item.title}
+                        </h1>
+                      ) : (
+                        <h2 className="fw-bold display-6 display-md-4 display-lg-2 text-wrap mb-2 ">
+                          {item.title}
+                        </h2>
+                      )}
                       {/* PARAGRAPHS */}
                       {(item.paragraphs || []).map((p, i) => (
                         <p className="lead" key={i}>{p}</p>
