@@ -65,7 +65,7 @@ export default function BlogSlider({ blogs, itemsPerSlide = 3 }: BlogSliderProps
             ))}
 
 
-            <div class="d-flex justify-content-center align-items-center" style={{ marginTop: "1rem", gap: "0rem" }}>
+            <div className="d-flex justify-content-center align-items-center" style={{ marginTop: "1rem", gap: "0rem" }}>
 
 
                 <button type="button" className="btn btn-outline-primary" onClick={prev} aria-label="Previous slide">Prev</button>
