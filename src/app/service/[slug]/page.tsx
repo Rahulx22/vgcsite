@@ -21,6 +21,17 @@ interface Section {
   content?: string;
 }
 
+// Decode escaped HTML (some API fields may be encoded)
+function decodeHtml(html: string) {
+  if (!html) return "";
+  return String(html)
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
 // Fetch service data from API and parse offerings
 async function getServiceData(slug: string) {
   try {
@@ -59,12 +70,14 @@ async function getServiceData(slug: string) {
     // Normalize content fields (API may use `content` or `long_description`)
     const longDesc = service.long_description || service.content || '';
     const offerings: any[] = [];
+    console.log("Long Description length:", (longDesc || '').length);
 
-    if (!longDesc.includes('<h2')) {
+    // If there's no <h2> structure, treat the whole content (or short_description) as one block
+    if (!/<h2[^>]*>/i.test(longDesc)) {
       offerings.push({
         title: service.title,
         subtitle: 'Our Services',
-        description: stripHtml(service.short_description || ''),
+        description: stripHtml(service.short_description || longDesc || ''),
         items: [],
       });
 
@@ -74,15 +87,20 @@ async function getServiceData(slug: string) {
       };
     }
 
-    // --- existing section parsing (unchanged) ---
+    // Capture any introductory HTML that appears *before* the first <h2>
+    const firstH2Index = longDesc.search(/<h2[^>]*>/i);
+    const introHtml = firstH2Index > 0 ? longDesc.substring(0, firstH2Index).trim() : '';
+    const bodyHtml = firstH2Index > 0 ? longDesc.substring(firstH2Index) : longDesc;
+
+    // Parse <h2> sections from the bodyHtml
     const sectionRegex = /<h2[^>]*>([\s\S]*?)<\/h2>/g;
     const sections: Section[] = [];
     let match;
     let lastIndex = 0;
 
-    while ((match = sectionRegex.exec(longDesc)) !== null) {
+    while ((match = sectionRegex.exec(bodyHtml)) !== null) {
       if (sections.length > 0) {
-        sections[sections.length - 1].content = longDesc.substring(lastIndex, match.index);
+        sections[sections.length - 1].content = bodyHtml.substring(lastIndex, match.index);
       }
 
       sections.push({
@@ -94,11 +112,29 @@ async function getServiceData(slug: string) {
     }
 
     if (sections.length > 0) {
-      sections[sections.length - 1].content = longDesc.substring(lastIndex);
+      sections[sections.length - 1].content = bodyHtml.substring(lastIndex);
+    }
+
+    // Preserve intro (if present) as the first offering so leading paragraphs don't disappear
+    if (introHtml) {
+      const introText = stripHtml(introHtml);
+      if (introText) {
+        offerings.push({
+          title: service.title,
+          subtitle: null,
+          description: introText,
+          items: [],
+        });
+      }
     }
 
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
+
+      // Derive a section description (prefer the first <p> inside the section)
+      const firstPara = /<p[^>]*>([\s\S]*?)<\/p>/i.exec(section.content || '');
+      const sectionDescription = firstPara ? stripHtml(firstPara[1]) : stripHtml(section.content || '');
+
       const items: { title: string; description: string }[] = [];
 
       const listItemRegex = /<li[^>]*>([\s\S]*?)<\/li>/g;
@@ -138,7 +174,7 @@ async function getServiceData(slug: string) {
       offerings.push({
         title: stripHtml(section.title),
         subtitle: subtitleMatch ? stripHtml(subtitleMatch[1]) : null,
-        // description: stripHtml(service.short_description || ''),
+        description: sectionDescription,
         items,
       });
     }
@@ -186,7 +222,7 @@ export async function generateMetadata(
 
   const shortDesc = stripHtml(service.short_description || "");
   const longDesc = stripHtml(service.long_description || "");
-  const description = (service.meta_description || shortDesc || longDesc || `VGC Consulting — ${service.title} services to help your business grow.`).trim();
+  const description = (service.meta_description || `VGC Consulting — ${service.title} services to help your business grow.`).trim();
 
   const keywords = (service.meta_keywords || [service.title, "VGC Consulting", "services"].join(", ")).trim();
   const url = `https://panel.vgcadvisors.com/api/v1/services/${service.slug}`;
@@ -222,8 +258,8 @@ export async function generateMetadata(
 export default async function ServiceDetailPage({ params }: ServiceDetailProps) {
   const { slug } = await params;
   const service = await getServiceData(slug);
-    // console.log("Service Data:",params, service);
-
+  console.log("Service Data:", { slug, serviceTitle: service?.title });
+   
   if (!service) {
     notFound();
   }
@@ -284,24 +320,36 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
           <div className="row">
             <div className="col-xl-10 col-lg-12 col-md-12 offset-xl-1">
               <div className="business-box" data-aos="fade-up" data-aos-duration="1200">
-                {service.offerings.map((offering: any, index: number) => (
-                    
-                  <div key={index}>
-                    {offering.title && <h2>{offering.title}</h2>}
-                    {offering.subtitle && <h3>{offering.subtitle}</h3>}
-                    {offering.description && <p>{offering.description}</p>}
-                    {offering.items.length > 0 && (
-                      <ul>
-                        {offering.items.map((item: any, itemIndex: number) => (
-                          <li key={itemIndex}>
-                            {item.title && <strong>{item.title}</strong>}
-                            {item.description && ` ${item.description}`}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
+                {/* Prefer rendering original CMS HTML when available so nothing is lost */}
+                { (service.long_description || service.content) ? (
+                  <div
+                    className="service-content"
+                    dangerouslySetInnerHTML={{ __html: decodeHtml((service.long_description || service.content) as string) }}
+                  />
+                ) : (
+                  service.offerings.map((offering: any, index: number) => (
+                    <div key={index}>
+                      {offering.title && <h2>{offering.title}</h2>}
+                      {offering.subtitle && <h3>{offering.subtitle}</h3>}
+                      {offering.description && <p>{offering.description}</p>}
+                      {offering.items.length > 0 && (
+                        <ul>
+                          {offering.items.map((item: any, itemIndex: number) => (
+                            <li key={itemIndex}>
+                              {item.title && <strong>{item.title}</strong>}
+                              {item.description && ` ${item.description}`}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))
+                )}
+
+                {/* CTA */}
+                <div className="service-cta">
+                  <a href="/contact-us" className="call-btn">Get a free consultation</a>
+                </div>
               </div>
             </div>
           </div>

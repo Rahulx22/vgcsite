@@ -276,14 +276,43 @@ footer .call-btn { margin:20px 0 0; }
 .business-banner nav { font-size:14px; font-weight:600; margin:40px 0 0; }
 
 .business-txt { background-color:var(--main-color); margin:-17px 0 0; padding:0 0 80px; }
-.business-box { background-color:#fff; border-radius:10px; margin:-38px 0 0; padding:45px 45px 0; position:relative; }
-.business-box h2 { color:var(--main-color); font-size:45px; font-weight:700; margin:0 0 30px; text-align:center; }
-.business-box h3 { color:var(--main-color); font-size:27px; font-weight:700; margin:0 0 8px; }
-.business-box p { color:#000; font-size:20px; font-weight:600; line-height:1.6; margin:0 0 0 28px; }
-.business-box ul { padding:0 0 55px; }
-.business-box li { color:#000; font-size:18px; font-weight:600; line-height:1.6; margin:0 0 3px 48px; position:relative; }
-.business-box li::before { background-color:var(--main-color); border-radius:50%; content:''; height:8px; left:-18px; position:absolute; top:12px; width:8px; }
-.business-box li strong { color:var(--main-color); font-size:20px; }
+.business-box { background-color:#fff; border-radius:14px; margin:-38px 0 0; padding:50px 54px 48px; position:relative; box-shadow: 0 18px 40px rgba(6,24,52,0.08); border: 1px solid rgba(3,47,88,0.04); }
+.business-box h2 { color:var(--main-color); font-size:38px; font-weight:800; margin:0 0 22px; text-align:center; letter-spacing: -0.02em; }
+.business-box h3 { color:var(--main-color); font-size:24px; font-weight:700; margin:18px 0 10px; }
+.business-box p { color:#0b1620; font-size:18px; font-weight:500; line-height:1.85; margin:0 0 18px; }
+.business-box ul { padding:0 0 55px; margin:0; }
+.business-box li { color:#0b1620; font-size:17px; font-weight:600; line-height:1.9; margin:0 0 12px 34px; position:relative; }
+.business-box li::before { background-color:var(--main-color); border-radius:50%; content:''; height:10px; left:-22px; position:absolute; top:9px; width:10px; }
+.business-box li strong { color:var(--main-color); font-size:18px; }
+
+/* New: service content — renders raw CMS HTML with improved typography */
+.service-content { max-width: 980px; margin: 0 auto; color:#0b1620; font-size:18px; line-height:1.85; letter-spacing: -0.01em; padding: 8px 12px; }
+.service-content h2 { border-left:4px solid var(--main-color); padding-left:16px; margin:28px 0 12px; font-size:30px; font-weight:800; color:var(--main-color); }
+.service-content h3 { margin:20px 0 10px; font-size:20px; color:var(--main-color); }
+.service-content p { margin:0 0 18px; font-size:18px; color:#0b1620; }
+.service-content ul { margin:0 0 18px 24px; padding-left:18px; }
+.service-content ol { margin:0 0 18px 24px; padding-left:18px; }
+.service-content li { margin:0 0 12px; font-size:17px; color:#263238; }
+.service-content a { color:var(--main-color-2); text-decoration:underline; }
+.service-content img { max-width:100%; height:auto; border-radius:8px; margin:16px 0; box-shadow:0 8px 24px rgba(3,47,88,0.06); }
+.service-content blockquote { background:#F8FBFF; border-left:4px solid var(--main-color); margin:18px 0; padding:14px 18px; border-radius:8px; color:#0b1620; }
+
+/* Callout / highlighted paragraph */
+.service-callout { background:#F4FBFF; border-left:4px solid var(--main-color-2); padding:20px; margin:20px 0 28px; border-radius:8px; color:#0b1620; font-weight:600; }
+
+/* Centered CTA below content */
+.service-cta { text-align:center; margin-top:30px; }
+.service-cta .call-btn { background: linear-gradient(180deg,var(--main-color) 0%,var(--main-color-2) 100%); color:#fff; padding:12px 30px; font-size:18px; border-radius:8px; box-shadow: 0 8px 20px rgba(2,36,85,0.12); border:none; }
+.service-cta .call-btn:hover { transform:translateY(-2px); }
+
+@media (max-width: 767.98px) {
+  .business-box { padding:28px 20px 26px; margin:-20px 0 0; }
+  .business-box h2 { font-size:26px; }
+  .service-content { font-size:16px; line-height:1.7; padding:0; }
+  .service-content h2 { font-size:22px; padding-left:12px; }
+  .service-cta .call-btn { width:100%; padding:12px; }
+}
+
 
 /******************** contact-us page CSS ********************/
 .contact-sec { background-color:var(--main-color); margin:84px 0 0; }
