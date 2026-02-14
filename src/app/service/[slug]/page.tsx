@@ -3,6 +3,11 @@ import Image from "next/image";
 import { fetchWithTimeout, ensureUrl, stripHtml, API_URL } from "../../../lib/api";
 import type { Metadata, ResolvingMetadata } from "next";
 
+// Ensure metadata is generated per-request and stay fresh
+export const dynamic = "force-dynamic";
+export const revalidate = 300;
+export const dynamicParams = true; 
+
 interface ServiceDetailProps {
   params: {
     slug: string;
@@ -23,147 +28,133 @@ async function getServiceData(slug: string) {
     if (!res.ok) {
       throw new Error(`API returned status ${res.status}`);
     }
-    
+
     const json = await res.json();
     const pages = Array.isArray(json?.data) ? json.data : [];
-    const homePage = pages.find((p: any) => p.slug === "homepage");
-    
-    if (!homePage) {
-      throw new Error("Homepage not found");
+
+    // 1) Prefer a top-level page entry that matches the slug (most authoritative source)
+    let service: any = pages.find((p: any) => p.slug === slug) || null;
+
+    // 2) If the page we found is a CMS page with nested `blocks` (not a service object),
+    //    try to extract a service entry from its blocks (defensive).
+    if (service && Array.isArray(service.blocks) && service.blocks.length > 0) {
+      const servicesBlock = service.blocks.find((b: any) => b.type === 'services_section');
+      if (servicesBlock?.data?.services) {
+        const matched = servicesBlock.data.services.find((s: any) => s.slug === slug);
+        if (matched) service = matched;
+      }
     }
 
-    const blocks = Array.isArray(homePage.blocks) ? homePage.blocks : [];
-    const servicesBlock = blocks.find((b: any) => b.type === "services_section");
-    const services = servicesBlock?.data?.services || [];
-    
-    // Find the specific service by slug
-    const service = services.find((s: any) => s.slug === slug);
-    
+    // 3) Fallback: look inside the `homepage` services_section (legacy source)
     if (!service) {
-      return null;
+      const homePage = pages.find((p: any) => p.slug === 'homepage');
+      const blocks = Array.isArray(homePage?.blocks) ? homePage.blocks : [];
+      const servicesBlock = blocks.find((b: any) => b.type === 'services_section');
+      const services = servicesBlock?.data?.services || [];
+      service = services.find((s: any) => s.slug === slug) || null;
     }
 
-    // Parse the long_description to extract structured offerings
-    const longDesc = service.long_description || "";
+    if (!service) return null;
+
+    // Normalize content fields (API may use `content` or `long_description`)
+    const longDesc = service.long_description || service.content || '';
     const offerings: any[] = [];
-    
-    // If there's no HTML structure, treat the entire content as a single offering
-    if (!longDesc.includes("<h2")) {
+
+    if (!longDesc.includes('<h2')) {
       offerings.push({
         title: service.title,
-        subtitle: "Our Services",
-        description: stripHtml(service.short_description || ""),
-        items: []
+        subtitle: 'Our Services',
+        description: stripHtml(service.short_description || ''),
+        items: [],
       });
+
       return {
         ...service,
-        offerings
+        offerings,
       };
     }
-    
-    // Extract main sections (h2 tags)
+
+    // --- existing section parsing (unchanged) ---
     const sectionRegex = /<h2[^>]*>([\s\S]*?)<\/h2>/g;
     const sections: Section[] = [];
     let match;
     let lastIndex = 0;
-    
+
     while ((match = sectionRegex.exec(longDesc)) !== null) {
       if (sections.length > 0) {
-        // Add content for previous section
         sections[sections.length - 1].content = longDesc.substring(lastIndex, match.index);
       }
-      
+
       sections.push({
         title: match[1].trim(),
-        start: match.index + match[0].length
+        start: match.index + match[0].length,
       });
-      
+
       lastIndex = match.index + match[0].length;
     }
-    
-    // Add content for the last section
+
     if (sections.length > 0) {
       sections[sections.length - 1].content = longDesc.substring(lastIndex);
     }
-    
-    // Process each section
+
     for (let i = 0; i < sections.length; i++) {
       const section = sections[i];
-      
-      // Extract items from this section (both <li> and <p> tags)
       const items: { title: string; description: string }[] = [];
-      
-      // Look for list items with strong tags
+
       const listItemRegex = /<li[^>]*>([\s\S]*?)<\/li>/g;
       let itemMatch;
-      
-      while ((itemMatch = listItemRegex.exec(section.content || "")) !== null) {
+
+      while ((itemMatch = listItemRegex.exec(section.content || '')) !== null) {
         const itemContent = itemMatch[1];
-        // Extract title (text within <strong> tags)
         const titleRegex = /<strong[^>]*>([\s\S]*?)<\/strong>/;
         const titleMatch = titleRegex.exec(itemContent);
-        const title = titleMatch ? titleMatch[1].trim() : "";
-        
-        // Extract description (text after strong tag or entire content if no strong tag)
-        let description = "";
+        const title = titleMatch ? titleMatch[1].trim() : '';
+
+        let description = '';
         if (titleMatch) {
-          description = itemContent.substring(titleMatch.index + titleMatch[0].length).replace(/^[^a-zA-Z0-9]*/, "").trim();
+          description = itemContent.substring(titleMatch.index + titleMatch[0].length).replace(/^[^a-zA-Z0-9]*/, '').trim();
         } else {
           description = stripHtml(itemContent);
         }
-        
+
         if (title || description) {
-          items.push({
-            title: stripHtml(title),
-            description: stripHtml(description)
-          });
+          items.push({ title: stripHtml(title), description: stripHtml(description) });
         }
       }
-      
-      // If no list items found, look for paragraph tags
+
       if (items.length === 0) {
         const paragraphRegex = /<p[^>]*>([\s\S]*?)<\/p>/g;
         let paraMatch;
-        
-        while ((paraMatch = paragraphRegex.exec(section.content || "")) !== null) {
+
+        while ((paraMatch = paragraphRegex.exec(section.content || '')) !== null) {
           const paraContent = stripHtml(paraMatch[1]);
-          if (paraContent) {
-            items.push({
-              title: "",
-              description: paraContent
-            });
-          }
+          if (paraContent) items.push({ title: '', description: paraContent });
         }
       }
-      
-      // Extract subtitle (h3 after h2)
+
       const subtitleRegex = /<h3[^>]*>([\s\S]*?)<\/h3>/;
-      const subtitleMatch = subtitleRegex.exec(section.content || "");
-      
+      const subtitleMatch = subtitleRegex.exec(section.content || '');
+
       offerings.push({
         title: stripHtml(section.title),
         subtitle: subtitleMatch ? stripHtml(subtitleMatch[1]) : null,
-        description: stripHtml(service.short_description || ""),
-        items: items
+        description: stripHtml(service.short_description || ''),
+        items,
       });
     }
-    
-    // If no sections found, create a default one
+
     if (offerings.length === 0) {
       offerings.push({
         title: service.title,
-        subtitle: "Our Services",
-        description: stripHtml(service.short_description || service.long_description || ""),
-        items: []
+        subtitle: 'Our Services',
+        description: stripHtml(service.short_description || service.long_description || ''),
+        items: [],
       });
     }
-    
-    return {
-      ...service,
-      offerings
-    };
+
+    return { ...service, offerings };
   } catch (error) {
-    console.error("Failed to fetch service data:", error);
+    console.error('Failed to fetch service data:', error);
     return null;
   }
 }
@@ -178,30 +169,61 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const service = await getServiceData(params.slug);
-  
+  const resolvedParams = (await params) as { slug: string };
+  const service = await getServiceData(resolvedParams.slug);
+
   if (!service) {
     return {
       title: "Service Not Found | VGC Consulting",
       description: "The requested service could not be found.",
+      alternates: { canonical: "https://vgcadvisors.com/service" },
+      robots: { index: false, follow: false },
     };
   }
 
-  const title = service.meta_title || `${service.title} | VGC Consulting`;
-  const description = service.meta_description || stripHtml(service.short_description || service.long_description || "");
-  const keywords = service.meta_keywords || service.title;
+  // Safe, non-empty metadata values (match `about`/`service` page behavior)
+  const title = (service.meta_title || `${service.title} | VGC Consulting`).trim();
+
+  const shortDesc = stripHtml(service.short_description || "");
+  const longDesc = stripHtml(service.long_description || "");
+  const description = (service.meta_description || shortDesc || longDesc || `VGC Consulting — ${service.title} services to help your business grow.`).trim();
+
+  const keywords = (service.meta_keywords || [service.title, "VGC Consulting", "services"].join(", ")).trim();
+  // https://panel.vgcadvisors.com/api/v1/services/registration-services
+  const url = `https://panel.vgcadvisors.com/api/v1/services/${service.slug}`;
+  const image = ensureUrl(service.featured_image || service.mobile_featured_image) || "/images/service-banner.jpg";
 
   return {
     title,
     description,
     keywords,
+
+    alternates: { canonical: url },
+
+    robots: { index: true, follow: true },
+
+    openGraph: {
+      title,
+      description,
+      url,
+      type: "website",
+      siteName: "VGC Consulting",
+      images: image ? [{ url: image, alt: service.title }] : undefined,
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
   };
 }
 
 export default async function ServiceDetailPage({ params }: ServiceDetailProps) {
   const { slug } = await params;
   const service = await getServiceData(slug);
-    console.log("Service Data:",params, service);
+    // console.log("Service Data:",params, service);
 
   if (!service) {
     notFound();
@@ -294,20 +316,25 @@ export async function generateStaticParams() {
   try {
     const res = await fetchWithTimeout(API_URL, { cache: 'force-cache' }, 10000);
     if (!res.ok) return [];
-    
+
     const json = await res.json();
     const pages = Array.isArray(json?.data) ? json.data : [];
-    const homePage = pages.find((p: any) => p.slug === "homepage");
-    
-    if (!homePage) return [];
 
-    const blocks = Array.isArray(homePage.blocks) ? homePage.blocks : [];
-    const servicesBlock = blocks.find((b: any) => b.type === "services_section");
-    const services = servicesBlock?.data?.services || [];
-    
-    return services.map((service: any) => ({
-      slug: service.slug,
-    }));
+    // 1) Slugs from top-level pages that look like service pages
+    const pageSlugs = pages
+      .filter((p: any) => p.slug && (p.type === 'service' || p.long_description || p.short_description))
+      .map((p: any) => p.slug);
+
+    // 2) Slugs from homepage services_block (legacy source)
+    const homePage = pages.find((p: any) => p.slug === 'homepage');
+    const blocks = Array.isArray(homePage?.blocks) ? homePage.blocks : [];
+    const servicesBlock = blocks.find((b: any) => b.type === 'services_section');
+    const blockSlugs = (servicesBlock?.data?.services || []).map((s: any) => s.slug);
+
+    // Dedupe and return
+    const allSlugs = Array.from(new Set([...pageSlugs, ...blockSlugs])).filter(Boolean);
+
+    return allSlugs.map((slug) => ({ slug }));
   } catch {
     return [];
   }

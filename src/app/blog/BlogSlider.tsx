@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import BlogCard from "../components/BlogCard";
-import { style } from "framer-motion/client";
+// import { style } from "framer-motion/client";
 
 interface Blog {
     id: number | string;

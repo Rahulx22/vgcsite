@@ -76,16 +76,16 @@ export default async function RootLayout({
   const customScripts = tracking?.custom_scripts || {};
 
 
-  console.log("Settings loaded in RootLayout:", {
-    tracking,
-    gaEnabled,
-    GA_ID,
-    gtmEnabled,
-    GTM_ID,
-    fbEnabled,
-    FB_ID,
-    customScripts
-  }, tracking,settings);
+  // console.log("Settings loaded in RootLayout:", {
+  //   tracking,
+  //   gaEnabled,
+  //   GA_ID,
+  //   gtmEnabled,
+  //   GTM_ID,
+  //   fbEnabled,
+  //   FB_ID,
+  //   customScripts
+  // }, tracking,settings);
 
   return (
     <html lang="en">

@@ -109,13 +109,7 @@ function excerpt(s: string, maxLen = 120): string {
 // ---------- Component ----------
 export default function ServicePage() {
   // ---- Static (keep form as-is) ----
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({name: "",email: "",phone: "",service: "",message: "",});
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -214,6 +208,7 @@ export default function ServicePage() {
       { type: "banner_slider_section" }
     > | undefined;
     const first = block?.data?.banners?.[0];
+    console.log("Banner block:", first);
     return first
       ? {
           title: first.title || "Our Expertise, Your Growth",
@@ -232,12 +227,15 @@ export default function ServicePage() {
         };
   }, [page]);
 
+
+
+
   const founderNote = useMemo(() => {
     const block = page?.blocks?.find((b) => b.type === "personal_note_section") as Extract<
       CMSBlock,
       { type: "personal_note_section" }
     > | undefined;
-
+console.log("Founder note block:", block);  
     return {
       title: block?.data?.title || "A Personal Note from Our Founder & CEO",
       description:
@@ -475,6 +473,7 @@ export default function ServicePage() {
                       <p>{svc.summary}</p>
 
                       <Link href={svc.link} className="read-btn">
+                      {svc.link}
                         Learn More
                       </Link>
                     </article>

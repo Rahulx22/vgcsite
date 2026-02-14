@@ -28,7 +28,8 @@ export default function InnerBanner({ title, breadcrumb, image, alt }: InnerBann
         loading="lazy" 
       />
       <div className="inner-txt" data-aos="fade-right" data-aos-duration="1200">
-        <h1>{title}</h1>
+        <h1>VGC Consulting Blog - Financial Growth Insights </h1>
+        {/* <h1>{title}</h1> */}
         <nav>
           <ol className="breadcrumb">
             {breadcrumb.map((item, index) => (

@@ -48,7 +48,7 @@ export default function Services({ services, offerings }: ServicesProps) {
               </li>
             </ul>
           </div>
-        </div> */}
+        </div> 
 
         {/* Services */}
         <div className="row">
