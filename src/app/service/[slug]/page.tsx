@@ -138,7 +138,7 @@ async function getServiceData(slug: string) {
       offerings.push({
         title: stripHtml(section.title),
         subtitle: subtitleMatch ? stripHtml(subtitleMatch[1]) : null,
-        description: stripHtml(service.short_description || ''),
+        // description: stripHtml(service.short_description || ''),
         items,
       });
     }
@@ -189,7 +189,6 @@ export async function generateMetadata(
   const description = (service.meta_description || shortDesc || longDesc || `VGC Consulting — ${service.title} services to help your business grow.`).trim();
 
   const keywords = (service.meta_keywords || [service.title, "VGC Consulting", "services"].join(", ")).trim();
-  // https://panel.vgcadvisors.com/api/v1/services/registration-services
   const url = `https://panel.vgcadvisors.com/api/v1/services/${service.slug}`;
   const image = ensureUrl(service.featured_image || service.mobile_featured_image) || "/images/service-banner.jpg";
 

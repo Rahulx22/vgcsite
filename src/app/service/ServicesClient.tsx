@@ -473,7 +473,7 @@ console.log("Founder note block:", block);
                       <p>{svc.summary}</p>
 
                       <Link href={svc.link} className="read-btn">
-                      {svc.link}
+                      {/* {svc.link} */}
                         Learn More
                       </Link>
                     </article>
