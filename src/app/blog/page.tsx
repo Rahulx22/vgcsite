@@ -35,7 +35,6 @@ async function getPageSEO() {
     // console.log("Fetched Page SEO Data:", page);
     
     // if (!page) return null;
-    console.log("Identified Blog Page Data:", page);
 
     // 
     
@@ -138,7 +137,6 @@ export default async function BlogPage({ searchParams }) {
     { label: "Blog", href: "/blog" },
   ];
 
-  console.log("Rendered Blog Page:", { page, pageSEO, totalPages });
 
 
   return (
