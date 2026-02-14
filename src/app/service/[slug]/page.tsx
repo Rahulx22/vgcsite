@@ -225,7 +225,7 @@ export async function generateMetadata(
   const description = (service.meta_description || `VGC Consulting — ${service.title} services to help your business grow.`).trim();
 
   const keywords = (service.meta_keywords || [service.title, "VGC Consulting", "services"].join(", ")).trim();
-  const url = `https://panel.vgcadvisors.com/api/v1/services/${service.slug}`;
+  const url = `https://panel.vgcadvisors.com/api/v1/services/${service.slug.toLowerCase()}`;
   const image = ensureUrl(service.featured_image || service.mobile_featured_image) || "/images/service-banner.jpg";
 
   return {
