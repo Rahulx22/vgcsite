@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: contactPage.meta_title || contactPage.title,
       description: contactPage.meta_description,
-      url: "https://vgcadvisors.com/contact",
+      url: "https://vgcadvisors.com/contact-us",
       type: "website",
       // Add images if your API provides og_image or similar
     },

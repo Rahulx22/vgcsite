@@ -233,7 +233,7 @@ export async function generateMetadata(
     description,
     keywords,
 
-    alternates: { canonical: `https://vgcadvisors.com/service${service.slug.toLowerCase()}` },
+    alternates: { canonical: `https://vgcadvisors.com/service/${service.slug.toLowerCase()}` },
     // alternates: { canonical: url },
 
     robots: { index: true, follow: true },

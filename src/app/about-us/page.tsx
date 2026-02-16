@@ -112,7 +112,13 @@ export async function generateMetadata(): Promise<Metadata> {
       openGraph: {
         title: aboutPage.meta_title || aboutPage.title,
         description: aboutPage.meta_description || "",
+        url: "https://vgcadvisors.com/about-us",
       },
+      robots: {
+        index: true,
+        follow: true,
+      },
+
     };
   } catch {
     return {
@@ -214,6 +220,7 @@ async function fetchAboutPage() {
     description: ctaBlock?.subtext ?? "",
     phone: ctaBlock?.cta_link ?? "tel:+1234567891",
     ctaText: ctaBlock?.cta_text ?? "Contact Us Today",
+    
   };
 
   return { banner: bannerData, about, whyChoose, beliefs, team, globalPresence, cta };

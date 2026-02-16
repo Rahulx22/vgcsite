@@ -101,7 +101,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "services, tax consulting, business registration, compliance, GST, VGC Consulting",
 
     alternates: {
-      canonical: "https://vgcadvisors.com/services",
+      canonical: "https://vgcadvisors.com/service",
     },
 
     robots: {
@@ -110,7 +110,7 @@ export async function generateMetadata(): Promise<Metadata> {
     },
 
     openGraph: {
-      title:
+      title:  
         servicesPage.meta_title ||
         servicesPage.title ||
         "Our Services | VGC Consulting",
@@ -119,7 +119,7 @@ export async function generateMetadata(): Promise<Metadata> {
         servicesPage.meta_description ||
         "Expert financial and compliance solutions for your business.",
 
-      url: "https://vgcadvisors.com/services",
+      url: "https://vgcadvisors.com/service",
       type: "website",
     },
 
