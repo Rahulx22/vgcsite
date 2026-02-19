@@ -134,7 +134,7 @@ export async function generateMetadata(): Promise<Metadata> {
         canonical: siteUrl,
       },
 
-      // ✅ Open Graph
+      // ✅ Open Graph  
       openGraph: {
         title: aboutPage.meta_title || aboutPage.title,
         description: aboutPage.meta_description || "",
@@ -188,6 +188,8 @@ async function fetchAboutPage() {
   // Banner
   const bannerBlock = getBlock("banner_slider_section");
   const banner = (bannerBlock?.banners && bannerBlock.banners[0]) || null;
+
+
   const bannerData = {
     title: banner?.title ?? "About Us",
     subtitle: banner?.subtitle ?? "",
@@ -196,6 +198,10 @@ async function fetchAboutPage() {
     image: mkImage(banner?.image ?? bannerBlock?.image ?? null),
   };
 
+
+
+
+  console.log("Constructed Banner Data:", bannerData);
   // About content
   const aboutBlock = getBlock("about_section");
   const about = {

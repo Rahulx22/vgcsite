@@ -22,6 +22,7 @@ export default function Blog({ items, title = "Our Blog" }: { items: BlogItem[];
                       width={600}
                       height={400}
                       loading="lazy"
+                      
                     />
                   </Link>
                 </div>

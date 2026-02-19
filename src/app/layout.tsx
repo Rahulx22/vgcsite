@@ -139,6 +139,30 @@ export default async function RootLayout({
         <link href="/css/style.css" rel="stylesheet" />
         <link href="/images/fav.webp" rel="icon" />
 
+        {/* Organization JSON-LD to help Google show site/company logo in search */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name:
+                settings?.data?.company_name ||
+                settings?.data?.site_name ||
+                settings?.data?.title ||
+                "VGC Advisors",
+              url: settings?.data?.site_url || "https://vgcadvisors.com",
+              logo:
+                (settings?.data?.logo || settings?.data?.logo_url)
+                  ? (String(settings?.data?.logo || settings?.data?.logo_url).startsWith("http")
+                      ? String(settings?.data?.logo || settings?.data?.logo_url)
+                      : `https://vgcadvisors.com${String(settings?.data?.logo || settings?.data?.logo_url)}`)
+                  : "https://vgcadvisors.com/images/logo.webp",
+              sameAs: settings?.data?.social_profiles || settings?.data?.social || [],
+            }),
+          }}
+        />
+
         {/* ✅ GOOGLE ANALYTICS (Dynamic) */}
         {gaEnabled && GA_ID && (
           <>
