@@ -91,13 +91,31 @@ async function loadAboutPage() {
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const aboutPage = await loadAboutPage();
-    console.log("About Page Data for Metadata:", aboutPage);
+    const siteUrl = "https://vgcadvisors.com/about-us";
+    const defaultImage = "https://vgcadvisors.com/images/about-banner.jpg"; // change to your actual image path
 
     if (!aboutPage) {
       return {
         title: "About Us | VGC Consulting",
         description:
           "Learn about VGC Consulting's mission, values, and expert team.",
+        alternates: {
+          canonical: siteUrl,
+        },
+        openGraph: {
+          title: "About Us | VGC Consulting",
+          description:
+            "Learn about VGC Consulting's mission, values, and expert team.",
+          url: siteUrl,
+          images: [
+            {
+              url: defaultImage,
+              width: 1200,
+              height: 630,
+              alt: "VGC Consulting About Us",
+            },
+          ],
+        },
       };
     }
 
@@ -108,23 +126,50 @@ export async function generateMetadata(): Promise<Metadata> {
         aboutPage.meta_description ||
         "Discover VGC Consulting's mission, values, and team.",
       keywords:
-        aboutPage.meta_keywords || "about us, vgc consulting, financial services",
+        aboutPage.meta_keywords ||
+        "about us, vgc consulting, financial services",
+
+      // ✅ Canonical
+      alternates: {
+        canonical: siteUrl,
+      },
+
+      // ✅ Open Graph
       openGraph: {
         title: aboutPage.meta_title || aboutPage.title,
         description: aboutPage.meta_description || "",
-        url: "https://vgcadvisors.com/about-us",
+        url: siteUrl,
+        images: [
+          {
+            url: aboutPage.meta_image || defaultImage, // dynamic image if available
+            width: 1200,
+            height: 630,
+            alt: aboutPage.meta_title || "VGC Consulting About Us",
+          },
+        ],
       },
+
+      // ✅ Twitter (recommended for better sharing)
+      twitter: {
+        card: "summary_large_image",
+        title: aboutPage.meta_title || aboutPage.title,
+        description: aboutPage.meta_description || "",
+        images: [aboutPage.meta_image || defaultImage],
+      },
+
       robots: {
         index: true,
         follow: true,
       },
-
     };
   } catch {
     return {
       title: "About Us | VGC Consulting",
       description:
         "Learn about VGC Consulting's mission, values, and financial expertise.",
+      alternates: {
+        canonical: "https://vgcadvisors.com/about-us",
+      },
     };
   }
 }
