@@ -83,11 +83,6 @@ export default function ContactClient() {
   const { addresses, mapImage } = transformContactData(contactData);
 
 
-
-
-
-
-
   return (
     <>
       <Head>

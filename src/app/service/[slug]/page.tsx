@@ -6,7 +6,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 // Ensure metadata is generated per-request and stay fresh
 export const dynamic = "force-dynamic";
 export const revalidate = 300;
-export const dynamicParams = true; 
+export const dynamicParams = true;
 
 interface ServiceDetailProps {
   params: {
@@ -244,7 +244,7 @@ export async function generateMetadata(
       url,
       type: "website",
       siteName: "VGC Consulting",
-      images: image ? [{ url: image, alt: service.title }] : undefined,
+      images: image ? [{ url: image, alt: service.featured_image_alt || service.title }] : undefined,
     },
 
     twitter: {
@@ -260,7 +260,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
   const { slug } = await params;
   const service = await getServiceData(slug);
   // console.log("Service Data:", { slug, serviceTitle: service?.title });o
-   
+
   if (!service) {
     notFound();
   }
@@ -278,13 +278,13 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
 
   return (
     <>
-      
+
       <div className="business-banner">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-xl-5 col-lg-6 col-md-12 offset-xl-1" 
-                 data-aos="fade-right" 
-                 data-aos-duration="1200">
+            <div className="col-xl-5 col-lg-6 col-md-12 offset-xl-1"
+              data-aos="fade-right"
+              data-aos-duration="1200">
               <nav>
                 <ol className="breadcrumb">
                   {bannerData.breadcrumb.map((item, index) => (
@@ -301,15 +301,19 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
               <h1>{bannerData.title}</h1>
               <p>{bannerData.description}</p>
             </div>
-            
+
             <div className="col-xl-6 col-lg-6 col-md-12">
-              <Image 
-                className="w-100" 
-                src={bannerData.image} 
-                alt={service.title}
-                width={800} 
-                height={600} 
-                loading="lazy" 
+              <Image
+                className="w-100"
+                src={bannerData.image}
+                alt={
+                  service.featured_image_alt ||
+                  service.mobile_featured_image_alt ||
+                  service.title
+                }
+                width={800}
+                height={600}
+                loading="lazy"
               />
             </div>
           </div>
@@ -322,7 +326,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
             <div className="col-xl-10 col-lg-12 col-md-12 offset-xl-1">
               <div className="business-box" data-aos="fade-up" data-aos-duration="1200">
                 {/* Prefer rendering original CMS HTML when available so nothing is lost */}
-                { (service.long_description || service.content) ? (
+                {(service.long_description || service.content) ? (
                   <div
                     className="service-content"
                     dangerouslySetInnerHTML={{ __html: decodeHtml((service.long_description || service.content) as string) }}

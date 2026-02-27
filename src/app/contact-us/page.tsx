@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     return {
       title: "Contact Us | VGC Consulting",
       description: "Get in touch with VGC Consulting for business, tax, and compliance solutions.",
-      alternates: { canonical: "https://vgcadvisors.com/contact" },
+      alternates: { canonical: "https://vgcadvisors.com/contact-us" },
       robots: "index, follow",
       other: {
         "google-site-verification": "dQfS1gfzdBySBdAcoPTdOltneKPZB8gWMIeDBKf8G2I",
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description: contactPage.meta_description || "Contact VGC Consulting for expert advice and support.",
     keywords: contactPage.meta_keywords || "contact, VGC Consulting, inquiry, support",
     alternates: {
-      canonical: "https://vgcadvisors.com/contact",
+      canonical: "https://vgcadvisors.com/contact-us",
     },
     robots: "index, follow",
     openGraph: {

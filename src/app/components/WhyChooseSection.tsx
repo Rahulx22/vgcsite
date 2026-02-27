@@ -32,9 +32,12 @@ export default function WhyChooseSection({ title, features }: WhyChooseSectionPr
 
   return (
     <div className="why-sec">
-      <h2 data-aos="fade-up" data-aos-duration="1200">
-        <strong>Why Choose</strong> {title}
+      <h2 data-aos="fade-up" data-aos-duration="1200"  style={{ margin: 10 }}>
+        Why Choose
       </h2>
+      <h3 data-aos="fade-up" data-aos-duration="1200">
+        {title}
+      </h3>
       <div className="container">
         <div className="row">
           {features.map((feature, index) => (

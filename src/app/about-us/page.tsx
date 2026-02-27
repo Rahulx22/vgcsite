@@ -9,7 +9,7 @@ import Head from "next/head";
 import * as NextCache from "next/cache";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
-import { i } from "framer-motion/client";
+
 
 // Force fresh
 export const revalidate = 0;
@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 const noStoreCompat =
   (NextCache as any).noStore ??
   (NextCache as any).unstable_noStore ??
-  (() => {});
+  (() => { });
 
 const STORAGE_BASE = "https://panel.vgcadvisors.com/storage/";
 
@@ -196,6 +196,7 @@ async function fetchAboutPage() {
     ctaText: banner?.cta_text ?? null,
     ctaLink: banner?.cta_link ?? null,
     image: mkImage(banner?.image ?? bannerBlock?.image ?? null),
+    alt: banner?.image_alt ?? banner?.title ?? "About Banner",
   };
 
 
@@ -210,6 +211,7 @@ async function fetchAboutPage() {
       aboutBlock?.left_description ?? aboutBlock?.description
     ),
     image: mkImage(aboutBlock?.right_image ?? aboutBlock?.left_image ?? null),
+    alt: aboutBlock?.right_image_alt ?? aboutBlock?.left_heading ?? "About Image",
   };
 
   // Why choose
@@ -220,10 +222,11 @@ async function fetchAboutPage() {
     features:
       Array.isArray(whyBlock?.items)
         ? whyBlock.items.map((it: any) => ({
-            icon: mkImage(it.icon),
-            title: it.title ?? "",
-            description: it.description ?? "",
-          }))
+          icon: mkImage(it.icon),
+          title: it.title ?? "",
+          description: it.description ?? "",
+          alt: it.icon_alt ?? it.title,
+        }))
         : [],
   };
 
@@ -246,10 +249,11 @@ async function fetchAboutPage() {
     members:
       Array.isArray(teamBlock?.members)
         ? teamBlock.members.map((m: any) => ({
-            name: m.name ?? "",
-            image: mkImage(m.photo ?? m.image),
-            bio: m.description ?? m.bio ?? "",
-          }))
+          name: m.name ?? "",
+          image: mkImage(m.photo ?? m.image),
+          bio: m.description ?? m.bio ?? "",
+          alt: m.photo_alt ?? m.name,
+        }))
         : [],
   };
 
@@ -259,6 +263,7 @@ async function fetchAboutPage() {
     title: globalBlock?.left_title ?? "Global Presence",
     paragraphs: splitParagraphs(globalBlock?.left_description),
     image: mkImage(globalBlock?.right_image),
+    alt: globalBlock?.right_image_alt ?? "Global Presence",
   };
 
   // CTA
@@ -271,7 +276,7 @@ async function fetchAboutPage() {
     description: ctaBlock?.subtext ?? "",
     phone: ctaBlock?.cta_link ?? "tel:+1234567891",
     ctaText: ctaBlock?.cta_text ?? "Contact Us Today",
-    
+
   };
 
   return { banner: bannerData, about, whyChoose, beliefs, team, globalPresence, cta };
@@ -296,23 +301,25 @@ export default async function AboutPage() {
 
   return (
     <>
-    <Head><link rel="canonical" href="https://vgcadvisors.com/about-us" />
-    <meta name="robots" content="index, follow"></meta></Head>
+
+      {/* <Head><link rel="canonical" href="https://vgcadvisors.com/about-us" />
+  <meta name="robots" content="index, follow"></meta></Head> */}
+
       <InnerBanner
         title={data.banner.title}
         breadcrumb={[
           { label: "Home", href: "/" },
-          { label: data.banner.title, href: "/about" },
+          { label: data.banner.title, href: "/about-us" },
         ]}
         image={data.banner.image ?? "/images/about-banner.webp"}
-        alt="about-banner"
+        alt={data.banner.alt}
       />
 
       <AboutSection
         title={data.about.title}
         paragraphs={data.about.paragraphs}
         image={data.about.image ?? "/images/about-img.webp"}
-        imageAlt="about-img"
+        imageAlt={data.about.alt}
       />
 
       <WhyChooseSection
@@ -324,7 +331,7 @@ export default async function AboutPage() {
         title={data.beliefs.title}
         paragraphs={data.beliefs.paragraphs}
         image={data.beliefs.image ?? "/images/about-img1.webp"}
-        imageAlt="about-img1"
+        imageAlt={data.beliefs.title}
         reverse
       />
 
@@ -334,7 +341,7 @@ export default async function AboutPage() {
         title={data.globalPresence.title}
         paragraphs={data.globalPresence.paragraphs}
         image={data.globalPresence.image ?? "/images/about-img.webp"}
-        imageAlt="about-img"
+        imageAlt={data.globalPresence.alt}
       />
 
       <div className="ready-sec">

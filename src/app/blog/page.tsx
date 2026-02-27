@@ -26,6 +26,8 @@ type ApiBlog = {
   short_description?: string | null;
   featured_image?: string | null;
   cover_image?: string | null;
+  featured_image_alt?: string | null;
+  cover_image_alt?: string | null;
   created_at?: string | null;
   slug?: string | null;
   status?: string | null;
@@ -36,6 +38,7 @@ type BlogCardData = {
   title: string;
   excerpt: string;
   image: string;
+  alt?: string;
   date: string;
   slug: string;
 };
@@ -92,7 +95,7 @@ async function getBlogSection(): Promise<BlogSection | null> {
 
     const json = await res.json();
     const page = (json?.data as any[] | undefined)?.find((p) => p?.slug === "blog");
-    
+
     if (!page || !page.sections) return null;
 
     // Find blog_section type in page sections
@@ -132,7 +135,10 @@ export async function generateMetadata(): Promise<Metadata> {
     title: seo.title || "Our Blog",
     description: seo.description || "",
     keywords: seo.keywords || "",
-    alternates: { canonical: siteUrl },
+    
+    alternates: { 
+      canonical: siteUrl 
+    },
     openGraph: {
       title: seo.title || "Our Blog",
       description: seo.description || "",
@@ -158,7 +164,7 @@ async function getBlogs(): Promise<ApiBlog[]> {
     if (!res.ok) return [];
 
     const json = await res.json();
-    console.log("Raw blogs data:", json); 
+    console.log("Raw blogs data:", json);
     return (json?.data as ApiBlog[]) ?? [];
   } catch {
     return [];
@@ -188,7 +194,7 @@ export default async function BlogPage({ searchParams }: { searchParams?: { page
   const blogSection = await getBlogSection();
   const blogsData = await getBlogs();
   console.log("Fetched blogs:", blogsData.length);
-  
+
 
   const allBlogs: BlogCardData[] = blogsData
     .filter((b) => !b.status || ["active", "Active", "ACTIVE"].includes((b.status || "").trim()))
@@ -197,6 +203,11 @@ export default async function BlogPage({ searchParams }: { searchParams?: { page
       title: b.title || "",
       excerpt: stripHtml(b.short_description || ""),
       image: ensureUrl(b.featured_image || b.cover_image),
+      alt:
+        b.featured_image_alt ||
+        b.cover_image_alt ||
+        b.title ||
+        "",
       date: formatDate(b.created_at),
       slug: b.slug || "",
     }));
@@ -205,12 +216,12 @@ export default async function BlogPage({ searchParams }: { searchParams?: { page
   const filteredBlogs = blogSection?.blog_ids && blogSection.blog_ids.length > 0
     ? allBlogs.filter((b) => blogSection.blog_ids?.includes(b.id))
     : blogSection?.show_latest !== false
-    ? allBlogs
-    : [];
+      ? allBlogs
+      : [];
 
   const totalBlogs = allBlogs.length;
   const totalPages = Math.ceil(totalBlogs / PER_PAGE);
-  const start = (page - 1) * PER_PAGE;  
+  const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
 
   const breadcrumb = [

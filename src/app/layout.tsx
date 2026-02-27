@@ -206,9 +206,7 @@ export default async function RootLayout({
       </head>
 
 
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {gtmEnabled && GTM_ID && (
           <noscript
             dangerouslySetInnerHTML={{

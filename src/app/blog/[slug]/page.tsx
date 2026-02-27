@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers"; 
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../../lib/api";
 import type { Metadata, ResolvingMetadata } from "next";
 
@@ -19,8 +20,8 @@ interface BlogPost {
   short_description: string;
   long_description?: string;
   content?: string;
-  featured_image?: string;
-  cover_image?: string;
+   featured_image_alt?: string;  
+  cover_image_alt?: string;     
   created_at: string;
   meta_title?: string | null;
   meta_description?: string | null;
@@ -79,9 +80,9 @@ async function getBlogPost(slug: string) {
 // Dynamic Metadata
 // ---------------------------
 export async function generateMetadata(
-  { params }: { params: { slug: string } | Promise<{ slug: string }> },
-  parent: ResolvingMetadata
+  { params }: { params: { slug: string } | Promise<{ slug: string }> }
 ): Promise<Metadata> {
+
   const resolvedParams = (await params) as { slug: string };
   const blog = await getBlogPost(resolvedParams.slug);
 
@@ -91,6 +92,16 @@ export async function generateMetadata(
       description: "Requested blog could not be found.",
     };
   }
+  
+  // =================================================================
+  // const headersList = headers();
+  // const host = headersList.get("host") || "vgcadvisors.com";
+  // const protocol = host.includes("localhost") ? "http" : "https";
+  // const currentUrl = `${protocol}://${host}/blog/${blog.slug}`;
+  // ==============================================================
+  
+
+const currentUrl = `https://vgcadvisors.com/blog/${blog.slug}`;
 
   return {
     title: blog.meta_title || `${blog.title} | VGC Consulting`,
@@ -99,9 +110,42 @@ export async function generateMetadata(
       stripHtml(blog.short_description || "") ||
       blog.title,
     keywords: blog.meta_keywords || blog.title,
+
+    alternates: {
+      canonical: currentUrl,   // ✅ CANONICAL FIXED
+    },
+
+    openGraph: {
+      title: blog.meta_title || blog.title,
+      description:
+        blog.meta_description ||
+        stripHtml(blog.short_description || ""),
+      url: currentUrl,
+      type: "article",          // ✅ Important
+      images: blog.featured_image
+        ? [
+            {
+              url: ensureUrl(blog.featured_image),
+              alt:
+                blog.featured_image_alt ||
+                blog.title,
+            },
+          ]
+        : undefined,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+
+    authors: [
+      {
+        name: "VGC Advisors",   // ✅ Author Added
+      },
+    ],
   };
 }
-
 // ---------------------------
 // MAIN PAGE
 // ---------------------------
@@ -126,7 +170,11 @@ export default async function BlogSinglePage({ params }: BlogSingleProps) {
             {image && (
               <Image
                 src={image}
-                alt={blog.title}
+                alt={
+                  blog.featured_image_alt ||
+                  blog.cover_image_alt ||
+                  blog.title
+                }
                 className="w-100 rounded"
                 width={1200}
                 height={500}

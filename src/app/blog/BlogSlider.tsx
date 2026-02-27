@@ -9,6 +9,8 @@ interface Blog {
     title: string;
     excerpt: string;
     image: string;
+    featured_image_alt?: string;
+    cover_image_alt?: string;
     date: string;
     slug: string;
 }
@@ -56,6 +58,11 @@ export default function BlogSlider({ blogs, itemsPerSlide = 3 }: BlogSliderProps
                                 title={b.title}
                                 excerpt={b.excerpt}
                                 image={b.image}
+                                alt={
+                                    b.featured_image_alt ||
+                                    b.cover_image_alt ||
+                                    b.title
+                                }
                                 date={b.date}
                                 slug={b.slug}
                             />

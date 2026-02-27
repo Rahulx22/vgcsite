@@ -216,14 +216,14 @@ export default function ServicePage() {
             first.subtitle ||
             "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
           image: assetUrl(first.image) || "/images/service-banner.webp",
-          alt: "service-banner",
+          alt: first.title || "Service Banner",
         }
       : {
           title: "Our Expertise, Your Growth",
           description:
             "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
           image: "/images/service-banner.webp",
-          alt: "service-banner",
+         alt: first.title || "Service Banner",
         };
   }, [page]);
 

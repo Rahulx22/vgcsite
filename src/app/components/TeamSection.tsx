@@ -6,6 +6,7 @@ import Image from "next/image";
 interface TeamMember {
   name: string;
   image: string;
+  alt?: string;
   bio: string;
 }
 
@@ -35,11 +36,12 @@ export default function TeamSection({ title, members }: TeamSectionProps) {
         <div className="row">
           {members.map((member, index) => (
             <div key={index} className="col-lg-3 col-md-6">
-              <Image 
-                src={member.image} 
-                alt={member.name} 
-                width={400} 
-                height={400} 
+              <Image
+                src={member.image}
+                alt={member.alt || member.name}
+                title={member.alt || member.name}
+                width={400}
+                height={400}
                 loading="lazy"
                 unoptimized
               />

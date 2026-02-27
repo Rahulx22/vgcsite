@@ -494,21 +494,34 @@ export default function CareerClient() {
               </div>
             </div>
 
-            <div className="col-xl-12 col-lg-12 col-md-12">
-              <Image
-                className="filter-img"
-                src="/images/filter.png"
-                alt="filter"
-                width={1200}
-                height={200}
-                loading="eager"
-                quality={80}
-              />
-            </div>
-            <div className="col-12">
+
+            <div className="col-12 mt-5">
               {activeJobs.length > 0 ? (
                 <>
-                  <h3 className="mb-5 text-center fw-bold">Current Openings</h3>
+                  <div className="text-center mb-5 py-4">
+                    <h2
+                      className="fw-bold text-white position-relative d-inline-block px-4"
+                      style={{
+                        fontSize: "2.4rem",
+                        fontFamily: "'Poppins', 'Segoe UI', sans-serif",
+                        letterSpacing: "1px"
+                      }}
+                    >
+                      Current Openings
+                      <span
+                        style={{
+                          position: "absolute",
+                          left: "50%",
+                          bottom: "-12px",
+                          transform: "translateX(-50%)",
+                          width: "70px",
+                          height: "4px",
+                          background: "linear-gradient(90deg, #20c997, #0d6efd)",
+                          borderRadius: "10px"
+                        }}
+                      ></span>
+                    </h2>
+                  </div>
 
                   <div className="row g-4">
                     {activeJobs.sort(sortJobs).map((job: CareerJob) => {
@@ -520,10 +533,7 @@ export default function CareerClient() {
                             className="card shadow-sm border-0 h-100"
                             style={{ borderRadius: "16px", overflow: "hidden" }}
                           >
-                            {/* 
-                   Fixed Height Container: 
-                   Using d-flex flex-column ensures the middle content pushes the footer down 
-                */}
+
                             <div className="card-body p-4 p-lg-5 d-flex flex-column" style={{ height: "650px" }}>
 
                               {/* 1. HEADER: flex-shrink-0 keeps it from squishing */}

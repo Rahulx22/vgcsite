@@ -24,7 +24,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
               <Image
                 className="d-block w-100 img-fluid"
                 src={item.image}
-                alt={`banner-${idx}`}
+                alt={item.image_alt?.trim() ? item.image_alt : item.title || "VGC Advisors banner"}
                 width={1920}
                 height={500}
                 priority={idx === 0}
@@ -35,7 +35,7 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                 <div className="container mt-auto mb-auto"> {/* Added mt-auto mb-auto for vertical centering within the caption area */}
                   <div className="row">
                     <div className="col-lg-7 col-md-9 col-12">
-               {idx === 0 ? (
+                      {idx === 0 ? (
                         <h1 className="fw-bold display-6 display-md-4 display-lg-2 text-wrap">
                           {item.title}
                         </h1>
