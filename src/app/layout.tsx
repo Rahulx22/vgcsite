@@ -137,7 +137,11 @@ export default async function RootLayout({
         />
 
         <link href="/css/style.css" rel="stylesheet" />
-        <link href="/images/fav.webp" rel="icon" />
+        {/* <link href="/images/fav.webp" rel="icon" /> */}
+        
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/favicon.ico" />
+
 
         {/* ✅ GOOGLE ANALYTICS (Dynamic) */}
         {gaEnabled && GA_ID && (
@@ -146,7 +150,7 @@ export default async function RootLayout({
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
             />
-        <link href="/images/fav.webp" rel="icon" />
+            <link href="/images/fav.webp" rel="icon" />
 
             <Script id="ga4-config" strategy="afterInteractive">{`
               window.dataLayer = window.dataLayer || [];
