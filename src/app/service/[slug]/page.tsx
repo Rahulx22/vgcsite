@@ -332,7 +332,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
                     dangerouslySetInnerHTML={{ __html: decodeHtml((service.long_description || service.content) as string) }}
                   />
                 ) : (
-                  service.offerings.map((offering: any, index: number) => (
+                  service?.offerings?.map((offering: any, index: number) => (
                     <div key={index}>
                       {offering.title && <h2>{offering.title}</h2>}
                       {offering.subtitle && <h3>{offering.subtitle}</h3>}
