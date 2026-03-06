@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { headers } from "next/headers"; 
+import { headers } from "next/headers";
 import { fetchWithTimeout, ensureUrl, stripHtml } from "../../../lib/api";
 import type { Metadata, ResolvingMetadata } from "next";
 
@@ -20,8 +20,8 @@ interface BlogPost {
   short_description: string;
   long_description?: string;
   content?: string;
-   featured_image_alt?: string;  
-  cover_image_alt?: string;     
+  featured_image_alt?: string;
+  cover_image_alt?: string;
   created_at: string;
   meta_title?: string | null;
   meta_description?: string | null;
@@ -92,16 +92,16 @@ export async function generateMetadata(
       description: "Requested blog could not be found.",
     };
   }
-  
+
   // =================================================================
   // const headersList = headers();
   // const host = headersList.get("host") || "vgcadvisors.com";
   // const protocol = host.includes("localhost") ? "http" : "https";
   // const currentUrl = `${protocol}://${host}/blog/${blog.slug}`;
   // ==============================================================
-  
 
-const currentUrl = `https://vgcadvisors.com/blog/${blog.slug}`;
+
+  const currentUrl = `https://vgcadvisors.com/blog/${blog.slug}`;
 
   return {
     title: blog.meta_title || `${blog.title} | VGC Consulting`,
@@ -124,13 +124,13 @@ const currentUrl = `https://vgcadvisors.com/blog/${blog.slug}`;
       type: "article",          // ✅ Important
       images: blog.featured_image
         ? [
-            {
-              url: ensureUrl(blog.featured_image),
-              alt:
-                blog.featured_image_alt ||
-                blog.title,
-            },
-          ]
+          {
+            url: ensureUrl(blog.featured_image),
+            alt:
+              blog.featured_image_alt ||
+              blog.title,
+          },
+        ]
         : undefined,
     },
 
@@ -165,7 +165,7 @@ export default async function BlogSinglePage({ params }: BlogSingleProps) {
     <div className="blog-txt py-4">
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-lg-10">
+          <div className="col-xl-10 col-lg-11 col-md-12 col-12">
 
             {image && (
               <Image
@@ -175,10 +175,16 @@ export default async function BlogSinglePage({ params }: BlogSingleProps) {
                   blog.cover_image_alt ||
                   blog.title
                 }
-                className="w-100 rounded"
-                width={1200}
-                height={500}
-                loading="lazy"
+                width={1400}
+                height={600}
+                className="blog-main-img"
+                sizes="(max-width: 576px) 100vw,
+         (max-width: 768px) 100vw,
+         (max-width: 992px) 95vw,
+         (max-width: 1200px) 90vw,
+         900px"
+                style={{ width: "100%", height: "auto", marginTop:" 41px" }}
+                priority
               />
             )}
 

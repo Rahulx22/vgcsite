@@ -116,8 +116,347 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
+
+/* Prevent horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* Container width */
+.container {
+  max-width: 1320px;
+}
+
+/* HEADER */
+.header-row {
+  gap: 16px;
+  min-height: 60px;
+}
+
+header img {
+  max-height: 48px;
+  width: auto;
+}
+
+.header-cta {
+  margin-left: 20px;
+}
+
+/* HERO SECTION */
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.hero-caption {
+  left: 0;
+  right: 0;
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero-caption h1,
+.hero-caption h2 {
+  font-size: 48px;
+}
+
+/* HERO COUNTERS */
+.hero-counters li {
+  min-width: 120px;
+}
+
+/* TABLET */
+@media (max-width: 992px) {
+
+  .hero-caption h1,
+  .hero-caption h2 {
+    font-size: 34px;
+  }
+
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+  .header-row {
+    min-height: 55px;
+  }
+
+  header img {
+    max-height: 40px;
+  }
+
+  .hero-img {
+    height: 320px;
+  }
+
+  .hero-caption {
+    position: relative;
+    top: auto;
+    transform: none;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  .hero-caption h1,
+  .hero-caption h2 {
+    font-size: 26px;
+  }
+
+  .hero-caption p {
+    font-size: 15px;
+  }
+
+  .hero-counters {
+    justify-content: center;
+  }
+}
+
+
+
+/* SERVICES RESPONSIVE */
+
+.service-sec {
+  padding: 80px 0;
+}
+
+.services-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* service card */
+.serv-box {
+  padding: 30px;
+  border-radius: 10px;
+  background: #fff;
+  height: 100%;
+}
+
+/* tablet */
+@media (max-width:992px) {
+
+  .service-sec {
+    padding: 60px 0;
+  }
+
+  .serv-box {
+    padding: 25px;
+  }
+
+}
+
+/* mobile */
+@media (max-width:768px) {
+
+  .service-sec {
+    padding: 40px 0;
+  }
+
+  .services-title {
+    font-size: 26px;
+  }
+
+  .serv-box {
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+}
+
+/* small mobile */
+@media (max-width:480px) {
+
+  .services-title {
+    font-size: 22px;
+  }
+
+  .serv-box h3 {
+    font-size: 18px;
+  }
+
+  .serv-box p {
+    font-size: 14px;
+  }
+
+}
+
+/* Blog Responsive */
+
+@media (max-width: 991px) {
+  .blog-box {
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-sec h2 {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .blog-box h3 {
+    font-size: 18px;
+  }
+
+  .blog-box p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-sec {
+    padding: 40px 0;
+  }
+
+  .blog-box h3 {
+    font-size: 16px;
+  }
+
+  .blog-box p {
+    font-size: 13px;
+  }
+}
+
+
+
+/* Tablet */
+@media (max-width:1024px) {
+
+  .blog-txt h1 {
+    font-size: 30px;
+  }
+
+  .blog-wrapper {
+    font-size: 16px;
+  }
+
+}
+
+/* Desktop */
+@media (min-width:1200px) {
+
+  .blog-wrapper {
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .blog-txt h1 {
+    font-size: 36px;
+  }
+
+}
+
+.blog-main-img {
+  width: 100%;
+  height: auto;
+ 
+  border-radius: 6px;
+  display: block;
+  margin-bottom: 20px;
+}
+
+/* ---------------- MOBILE RESPONSIVE ---------------- */
+
+@media (max-width: 991px) {
+
+  .blog-txt .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .blog-txt h1 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  .blog-wrapper {
+    max-width: 1100px;
+    margin: auto;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .blog-txt h1 {
+    font-size: 24px;
+  }
+
+  .blog-wrapper {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .blog-wrapper img {
+    margin: 16px 0;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .blog-txt h1 {
+    font-size: 22px;
+  }
+
+  .blog-wrapper {
+    font-size: 14px;
+  }
+
+}
+
+
+/* SERVICE PAGE RESPONSIVE */
+
+.business-banner {
+  padding: 60px 0;
+}
+
+.business-banner h1 {
+  font-size: 42px;
+}
+
+.business-banner p {
+  font-size: 18px;
+}
+
+@media (max-width: 992px) {
+
+  .business-banner {
+    text-align: center;
+  }
+
+  .business-banner h1 {
+    font-size: 32px;
+  }
+
+  .business-banner p {
+    font-size: 16px;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .business-banner h1 {
+    font-size: 26px;
+  }
+
+}
+.service-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0;
+}

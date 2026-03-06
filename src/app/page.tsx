@@ -124,6 +124,7 @@ function mapApiToHomeDataStrict(apiJson: any): HomeData {
       phone: (bn?.cta_link || "").replace(/^tel:/, ""),
       counters,
       image: ensureUrl(bn?.image),
+      alt: bn?.image_alt || bn?.title || "VGC Advisors Banner",
       ctaLink: bn?.cta_link || "",
       ctaText: bn?.cta_text || "",
     };

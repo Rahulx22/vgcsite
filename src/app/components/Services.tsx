@@ -53,7 +53,7 @@ export default function Services({ services, offerings }: ServicesProps) {
         {/* Services */}
         <div className="row">
           <div className="col-xl-10 col-lg-12 col-md-12 offset-xl-1">
-            <h2 data-aos="fade-up" data-aos-duration="1200">
+           <h2 className="services-title" data-aos="fade-up" data-aos-duration="1200">
               Our Services
             </h2>
             <div className="row">
@@ -61,7 +61,7 @@ export default function Services({ services, offerings }: ServicesProps) {
                 if (index>= 4) return null; // skip all others
 
                 return (
-                  <div key={s.title} className="col-lg-6 col-md-6">
+                  <div key={s.title} className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                     <div
                       className="serv-box"
                       data-aos="zoom-in"

@@ -198,10 +198,7 @@ export default function Header({ data }: HeaderProps) {
     <header ref={headerRef}>
       <div className="container">
         <div className="row">
-          <div
-            className="col-lg-12 col-md-12"
-            style={{ alignItems: "center", display: "flex", justifyContent: "space-between", gap: "16px", minHeight: "50px" }}
-          >
+          <div className="col-12 d-flex align-items-center justify-content-between header-row">
             {/* Single Logo - All Sizes */}
             <div style={{ display: "flex", alignItems: "center", flex: "0 1 auto", minWidth: "0" }}>
               <Link href="/" aria-label="Home">
@@ -268,7 +265,7 @@ export default function Header({ data }: HeaderProps) {
             </nav>
 
             {/* CTA Button - Hidden on mobile */}
-            <div style={{ marginLeft: 20 }} className="d-none d-md-block">
+            <div className="header-cta d-none d-md-block">
               <Link href={buttonHref} className="cont-btn" aria-label={buttonText}>
                 {buttonText}
               </Link>
@@ -316,8 +313,5 @@ export default function Header({ data }: HeaderProps) {
       {/* Backdrop */}
       <div className={`offcanvas-backdrop ${menuOpen ? "show" : ""}`} onClick={closeMenu} />
     </header>
-
-
-
 );
 }

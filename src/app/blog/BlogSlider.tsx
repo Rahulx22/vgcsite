@@ -75,14 +75,14 @@ export default function BlogSlider({ blogs, itemsPerSlide = 3 }: BlogSliderProps
             <div className="d-flex justify-content-center align-items-center" style={{ marginTop: "1rem", gap: "0rem" }}>
 
 
-                <button type="button" className="btn btn-outline-primary" onClick={prev} aria-label="Previous slide">Prev</button>
+                <button type="button" className="btn btn-outline-dark" onClick={prev} aria-label="Previous slide">Prev</button>
 
 
                 <div className="slider-numbers">
                     {slides.map((_, i) => (
                         <button
                             key={i}
-                            className={`btn ${i === index ? "btn-primary" : "btn-outline-primary"} mx-1`}
+                            className={`btn ${i === index ? "btn-dark" : "btn-outline-dark"} mx-1`}
                             onClick={() => setIndex(i)}
                             aria-label={`Go to slide ${i + 1}`}
                             type="button" // Always good practice to specify type for buttons
@@ -93,7 +93,7 @@ export default function BlogSlider({ blogs, itemsPerSlide = 3 }: BlogSliderProps
                 </div>
 
 
-                <button type="button" className="btn btn-outline-primary" onClick={next} aria-label="Next slide">Next</button>
+                <button type="button" className="btn btn-outline-dark" onClick={next} aria-label="Next slide">Next</button>
             </div>
 
 

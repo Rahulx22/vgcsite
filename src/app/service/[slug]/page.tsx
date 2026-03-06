@@ -280,9 +280,9 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
     <>
 
       <div className="business-banner">
-        <div className="container-fluid">
+        <div className="container">
           <div className="row">
-            <div className="col-xl-5 col-lg-6 col-md-12 offset-xl-1"
+            <div className="col-xl-5 col-lg-6 col-md-12 col-12 offset-xl-1 offset-lg-0"
               data-aos="fade-right"
               data-aos-duration="1200">
               <nav>
@@ -302,9 +302,9 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
               <p>{bannerData.description}</p>
             </div>
 
-            <div className="col-xl-6 col-lg-6 col-md-12">
+            <div className="col-xl-6 col-lg-6 col-md-12 col-12 mt-4 mt-lg-0">
               <Image
-                className="w-100"
+                className="img-fluid w-100"
                 src={bannerData.image}
                 alt={
                   service.featured_image_alt ||
@@ -323,7 +323,7 @@ export default async function ServiceDetailPage({ params }: ServiceDetailProps) 
       <div className="business-txt">
         <div className="container">
           <div className="row">
-            <div className="col-xl-10 col-lg-12 col-md-12 offset-xl-1">
+            <div className="col-xl-10 col-lg-11 col-md-12 col-12 mx-auto">
               <div className="business-box" data-aos="fade-up" data-aos-duration="1200">
                 {/* Prefer rendering original CMS HTML when available so nothing is lost */}
                 {(service.long_description || service.content) ? (

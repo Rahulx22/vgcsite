@@ -1,4 +1,27 @@
 // types/home.ts
+
+
+export type HeroBanner = {
+  title: string;
+  paragraphs: string[];
+  phone: string;
+  counters: {
+    label: string;
+    value: number | null;
+    suffix: string;
+    display: string;
+  }[];
+  image: string;
+  alt: string;
+  ctaLink: string;
+  ctaText: string;
+};
+
+export type Hero = {
+  banners: HeroBanner[];
+};
+
+
 export type Banner = {
   image?: string | null;
   title?: string | null;
@@ -13,13 +36,7 @@ export type HeroCounter = {
   suffix?: string;
 };
 
-export type Hero = {
-  title: string;
-  paragraphs: string[];
-  phone: string;
-  counters: HeroCounter[];
-  banners: string[]; // absolute URLs
-};
+
 
 export type Service = {
   title: string;

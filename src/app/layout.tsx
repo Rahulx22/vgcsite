@@ -131,10 +131,10 @@ export default async function RootLayout({
           rel="stylesheet"
         />
 
-        <link
+        {/* <link
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
           rel="stylesheet"
-        />
+        /> */}
 
         <link href="/css/style.css" rel="stylesheet" />
         {/* <link href="/images/fav.webp" rel="icon" /> */}
@@ -262,10 +262,10 @@ export default async function RootLayout({
           strategy="lazyOnload"
         />
 
-        <Script
+        {/* <Script
           src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
           strategy="lazyOnload"
-        />
+        /> */}
 
         {/* Custom JS */}
         <Script src="/js/custom.js" strategy="lazyOnload" />

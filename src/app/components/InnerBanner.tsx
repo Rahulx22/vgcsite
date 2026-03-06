@@ -23,7 +23,7 @@ export default function InnerBanner({ title, breadcrumb, image, alt }: InnerBann
         src={image} 
         alt={alt} 
         width={1920} 
-        height={450} 
+        height={650} 
         loading="lazy" 
       />
       <div className="inner-txt" data-aos="fade-right" data-aos-duration="1200">

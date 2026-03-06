@@ -135,7 +135,6 @@ export default function AutoBanner({ delay = 9000 }: { delay?: number }) {
   `}</style>
       </div>
 
-
     </>
   );
 }
