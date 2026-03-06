@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
 import type { Hero } from "../../types/home";
 
 export default function HeroCarousel({ hero }: { hero: Hero }) {
@@ -8,31 +9,48 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
 
   if (!hero || !hero.banners) return null;
 
-  const nextSlide = () => setIndex((prev) => (prev + 1) % hero.banners.length);
-  const prevSlide = () =>
-    setIndex((prev) => (prev - 1 + hero.banners.length) % hero.banners.length);
+  const nextSlide = () => {
+    setIndex((prev) => (prev + 1) % hero.banners.length);
+  };
 
-  // useEffect(() => {
-  //   const timer = setInterval(() => nextSlide(), 2500);
-  //   return () => clearInterval(timer);
-  // }, []);
+  const prevSlide = () => {
+    setIndex((prev) => (prev - 1 + hero.banners.length) % hero.banners.length);
+  };
 
   return (
     <div className="slider">
+
+      {/* ARROWS */}
       <button className="arrow prev" onClick={prevSlide}>❮</button>
       <button className="arrow next" onClick={nextSlide}>❯</button>
 
       {hero.banners.map((banner, i) => (
-        <div
-          key={i}
-          className={`slide ${i === index ? "active" : ""}`}
-          style={{ backgroundImage: `url(${banner.image})` }}
-        >
+        <div key={i} className={`slide ${i === index ? "active" : ""}`}>
+
+          <Image
+            src={banner.image}
+            alt={banner.alt || "banner"}
+            fill
+            priority={i === 0}
+            className="bg-img"
+          />
+
           <div className="content">
-            <h1>{banner.title}</h1>
+            {i === 0 ? (
+              <h1>{banner.title}</h1>
+            ) : (
+              <h2>{banner.title}</h2>
+            )}
             {(banner.paragraphs || []).map((p, j) => (
               <p className="subtitle" key={j}>{p}</p>
             ))}
+
+            {banner.ctaLink && (
+              <a className="btn" href={banner.ctaLink}>
+                {banner.ctaText}
+              </a>
+            )}
+
             <div className="stats">
               {(banner.counters || []).map((c, k) => (
                 <div className="stat" key={k}>
@@ -41,156 +59,158 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
                 </div>
               ))}
             </div>
-            {banner.ctaLink && (
-              <a className="btn" href={banner.ctaLink}>{banner.ctaText}</a>
-            )}
           </div>
+
         </div>
       ))}
 
       <style jsx>{`
-  .slider {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-  }
 
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.8s;
-    padding: 20px;
-  }
+        .slider{
+          position:relative;
+          width:100%;
+          height:100vh;
+          min-height:750px;
+          overflow:hidden;
+        }
 
-  .slide.active {
-    opacity: 1;
-  }
+        .slide{
+          position:absolute;
+          width:100%;
+          height:100%;
+          opacity:0;
+          transition:opacity .8s ease;
+        }
 
-  .slide::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
-  }
+        .slide.active{
+          opacity:1;
+          z-index:1;
+        }
 
-  .content {
-    position: relative;
-    color: #fff;
-    width: 90%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    z-index: 1;
-  }
+        .bg-img{
+          object-fit:cover;
+        }
 
-  h1 {
-    font-size: 38px;
-    margin-bottom: 1px;
-    margin-top: 45px;
-    line-height: 1.2;
-    font-weight: 700;
-  }
+        .slide::before{
+          content:"";
+          position:absolute;
+          inset:0;
+          background:rgba(0,0,0,0.55);
+          z-index:1;
+        }
 
+        .content{
+          position:relative;
+          z-index:2;
+          color:white;
+          max-width:900px;
+          padding:40px;
+          top:50%;
+          transform:translateY(-50%);
+        }
 
-  .subtitle {
-    font-size: 20px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
+        h1{
+          font-size:44px;
+          font-weight:700;
+          margin-bottom:12px;
+        }
 
-  /* CTA BUTTON TOP */
-  .btn {
-    order: 1;
-    display: inline-block;
-    padding: 14px 30px;
-    background: #0d6efd;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-   
-  }
+        .subtitle{
+          font-size:20px;
+          margin-bottom:20px;
+        }
 
-  .btn:hover {
-    background: #084298;
-    transform: translateY(-2px);
-  }
+        .btn{
+          display:inline-block;
+          padding:14px 30px;
+          background:#0d6efd;
+          color:#fff;
+          text-decoration:none;
+          border-radius:6px;
+          font-weight:600;
+          margin-bottom:25px;
+        }
 
-  /* COUNTERS BELOW BUTTON */
-  .stats {
-    order: 2;
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
+        .stats{
+          display:flex;
+          gap:40px;
+          flex-wrap:wrap;
+        }
 
-  .stat {
-    background: transparent;
-    color: #fff;
-  }
+        .stat h2{
+          font-size:36px;
+          margin:0;
+        }
 
-  .stat h2 {
-    font-size: 36px;
-    font-weight: 700;
-    margin: 0;
-  }
+        .arrow{
+          position:absolute;
+          top:50%;
+          transform:translateY(-50%);
+          background:rgba(0,0,0,0.6);
+          border:none;
+          color:white;
+          font-size:30px;
+          padding:10px 18px;
+          cursor:pointer;
+          z-index:5;
+        }
 
-  .stat small {
-    font-size: 14px;
-    opacity: 0.9;
-  }
+        .prev{ left:20px; }
+        .next{ right:20px; }
 
-  .arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    border: none;
-    font-size: 28px;
-    padding: 10px 16px;
-    cursor: pointer;
-    z-index: 10;
-  }
+        /* TABLET */
+        @media(max-width:992px){
 
-  .prev { left: 20px; }
-  .next { right: 20px; }
+          .slider{
+            height:100vh;
+            min-height:700px;
+          }
 
-  .arrow:hover {
-    background: rgba(0,0,0,0.8);
-  }
+          h1{
+            font-size:34px;
+          }
+        }
 
-  @media (max-width: 768px) {
-    h1 { font-size: 30px; }
-    .subtitle { font-size: 16px; }
-    .btn { font-size: 16px; padding: 12px 22px; }
-    .stats { gap: 20px; }
-    .stat h2 { font-size: 28px; }
-  }
+        /* MOBILE HEIGHT INCREASED */
+        @media(max-width:768px){
 
-  @media (max-width: 480px) {
-    h1 { font-size: 24px; }
-    .stats {
-      flex-direction: column;
-      gap: 12px;
-    }
-  }
-       `}</style>
+          .slider{
+            height:105vh;
+            min-height:700px;
+          }
+
+          .content{
+            padding:20px;
+          }
+
+          h1{
+            font-size:28px;
+          }
+
+          .subtitle{
+            font-size:16px;
+          }
+        }
+
+        /* SMALL MOBILE HEIGHT MORE */
+        @media(max-width:480px){
+
+          .slider{
+            height:110vh;
+            min-height:720px;
+          }
+
+          h1{
+            font-size:22px;
+          }
+
+          .stats{
+            flex-direction:column;
+            gap:10px;
+          }
+        }
+
+      `}</style>
 
     </div>
   );
