@@ -96,11 +96,13 @@ export default function HeroCarousel({ hero }: { hero: Hero }) {
   }
 
   h1 {
-    font-size: 48px;
-    margin-bottom: 15px;
+    font-size: 38px;
+    margin-bottom: 1px;
+    margin-top: 45px;
     line-height: 1.2;
     font-weight: 700;
   }
+
 
   .subtitle {
     font-size: 20px;
