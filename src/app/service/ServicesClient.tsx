@@ -9,50 +9,53 @@ import Head from "next/head";
 
 type CMSBlock =
   | {
-      type: "banner_slider_section";
-      data: {
-        banners: Array<{
-          image: string;
-          title: string | null;
-          subtitle?: string | null;
-          cta_link?: string | null;
-          cta_text?: string | null;
-          statics?: Array<{ text: string | null; count_percent: string | null }>;
-        }>;
-      };
-    }
-  | {
-      type: "personal_note_section";
-      data: {
-        title?: string | null;
-        position?: string | null;
-        signature?: string | null;
-        description?: string | null;
-      };
-    }
-  | {
-      type: "services_section";
-      data: {
-        title?: string | null;
+    type: "banner_slider_section";
+    data: {
+      banners: Array<{
+        image: string;
+        image_alt?: string | null;
+        title: string | null;
         subtitle?: string | null;
-        show_all?: boolean;
-        services?: Array<{
-          id: number;
-          title: string;
-          slug: string;
-          short_description?: string | null;
-          sub_heading?: string | null;
-          long_description?: string | null;
-          featured_image?: string | null;
-          mobile_featured_image?: string | null;
-          status?: string;
-        }>;
-      };
-    }
-  | {
-      type: string;
-      data: any;
+        cta_link?: string | null;
+        cta_text?: string | null;
+        statics?: Array<{ text: string | null; count_percent: string | null }>;
+      }>;
     };
+  }
+  | {
+    type: "personal_note_section";
+    data: {
+      title?: string | null;
+      position?: string | null;
+      signature?: string | null;
+      signature_alt?: string | null;
+      description?: string | null;
+    };
+  }
+  | {
+    type: "services_section";
+    data: {
+      title?: string | null;
+      subtitle?: string | null;
+      show_all?: boolean;
+      services?: Array<{
+        id: number;
+        title: string;
+        slug: string;
+        short_description?: string | null;
+        sub_heading?: string | null;
+        long_description?: string | null;
+        featured_image?: string | null;
+        featured_image_alt?: string | null;
+        mobile_featured_image?: string | null;
+        status?: string;
+      }>;
+    };
+  }
+  | {
+    type: string;
+    data: any;
+  };
 
 type CMSPage = {
   id: number;
@@ -107,9 +110,9 @@ function excerpt(s: string, maxLen = 120): string {
 }
 
 // ---------- Component ----------
-export default function ServicePage() {
+export default function ServicePage({ initialData }: { initialData: any }) {
   // ---- Static (keep form as-is) ----
-  const [formData, setFormData] = useState({name: "",email: "",phone: "",service: "",message: "",});
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", service: "", message: "", });
   const [submitting, setSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -128,7 +131,7 @@ export default function ServicePage() {
     e.preventDefault();
     setSubmitting(true);
     setSubmitError(null);
-    
+
     try {
       // Prepare the data to match API expected format
       const submitData = {
@@ -164,67 +167,41 @@ export default function ServicePage() {
   };
 
   // ---- Dynamic ----
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialData);
   const [err, setErr] = useState<string | null>(null);
-  const [page, setPage] = useState<CMSPage | null>(null);
+ const [page, setPage] = useState<CMSPage | null>(initialData || null);
 
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        setLoading(true);
-        setErr(null);
 
-        // Use fetchWithTimeout with caching for 5 minutes
-        const res = await fetch(API_URL, { 
-          cache: "force-cache",
-          next: { revalidate: 300 } // Cache for 5 minutes (300 seconds)
-        });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const json: CMSResponse = await res.json();
-
-        const servicesPage =
-          json?.data?.find((p) => p.slug === "services") ||
-          json?.data?.find((p) => p.type === "services") ||
-          null;
-
-        if (!servicesPage) throw new Error("Services page not found");
-        if (mounted) setPage(servicesPage);
-      } catch (e: any) {
-        if (mounted) setErr(e?.message || "Failed to load data");
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    })();
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   // Pick blocks we care about
   const banner = useMemo(() => {
-    const block = page?.blocks?.find((b) => b.type === "banner_slider_section") as Extract<
-      CMSBlock,
-      { type: "banner_slider_section" }
-    > | undefined;
+    const block = page?.blocks?.find(
+      (b) => b.type === "banner_slider_section"
+    ) as Extract<CMSBlock, { type: "banner_slider_section" }> | undefined;
+
     const first = block?.data?.banners?.[0];
+
     console.log("Banner block:", first);
+
     return first
       ? {
-          title: first.title || "Our Expertise, Your Growth",
-          description:
-            first.subtitle ||
-            "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
-          image: assetUrl(first.image) || "/images/service-banner.webp",
-         alt: first?.title || "Service Banner",
-        }
+        title: first.title || "Our Expertise, Your Growth",
+        description:
+          first.subtitle ||
+          "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
+        image: assetUrl(first.image) || "/images/service-banner.webp",
+        alt:
+          first?.image_alt && first.image_alt !== "/"
+            ? first.image_alt
+            : "",
+      }
       : {
-          title: "Our Expertise, Your Growth",
-          description:
-            "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
-          image: "/images/service-banner.webp",
-        alt: first?.title || "Service Banner",
-        };
+        title: "Our Expertise, Your Growth",
+        description:
+          "Comprehensive business, tax, and compliance solutions tailored to empower MSMEs, corporates, and global ventures — delivered with precision, integrity, and strategic insight.",
+        image: "/images/service-banner.webp",
+        alt: "",
+      };
   }, [page]);
 
 
@@ -235,13 +212,14 @@ export default function ServicePage() {
       CMSBlock,
       { type: "personal_note_section" }
     > | undefined;
-console.log("Founder note block:", block);  
+    console.log("Founder note block:", block);
     return {
       title: block?.data?.title || "A Personal Note from Our Founder & CEO",
       description:
         block?.data?.description ||
         "With a vision to empower MSMEs and a commitment to integrity, innovation, and client success, I lead VGC Advisors with the belief that your growth is our greatest achievement.",
-      signature: assetUrl(block?.data?.signature) || "/images/sign.svg",
+      signature: block?.data?.signature ? assetUrl(block.data.signature) : "",
+      signatureAlt: block?.data?.signature_alt ?? "",
       name: block?.data?.position || "Founder & Senior Of VGC Consultancy",
     };
   }, [page]);
@@ -279,18 +257,19 @@ console.log("Founder note block:", block);
   return (
     <>
       {/* Banner */}
-    <Head><link rel="canonical" href="https://vgcadvisors.com/service" />
-    <meta name="robots" content="index, follow"></meta>
-    </Head>
-      <div
-        className="service-banner"
-        style={{
-          backgroundImage: `url(${banner.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        aria-label={banner.alt}
-      >
+      <Head><link rel="canonical" href="https://vgcadvisors.com/service" />
+        <meta name="robots" content="index, follow"></meta>
+      </Head>
+      <div className="service-banner" aria-label={banner.alt} style={{ position: "relative" }}>
+
+        <Image
+          src={banner.image}
+          alt={banner.alt}
+          fill
+          priority
+          style={{ objectFit: "cover", zIndex: -1 }}
+        />
+
         <div className="container">
           <div className="row">
             <div
@@ -298,15 +277,17 @@ console.log("Founder note block:", block);
               data-aos="fade-right"
               data-aos-duration="1200"
             >
-              <h1 style={{ minHeight: '100px', display: 'flex', alignItems: 'center' }}>
+              <h1 style={{ minHeight: "100px", display: "flex", alignItems: "center" }}>
                 {banner.title}
               </h1>
-              <p style={{ minHeight: '120px', display: 'flex', alignItems: 'center' }}>
+
+              <p style={{ minHeight: "120px", display: "flex", alignItems: "center" }}>
                 {banner.description}
               </p>
             </div>
           </div>
         </div>
+
       </div>
 
       {/* Form (static as requested) */}
@@ -387,10 +368,10 @@ console.log("Founder note block:", block);
                       {(servicesSection.items.length
                         ? servicesSection.items
                         : [
-                            { title: "Business Support", slug: "business-support", link: "#" },
-                            { title: "Direct Tax Services", slug: "direct-tax", link: "#" },
-                            { title: "Indirect Tax Services", slug: "indirect-tax", link: "#" },
-                          ]
+                          { title: "Business Support", slug: "business-support", link: "#" },
+                          { title: "Direct Tax Services", slug: "direct-tax", link: "#" },
+                          { title: "Indirect Tax Services", slug: "indirect-tax", link: "#" },
+                        ]
                       ).map((s) => (
                         <option key={s.slug} value={s.title}>
                           {s.title}
@@ -425,12 +406,14 @@ console.log("Founder note block:", block);
               <h2>{founderNote.title}</h2>
               <p>{founderNote.description}</p>
               <div style={{ margin: "14px 0" }}>
-                <img
-                  src={founderNote.signature || "/images/sign.svg"}
-                  alt="sign"
-                  width={100}
-                  height={30}
-                />
+                {founderNote.signature && (
+                  <Image
+                    src={founderNote.signature}
+                    alt={founderNote.signatureAlt}
+                    width={100}
+                    height={30}
+                  />
+                )}
               </div>
               <p>{founderNote.name}</p>
             </div>
@@ -455,11 +438,11 @@ console.log("Founder note block:", block);
               <div className="row">
                 {(loading
                   ? Array.from({ length: 4 }).map((_, i) => ({
-                      title: "Loading...",
-                      slug: `skeleton-${i}`,
-                      link: "#",
-                      summary: "Please wait…",
-                    }))
+                    title: "Loading...",
+                    slug: `skeleton-${i}`,
+                    link: "#",
+                    summary: "Please wait…",
+                  }))
                   : servicesSection.items
                 ).map((svc) => (
                   <div key={svc.slug} className="col-lg-6 col-md-6">
@@ -473,7 +456,7 @@ console.log("Founder note block:", block);
                       <p>{svc.summary}</p>
 
                       <Link href={svc.link} className="read-btn">
-                      {/* {svc.link} */}
+                        {/* {svc.link} */}
                         Learn More
                       </Link>
                     </article>
