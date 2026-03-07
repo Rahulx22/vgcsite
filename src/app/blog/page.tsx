@@ -135,9 +135,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: seo.title || "Our Blog",
     description: seo.description || "",
     keywords: seo.keywords || "",
-
-    alternates: {
-      canonical: siteUrl
+    
+    alternates: { 
+      canonical: siteUrl 
     },
     openGraph: {
       title: seo.title || "Our Blog",
@@ -150,31 +150,6 @@ export async function generateMetadata(): Promise<Metadata> {
       follow: true,
     },
   };
-}
-
-async function getBannerData() {
-  try {
-    const res = await fetchWithTimeout(
-      "https://panel.vgcadvisors.com/api/v1/pages/blog",
-      { cache: "force-cache", next: { revalidate: 300 } }
-    );
-
-    if (!res.ok) return null;
-
-    const json = await res.json();
-
-    const blocks = json?.data?.blocks;
-
-    const bannerSection = blocks?.find(
-      (b: any) => b.type === "banner_slider_section"
-    );
-
-    return bannerSection?.data?.banners?.[0] || null;
-
-  } catch (error) {
-    console.error("Banner fetch error:", error);
-    return null;
-  }
 }
 
 // =============================
@@ -248,7 +223,6 @@ export default async function BlogPage({ searchParams }: { searchParams?: { page
   const totalPages = Math.ceil(totalBlogs / PER_PAGE);
   const start = (page - 1) * PER_PAGE;
   const paginatedBlogs = allBlogs.slice(start, start + PER_PAGE);
-  const banner = await getBannerData();
 
   const breadcrumb = [
     { label: "Home", href: "/" },
@@ -263,10 +237,10 @@ export default async function BlogPage({ searchParams }: { searchParams?: { page
             BANNER FROM PAGE API (UI title fixed — metadata still generated for head)
         ============================= */}
       <InnerBanner
-        title={banner?.title || "Our Blog"}
+        title={stripHtml("Our Blog")}
         breadcrumb={breadcrumb}
-        image={ensureUrl(banner?.image) || "/images/service-banner.webp"}
-        alt={banner?.image_alt || "Blog Banner"}
+        image={pageSEO?.banner || "/images/service-banner.webp"}
+        alt={pageSEO?.alt || "Blog Banner"}
       />
 
       <div className="blog-sec dd">
