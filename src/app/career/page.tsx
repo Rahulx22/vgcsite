@@ -3,21 +3,22 @@ import { Metadata } from 'next';
 import CareerClient from './CareerClient';
 
 // Helper to fetch the career page data (shared between metadata and page)
-async function fetchCareerPage(): Promise<null> {
+async function fetchCareerPage(): Promise<any> {
   try {
-    const res = await fetch("https://panel.vgcadvisors.com/api/v1/pages", {
-      next: { revalidate: 300 }, // Cache for 5 minutes
-    });
+    const res = await fetch(
+      "https://panel.vgcadvisors.com/api/v1/pages/slug/career",
+      {
+        next: { revalidate: 300 },
+      }
+    );
 
     if (!res.ok) return null;
 
     const json = await res.json();
-    const pages = Array.isArray(json?.data) ? json.data : [];
 
-    // Find career page by type or slug
-    return pages.find((page: any) => page.type === 'career' || page.slug === 'career') ?? null;
+    return json?.data ?? null;
   } catch (error) {
-    console.error('Failed to fetch career page for metadata:', error);
+    console.error("Failed to fetch career page:", error);
     return null;
   }
 }
