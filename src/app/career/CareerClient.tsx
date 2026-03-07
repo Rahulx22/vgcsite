@@ -295,7 +295,7 @@ export default function CareerClient() {
               <Image
                 className="w-100"
                 src={ensureUrl(headerData.right_image_main)}
-                alt="career-banner"
+                alt={headerData?.right_image_main_alt || headerData?.left_title || ""}
                 width={800}
                 height={600}
                 loading="eager"
